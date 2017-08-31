@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "20767BA6A2739E5EA231BFEB5CA0D281358398D2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "55505DE6675E1AEB4CF72AD63A972936EC984D97" : 9223372036854775807,
+    "20767BA6A2739E5EA231BFEB5CA0D281358398D2" : 9223372036854775807,
+    "926E79937B1D74080D6099615F18FF8D46E99FB5" : 9223372036854775807,
+    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3DDD5C41-7697-4961-9170-77EE36DC23FB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "55505DE6675E1AEB4CF72AD63A972936EC984D97" : "..\/..\/addons\/ofxImGui",
+    "20767BA6A2739E5EA231BFEB5CA0D281358398D2" : "EnergeticVibrationsAV\/",
+    "926E79937B1D74080D6099615F18FF8D46E99FB5" : "..\/..\/addons\/ofxUbo",
+    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : "..\/.."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "vertexshaderart",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "vertexshaderart.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/JoshuaBatty\/EnergeticVibrationsAV",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "20767BA6A2739E5EA231BFEB5CA0D281358398D2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/JoshuaBatty\/openFrameworks",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2DE9C8846D9375EAACFABA8963120E8E7719BAF5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jvcleave\/ofxImGui",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "55505DE6675E1AEB4CF72AD63A972936EC984D97"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Ahbee\/ofxUbo",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "926E79937B1D74080D6099615F18FF8D46E99FB5"
+    }
+  ]
+}
