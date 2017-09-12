@@ -39,10 +39,15 @@ void ofApp::setup(){
     //required call
     gui.setup();
     
+
+    //Post Processing
+    post.setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    ofSetWindowTitle(ofToString(ofGetFrameRate()));
+
     float val = -0.5+(sin(ofGetElapsedTimef()*0.05)*0.5)*3.;
 //    mCam1.truck(val);
 //   mCam1.boom(val);
@@ -53,6 +58,8 @@ void ofApp::update(){
 
     params.time = ofGetElapsedTimef();
 
+    //Post Processing
+    post.update();
 }
 
 //--------------------------------------------------------------
@@ -96,13 +103,14 @@ void ofApp::draw(){
         isShaderDirty = false;
     }
     
-    // mCam1.setDistance(10); // let's pull the camera closer.
-    
+    // begin scene to post process
+    post.begin();
     mCam1.begin();
     
     // alpha blending is enabled by default,
     // let's see if disabling it will help us a little.
     ofDisableBlendMode();
+    
     
     // also, let's get rid of the back faces.
     glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
@@ -139,6 +147,10 @@ void ofApp::draw(){
     ofEnableAlphaBlending();
     
     mCam1.end();
+    
+    post.end();
+
+    post.draw();
     
     // draw our frame rate
     ofSetColor(ofColor::white);

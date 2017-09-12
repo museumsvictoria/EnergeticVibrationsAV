@@ -4,6 +4,7 @@
 #include "ofxUbo.h"
 #include "OptimisedBox.h"
 #include "ofxImGui.h"
+#include "PostProcessing.h"
 
 const int TILE_LENGTH = 8; ///< how many boxes in each x and z direction
 const int NUM_ROWS = 4;
@@ -48,7 +49,7 @@ class ofApp : public ofBaseApp{
         ShaderParams params;
         bool isShaderDirty;
         ofTexture mTex1;
-		
-        ofxImGui::Gui gui;
 
+        PostProcessing post;
+        ofxImGui::Gui gui;
 };

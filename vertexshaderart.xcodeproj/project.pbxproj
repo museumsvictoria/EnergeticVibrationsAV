@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		139379991F6613A600E211AF /* ofxDOF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139379931F6613A600E211AF /* ofxDOF.cpp */; };
+		139379A21F6617F400E211AF /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 139379A11F6617F400E211AF /* PostProcessing.cpp */; };
 		13999D231F4E40AD00617019 /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13999CFF1F4E40AD00617019 /* imgui.cpp */; };
 		13999D241F4E40AD00617019 /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13999D011F4E40AD00617019 /* imgui_demo.cpp */; };
 		13999D251F4E40AD00617019 /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13999D021F4E40AD00617019 /* imgui_draw.cpp */; };
@@ -55,6 +57,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		139379931F6613A600E211AF /* ofxDOF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDOF.cpp; sourceTree = "<group>"; };
+		139379941F6613A600E211AF /* ofxDOF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDOF.h; sourceTree = "<group>"; };
+		139379A01F6617D700E211AF /* PostProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostProcessing.h; sourceTree = "<group>"; };
+		139379A11F6617F400E211AF /* PostProcessing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostProcessing.cpp; sourceTree = "<group>"; };
 		13999CBE1F4D37B200617019 /* instanced-2.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = "instanced-2.frag"; path = "bin/data/shaders/instanced-2.frag"; sourceTree = SOURCE_ROOT; };
 		13999CBF1F4D37B200617019 /* instanced-2.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = "instanced-2.vert"; path = "bin/data/shaders/instanced-2.vert"; sourceTree = SOURCE_ROOT; };
 		13999CC11F4D38D000617019 /* vertexshaderart.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = vertexshaderart.frag; path = bin/data/shaders/vertexshaderart.frag; sourceTree = SOURCE_ROOT; };
@@ -113,6 +119,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		139379711F6613A600E211AF /* ofxDOF */ = {
+			isa = PBXGroup;
+			children = (
+				139379921F6613A600E211AF /* src */,
+			);
+			name = ofxDOF;
+			path = ../../../addons/ofxDOF;
+			sourceTree = "<group>";
+		};
+		139379921F6613A600E211AF /* src */ = {
+			isa = PBXGroup;
+			children = (
+				139379931F6613A600E211AF /* ofxDOF.cpp */,
+				139379941F6613A600E211AF /* ofxDOF.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		13999CBD1F4D37A500617019 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +245,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				139379711F6613A600E211AF /* ofxDOF */,
 				13999D371F4E433800617019 /* ofxUbo */,
 				13999CC61F4E40AD00617019 /* ofxImGui */,
 			);
@@ -254,6 +279,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				139379A01F6617D700E211AF /* PostProcessing.h */,
+				139379A11F6617F400E211AF /* PostProcessing.cpp */,
 				13999D341F4E410A00617019 /* OptimisedBox.h */,
 				13999CBD1F4D37A500617019 /* shaders */,
 			);
@@ -377,10 +404,12 @@
 				13999D2C1F4E40AD00617019 /* Gui.cpp in Sources */,
 				13999D2D1F4E40AD00617019 /* Helpers.cpp in Sources */,
 				13999D2B1F4E40AD00617019 /* EngineOpenGLES.cpp in Sources */,
+				139379A21F6617F400E211AF /* PostProcessing.cpp in Sources */,
 				13999D271F4E40AD00617019 /* README.md in Sources */,
 				13999D231F4E40AD00617019 /* imgui.cpp in Sources */,
 				13999D281F4E40AD00617019 /* BaseEngine.cpp in Sources */,
 				13999D2A1F4E40AD00617019 /* EngineGLFW.cpp in Sources */,
+				139379991F6613A600E211AF /* ofxDOF.cpp in Sources */,
 				13999D9A1F4E433800617019 /* ofxUbo.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				13999D261F4E40AD00617019 /* README.md in Sources */,
