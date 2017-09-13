@@ -13,9 +13,14 @@ void PostProcessing::setup(){
 }
 
 void PostProcessing::update(){
-    //swim the depth of field
-    //depthOfField.setFocalDistance(ofMap(sin(ofGetElapsedTimef()/2),-1,1, 20, 150));
+    // where is the focal plane from the camera
     depthOfField.setFocalDistance(ofMap(ofGetMouseX(),0,ofGetWidth(), 0, 550));
+    
+    //usually between 0 and 2 or 3
+    depthOfField.setBlurAmount(0.0);
+    
+    // how much of the scene is in focus, smaller number is a narrower focal distance
+    depthOfField.setFocalRange(0.0);
 }
 
 void PostProcessing::begin(){

@@ -12,17 +12,24 @@ const int NUM_INSTANCES = TILE_LENGTH * NUM_ROWS; ///< total number of boxes
 
 struct ShaderParams {
     float time;
+    float speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
+    float shape_morph;
+    float circle_motion;
 };
 
 class ofApp : public ofBaseApp{
 
         
 	public:
+        void init();
 		void setup();
 		void update();
 		void draw();
+    
+        void setupGui();
+        void drawGui(ofEventArgs & args);
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -37,8 +44,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
         OptimisedBox optimisedBox;
-        ofVboMesh mMshBox;
-        ofVboMesh mMshOptimisedBox;
+        ofVboMesh primitive_mesh;
+        ofVboMesh active_primitive_mesh;
     
         vector<of3dPrimitive> primitives;
         ofCylinderPrimitive cylinder;

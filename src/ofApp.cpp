@@ -10,6 +10,17 @@
 //
 // BONUS POINTS: use the camera live feed as your height map texture.
 
+//--------------------------------------------------------------
+void ofApp::init(){
+    params.shape_morph = 0.0;
+    params.circle_motion = 0.0;
+    params.speed = 1.0;
+    
+    for(int i = 0; i < NUM_INSTANCES; i++){
+        params.transducer_speed[i] = 0.0;
+        params.active_chair[i] = 0;
+    }
+}
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -26,9 +37,12 @@ void ofApp::setup(){
     // therefore, we will use a vbo
     
     primitives.push_back(ofIcoSpherePrimitive(1,1));
-    mMshBox = primitives[0].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
-    
-    mMshOptimisedBox = optimisedBox.getOptimisedBox();
+    primitives.push_back(ofConePrimitive(1.0, 2.0, 4, 4));
+    primitives.push_back(ofCylinderPrimitive(1.0, 1.0, 4, 4));
+    primitives.push_back(ofBoxPrimitive(1.0, 1.0, 1.0));
+    primitives.push_back(optimisedBox.getOptimisedBox());
+    primitive_mesh = primitives[0].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
+    active_primitive_mesh = primitives[3].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
     
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 60, 0.1, 5000);
@@ -36,12 +50,18 @@ void ofApp::setup(){
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
-    //required call
-    gui.setup();
-    
-
     //Post Processing
     post.setup();
+
+    init();
+}
+
+//--------------------------------------------------------------
+void ofApp::setupGui(){
+    ofSetBackgroundColor(0);
+
+    //required call
+    gui.setup();
 }
 
 //--------------------------------------------------------------
@@ -63,21 +83,34 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
+void ofApp::drawGui(ofEventArgs & args){
+    this->gui.begin();
+
+    auto mainSettings = ofxImGui::Settings();
+    mainSettings.windowPos = ofVec2f(0, 0);
+
+
+    if (ofxImGui::BeginWindow("Layer Assignments", mainSettings, false))
+    {
+        // Basic columns
+        if (ofxImGui::BeginTree("Mappings", mainSettings)){
+            ImGui::SliderFloat("Speed",&params.speed,0.0,1.0);
+            ImGui::SliderFloat("Shape Morph",&params.shape_morph,0.0,1.0);
+            ImGui::SliderFloat("Circle Motion",&params.circle_motion,0.0,1.0);
+
+            ofxImGui::EndTree(mainSettings);
+        }
+    }
+    ofxImGui::EndWindow(mainSettings);
+    
+    this->gui.end();
+}
+
+//--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0.65); // pro app gray =)
     ofSetColor(ofColor::white);
  
-    /*
-    //required to call this at beginning
-    gui.begin();
-    
-    ImGui::Text("Hello, world!");
-    //ImGui::SliderFloat("Scale", &params.scale, 0.0f, 10.0f);
-    
-    //required to call this at end
-    gui.end();
-    */
-
     // let's do something slightly more funky with this.
     
     // let's optimise this:
@@ -132,12 +165,12 @@ void ofApp::draw(){
         mShd1->setUniformBuffer("ShaderParams", params);
         mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
         // draw lots of boxes
-        mMshBox.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+        primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
         mShd1->end();
         
         mShd1->begin();
         mShd1->setUniform1i("is_active", 1);
-        mMshOptimisedBox.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+        active_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
         mShd1->end();
         
     }
@@ -171,20 +204,25 @@ void ofApp::keyReleased(int key){
             isShaderDirty = true;
             break;
         case 'r':
-        for(int i = 0; i < NUM_INSTANCES; i++){
-            int active;
-            float speed;
-            if(ofRandomuf() < 0.1) {
-                active = 1;
-                speed = ofRandom(20.0);
+            for(int i = 0; i < NUM_INSTANCES; i++){
+                int active;
+                float speed;
+                if(ofRandomuf() < 0.1) {
+                    active = 1;
+                    speed = ofRandom(20.0);
+                }
+                else {
+                    active = 0;
+                    speed = 0.0;
+                }
+                params.active_chair[i] = active;
+                params.transducer_speed[i] = speed;
             }
-            else {
-                active = 0;
-                speed = 0.0;
-            }
-            params.active_chair[i] = active;
-            params.transducer_speed[i] = speed;
-        }
+            break;
+        case 'p':
+            primitive_mesh = primitives[(int)ofRandom(primitives.size())].getMesh();
+            active_primitive_mesh = primitives[(int)ofRandom(primitives.size())].getMesh();
+            break;
         default:
             break;
     }

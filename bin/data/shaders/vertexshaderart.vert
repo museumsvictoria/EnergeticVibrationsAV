@@ -59,8 +59,11 @@ uniform sampler2D tex_unit_0; 		// 2d texture
 
 uniform ShaderParams {
     float time;
+    float speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
+    float shape_morph;
+    float circle_motion;
 }params;
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -95,21 +98,22 @@ void main()
 	// We use this, to manipulate each instance individually.
 	mat4 perInstanceModelMatrix;
 
+    // Arrange the objects in a grid
     vec4 translation_grid;
-    translation_grid.x = - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
-    translation_grid.y = - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
-    translation_grid.z = 0; 						// translate y
+    translation_grid.x = 0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
+    translation_grid.y = 1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
+    translation_grid.z = 0; 					// translate y
     translation_grid.w = 1;						// needs to remain 1.
     
     // Try to make a circle using cos and sin
     vec4 translation_circle;
-    float r = 2.0+sin(1. + gl_InstanceID  / 3. * params.time * .4) * 1.0;
+    float r = (3.0 - params.circle_motion) + sin(1. + gl_InstanceID  / 3. * params.time * .4) * params.circle_motion;
     translation_circle.x = r * cos(remap(gl_InstanceID,0.0,NUM_INSTANCES,0.0,TWO_PI));
     translation_circle.y = r * sin(remap(gl_InstanceID,0.0,NUM_INSTANCES,0.0,TWO_PI));
     translation_circle.z = 0;
     translation_circle.w = 1;						// needs to remain 1.
 
-    vec4 translation = mix(translation_grid,translation_circle,1.0);
+    vec4 translation = mix(translation_grid,translation_circle,params.shape_morph);
     
     
     //translation.y = atan(translation.z/128.0,translation.x/128.0);
@@ -173,7 +177,7 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float lfo_scale = sin(1. + gl_InstanceID  / 3. * params.time * 0.2);
+    float lfo_scale = sin(1. + gl_InstanceID  / 3. * params.time * (0.2*params.speed));
     
     if(params.active_chair[gl_InstanceID] == 1) lfo_scale = sin(params.time * params.transducer_speed[gl_InstanceID])*2.;
     
@@ -185,7 +189,7 @@ void main()
     
     // Bonus Points: translation alone too boring?
     // how about squeezing in a rotation matrix?
-    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID / tile_length + (params.time*3.0));
+    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID / tile_length + (params.time*(3.0*params.speed)));
     
     // We move the box, before we even apply all the other matrices.
     // This works, because the next line really says:
