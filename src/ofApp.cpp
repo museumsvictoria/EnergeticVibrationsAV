@@ -35,14 +35,7 @@ void ofApp::setup(){
     
     // step 2: we will want to draw our geometry as instances
     // therefore, we will use a vbo
-    
-    primitives.push_back(ofIcoSpherePrimitive(1,1));
-    primitives.push_back(ofConePrimitive(1.0, 2.0, 4, 4));
-    primitives.push_back(ofCylinderPrimitive(1.0, 1.0, 4, 4));
-    primitives.push_back(ofBoxPrimitive(1.0, 1.0, 1.0));
-    primitives.push_back(optimisedBox.getOptimisedBox());
-    primitive_mesh = primitives[0].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
-    active_primitive_mesh = primitives[3].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
+    primitives.setup();
     
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 60, 0.1, 5000);
@@ -165,12 +158,12 @@ void ofApp::draw(){
         mShd1->setUniformBuffer("ShaderParams", params);
         mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
         // draw lots of boxes
-        primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+        primitives.draw_idle_mesh();
         mShd1->end();
         
         mShd1->begin();
         mShd1->setUniform1i("is_active", 1);
-        active_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+        primitives.draw_active_mesh();
         mShd1->end();
         
     }
@@ -220,8 +213,10 @@ void ofApp::keyReleased(int key){
             }
             break;
         case 'p':
-            primitive_mesh = primitives[(int)ofRandom(primitives.size())].getMesh();
-            active_primitive_mesh = primitives[(int)ofRandom(primitives.size())].getMesh();
+            primitives.randomise_objects();
+            break;
+        case 'm':
+            primitives.randomise_mesh_resolution();
             break;
         default:
             break;

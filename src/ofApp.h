@@ -1,14 +1,13 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Constants.h"
 #include "ofxUbo.h"
-#include "OptimisedBox.h"
 #include "ofxImGui.h"
 #include "PostProcessing.h"
+#include "Primitives.h"
 
-const int TILE_LENGTH = 8; ///< how many boxes in each x and z direction
-const int NUM_ROWS = 4;
-const int NUM_INSTANCES = TILE_LENGTH * NUM_ROWS; ///< total number of boxes
+
 
 struct ShaderParams {
     float time;
@@ -30,6 +29,7 @@ class ofApp : public ofBaseApp{
     
         void setupGui();
         void drawGui(ofEventArgs & args);
+    
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -43,12 +43,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        OptimisedBox optimisedBox;
-        ofVboMesh primitive_mesh;
-        ofVboMesh active_primitive_mesh;
-    
-        vector<of3dPrimitive> primitives;
-        ofCylinderPrimitive cylinder;
+        Primitives primitives;
     
         ofEasyCam mCam1;
         
