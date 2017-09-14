@@ -98,6 +98,7 @@ void main(){
     if(tick_position == vertex.instance_ID){
         fragColor = vec4(1.0,0.0,0.0,1.0);
     }
+    
     //fragColor.rgb += vertex.normal * vertex.height;
     
     // fragColor = vec4(vertex.texcoord.x, vertex.texcoord.y, 0 , 1.0);

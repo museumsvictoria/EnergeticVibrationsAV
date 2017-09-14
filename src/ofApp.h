@@ -10,7 +10,6 @@
 
 
 struct ShaderParams {
-    float time;
     float speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
@@ -54,4 +53,11 @@ class ofApp : public ofBaseApp{
 
         PostProcessing post;
         ofxImGui::Gui gui;
+    
+        // Shader Params
+        float explode_amount;
+    
+    // Camera
+    float cam_near_clip;
+    float cam_far_clip;
 };

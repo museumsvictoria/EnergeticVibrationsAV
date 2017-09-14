@@ -41,7 +41,7 @@ void Primitives::init(){
 
 //--------------------------------------------------------------
 void Primitives::draw_idle_mesh(){
-    idle_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+    idle_primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
 }
 
 //--------------------------------------------------------------

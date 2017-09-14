@@ -15,6 +15,7 @@ void ofApp::init(){
     params.shape_morph = 0.0;
     params.circle_motion = 0.0;
     params.speed = 1.0;
+    explode_amount = 0.0;
     
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
@@ -37,6 +38,9 @@ void ofApp::setup(){
     // therefore, we will use a vbo
     primitives.setup();
     
+    cam_near_clip = 0.0;
+    cam_far_clip = 0.0;
+    
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 60, 0.1, 5000);
     mCam1.setDistance(20); // set default camera distance to 1000
@@ -57,11 +61,33 @@ void ofApp::setupGui(){
     gui.setup();
 }
 
+//--------- LFO's --------------
+float fract(float f) {
+    float temp;
+    return modf(f, &temp);
+}
+
+// FLOATS
+float tri(float x) {
+    return asin(sin(x))/(PI/2.);
+}
+float puls(float x) {
+    return (floor(sin(x))+0.5)*2.;
+}
+float saw(float x) {
+    return (fract((x/2.)/PI)-0.5)*2.;
+}
+float noise(float x) {
+    return (fract(sin((x*2.) *(12.9898+78.233)) * 43758.5453)-0.5)*2.;
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
-    float val = -0.5+(sin(ofGetElapsedTimef()*0.05)*0.5)*3.;
+    float orbit_x = 0.5+(saw(ofGetElapsedTimef()*0.4)*0.5)*360.;
+    float orbit_y = 0.5+(saw(ofGetElapsedTimef()*0.2)*0.5)*360.;
+    mCam1.orbitDeg(0, orbit_y, 10);
 //    mCam1.truck(val);
 //   mCam1.boom(val);
 //    mCam1.dolly(val);
@@ -69,10 +95,13 @@ void ofApp::update(){
 //    mCam1.pan(val);
 //    mCam1.roll(val);
 
-    params.time = ofGetElapsedTimef();
-
+    mCam1.setNearClip(cam_near_clip);
+    mCam1.setFarClip(cam_far_clip);
+    
     //Post Processing
     post.update();
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -86,11 +115,19 @@ void ofApp::drawGui(ofEventArgs & args){
     if (ofxImGui::BeginWindow("Layer Assignments", mainSettings, false))
     {
         // Basic columns
-        if (ofxImGui::BeginTree("Mappings", mainSettings)){
+        if (ofxImGui::BeginTree("Geometry", mainSettings)){
             ImGui::SliderFloat("Speed",&params.speed,0.0,1.0);
             ImGui::SliderFloat("Shape Morph",&params.shape_morph,0.0,1.0);
             ImGui::SliderFloat("Circle Motion",&params.circle_motion,0.0,1.0);
+            ImGui::SliderFloat("Explode Scale",&explode_amount,0.0,20.0);
 
+            ofxImGui::EndTree(mainSettings);
+        }
+        if (ofxImGui::BeginTree("DOF", mainSettings)){
+            ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
+            ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,0.0,600.0);
+            ImGui::SliderFloat("Focal Range",&post.dof_focal_range,0.0,500.0);
+            
             ofxImGui::EndTree(mainSettings);
         }
     }
@@ -118,8 +155,12 @@ void ofApp::draw(){
         // dirty shader pattern:
         shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
         
+        tmpShader->setGeometryInputType(GL_TRIANGLES);
+        tmpShader->setGeometryOutputType(GL_TRIANGLE_STRIP);
+        tmpShader->setGeometryOutputCount(4);
+        
 //        if (tmpShader->load("shaders/instanced-2.vert", "shaders/instanced-2.frag")){
-        if (tmpShader->load("shaders/vertexshaderart.vert", "shaders/vertexshaderart.frag")){
+        if (tmpShader->load("shaders/vertexshaderart.vert", "shaders/vertexshaderart.frag", "shaders/vertexshaderart.geom")){
             mShd1 = tmpShader;
             ofLogNotice() << ofGetTimestampString() << " reloaded Shader.";
         } else {
@@ -135,8 +176,8 @@ void ofApp::draw(){
     
     // alpha blending is enabled by default,
     // let's see if disabling it will help us a little.
-    ofDisableBlendMode();
-    
+    //ofDisableBlendMode();
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
     
     // also, let's get rid of the back faces.
     glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
@@ -155,6 +196,8 @@ void ofApp::draw(){
         mShd1->setUniform1i("is_active", 0);
         mShd1->setUniform1f("tick_position", (int)(ofGetElapsedTimef() * 4.4) % NUM_INSTANCES);
         mShd1->setUniform1i("tile_length", TILE_LENGTH);
+        mShd1->setUniform1f("time", ofGetElapsedTimef());
+        mShd1->setUniform1f("explode_amount", explode_amount);
         mShd1->setUniformBuffer("ShaderParams", params);
         mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
         // draw lots of boxes
@@ -255,7 +298,7 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    post.init();
 }
 
 //--------------------------------------------------------------

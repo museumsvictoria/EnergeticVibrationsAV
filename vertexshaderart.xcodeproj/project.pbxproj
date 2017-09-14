@@ -65,8 +65,6 @@
 		139379A71F68D34300E211AF /* Primitives.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Primitives.cpp; sourceTree = "<group>"; };
 		139379A81F68D34300E211AF /* Primitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Primitives.h; sourceTree = "<group>"; };
 		139379AA1F68D4CA00E211AF /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		13999CBE1F4D37B200617019 /* instanced-2.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = "instanced-2.frag"; path = "bin/data/shaders/instanced-2.frag"; sourceTree = SOURCE_ROOT; };
-		13999CBF1F4D37B200617019 /* instanced-2.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = "instanced-2.vert"; path = "bin/data/shaders/instanced-2.vert"; sourceTree = SOURCE_ROOT; };
 		13999CC11F4D38D000617019 /* vertexshaderart.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = vertexshaderart.frag; path = bin/data/shaders/vertexshaderart.frag; sourceTree = SOURCE_ROOT; };
 		13999CC31F4D3CDE00617019 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vertexshaderart.vert; path = bin/data/shaders/vertexshaderart.vert; sourceTree = SOURCE_ROOT; };
 		13999CFF1F4E40AD00617019 /* imgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui.cpp; sourceTree = "<group>"; };
@@ -147,8 +145,6 @@
 				13999CC11F4D38D000617019 /* vertexshaderart.frag */,
 				13999CC31F4D3CDE00617019 /* vertexshaderart.vert */,
 				13D1E77D1F5676EB0027F3F1 /* vertexshaderart.geom */,
-				13999CBE1F4D37B200617019 /* instanced-2.frag */,
-				13999CBF1F4D37B200617019 /* instanced-2.vert */,
 			);
 			name = shaders;
 			sourceTree = "<group>";

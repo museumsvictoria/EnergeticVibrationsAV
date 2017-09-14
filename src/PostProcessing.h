@@ -13,6 +13,7 @@
 
 class PostProcessing {
 public:
+    void init();
     void setup();
     void update();
     void begin();
@@ -20,4 +21,8 @@ public:
     void draw();
     
     ofxDOF depthOfField;
+    
+    float dof_blur_amount;
+    float dof_focal_range;
+    float dof_focal_distance;
 };

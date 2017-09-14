@@ -48,6 +48,7 @@ out mat4 perInstanceModelViewMatrix;
 const float TWO_PI = 6.28318530717959;
 const float PI = 3.141592653589793;
 
+uniform float time;
 uniform int is_active;
 uniform int tile_length;
 uniform sampler2D tex_unit_0; 		// 2d texture
@@ -58,7 +59,6 @@ uniform sampler2D tex_unit_0; 		// 2d texture
 #define HALF_PI 1.57079632679
 
 uniform ShaderParams {
-    float time;
     float speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
@@ -107,7 +107,7 @@ void main()
     
     // Try to make a circle using cos and sin
     vec4 translation_circle;
-    float r = (3.0 - params.circle_motion) + sin(1. + gl_InstanceID  / 3. * params.time * .4) * params.circle_motion;
+    float r = (3.0 - params.circle_motion) + sin(1. + gl_InstanceID  / 3. * time * .4) * params.circle_motion;
     translation_circle.x = r * cos(remap(gl_InstanceID,0.0,NUM_INSTANCES,0.0,TWO_PI));
     translation_circle.y = r * sin(remap(gl_InstanceID,0.0,NUM_INSTANCES,0.0,TWO_PI));
     translation_circle.z = 0;
@@ -177,9 +177,9 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float lfo_scale = sin(1. + gl_InstanceID  / 3. * params.time * (0.2*params.speed));
+    float lfo_scale = remap(sin(1. + gl_InstanceID  / 3. * time * (0.2*params.speed)),-1.0,1.0,-1.0,0.0);
     
-    if(params.active_chair[gl_InstanceID] == 1) lfo_scale = sin(params.time * params.transducer_speed[gl_InstanceID])*2.;
+    if(params.active_chair[gl_InstanceID] == 1) lfo_scale = remap(sin(time * params.transducer_speed[gl_InstanceID]),-1.0,1.0,-2.0,0.0);
     
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(lfo_scale,0,0,0);
@@ -189,7 +189,7 @@ void main()
     
     // Bonus Points: translation alone too boring?
     // how about squeezing in a rotation matrix?
-    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID / tile_length + (params.time*(3.0*params.speed)));
+    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID / tile_length + (time*(3.0*params.speed)));
     
     // We move the box, before we even apply all the other matrices.
     // This works, because the next line really says:
