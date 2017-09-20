@@ -77,7 +77,8 @@ void main( void )
     // "c2" and "c" is used to provide the highlighting.
     float c2 = 1. - texture(iChannel0, uv + .5/iResolution.xy).y;
     
-    
+    vec3 orig = texture(iChannel1,uv).rgb;
+
     // Color the pixel by mixing two colors in a sinusoidal kind of pattern.
     //
     float pattern = -cos(uv.x*0.75*3.14159-0.9)*cos(uv.y*1.5*3.14159-0.75)*0.5 + 0.5;
@@ -90,6 +91,8 @@ void main( void )
     //vec3 col = mix(vec3(c*1.2, pow(c, 8.), pow(c, 2.)), vec3(c*1.3, pow(c, 2.), pow(c, 10.)), pattern );
     //vec3 col = mix(vec3(c*1.3, c*c, pow(c, 10.)), vec3(c*c*c, c*sqrt(c), c), pattern );
     
+    col -= orig.rbb;
+
     // Adding the highlighting. Not as nice as bump mapping, but still pretty effective.
     col += vec3(.6, .85, 1.)*max(c2*c2 - c*c, 0.)*12.;
     
@@ -100,7 +103,7 @@ void main( void )
     col *= smoothstep(0., 1., iTime/2.);
     
     // Done.
-    outputColor = vec4(min(col, 1.), 1.);
+    outputColor = vec4(1.0-min(col, 1.), 1.);
 
 }
 

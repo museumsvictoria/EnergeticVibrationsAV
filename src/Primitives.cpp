@@ -18,7 +18,7 @@ void Primitives::setup(){
     cylinder.set(1.0,2.0,4,4);
     box.set(1.0,1.0,1.0);
     
-    idle_idx = 0;
+    idle_idx = 4;
     active_idx = 3;
     
     init();
@@ -41,7 +41,7 @@ void Primitives::init(){
 
 //--------------------------------------------------------------
 void Primitives::draw_idle_mesh(){
-    idle_primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
+    idle_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
 }
 
 //--------------------------------------------------------------

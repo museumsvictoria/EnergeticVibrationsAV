@@ -87,7 +87,7 @@ void ofApp::update(){
 
     float orbit_x = 0.5+(saw(ofGetElapsedTimef()*0.4)*0.5)*360.;
     float orbit_y = 0.5+(saw(ofGetElapsedTimef()*0.2)*0.5)*360.;
-    mCam1.orbitDeg(0, orbit_y, 10);
+//    mCam1.orbitDeg(orbit_x, orbit_y, 10);
 //    mCam1.truck(val);
 //   mCam1.boom(val);
 //    mCam1.dolly(val);
@@ -171,7 +171,7 @@ void ofApp::draw(){
     }
     
     // begin scene to post process
-    post.begin();
+    post.dof_begin();
     mCam1.begin();
     
     // alpha blending is enabled by default,
@@ -217,7 +217,7 @@ void ofApp::draw(){
     
     mCam1.end();
     
-    post.end();
+    post.dof_end();
 
     post.draw();
     

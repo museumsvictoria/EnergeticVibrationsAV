@@ -177,7 +177,7 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float lfo_scale = remap(sin(1. + gl_InstanceID  / 3. * time * (0.2*params.speed)),-1.0,1.0,-1.0,0.0);
+    float lfo_scale = remap(sin(1. + gl_InstanceID  / 3. * time * (0.2*params.speed)),-1.0,1.0,-2.0,0.0);
     
     if(params.active_chair[gl_InstanceID] == 1) lfo_scale = remap(sin(time * params.transducer_speed[gl_InstanceID]),-1.0,1.0,-2.0,0.0);
     

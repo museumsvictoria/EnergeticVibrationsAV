@@ -23,6 +23,7 @@
 		13999D2D1F4E40AD00617019 /* Helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13999D151F4E40AD00617019 /* Helpers.cpp */; };
 		13999D991F4E433800617019 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 13999D821F4E433800617019 /* README.md */; };
 		13999D9A1F4E433800617019 /* ofxUbo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13999D841F4E433800617019 /* ofxUbo.cpp */; };
+		13CBF3881F720D52001B8CB1 /* ReactionDiffusion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13CBF3861F720D52001B8CB1 /* ReactionDiffusion.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
@@ -98,6 +99,10 @@
 		13999D821F4E433800617019 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		13999D841F4E433800617019 /* ofxUbo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUbo.cpp; sourceTree = "<group>"; };
 		13999D851F4E433800617019 /* ofxUbo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUbo.h; sourceTree = "<group>"; };
+		13CBF3861F720D52001B8CB1 /* ReactionDiffusion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReactionDiffusion.cpp; sourceTree = "<group>"; };
+		13CBF3871F720D52001B8CB1 /* ReactionDiffusion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionDiffusion.h; sourceTree = "<group>"; };
+		13CBF38A1F720FC6001B8CB1 /* ReactionDiffusion_BufA.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = ReactionDiffusion_BufA.frag; path = bin/data/shaders/ReactionDiffusion_BufA.frag; sourceTree = SOURCE_ROOT; };
+		13CBF38B1F720FC6001B8CB1 /* ReactionDiffusion_Image.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = ReactionDiffusion_Image.frag; path = bin/data/shaders/ReactionDiffusion_Image.frag; sourceTree = SOURCE_ROOT; };
 		13D1E77D1F5676EB0027F3F1 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = vertexshaderart.geom; path = bin/data/shaders/vertexshaderart.geom; sourceTree = SOURCE_ROOT; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* vertexshaderartDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vertexshaderartDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +150,8 @@
 				13999CC11F4D38D000617019 /* vertexshaderart.frag */,
 				13999CC31F4D3CDE00617019 /* vertexshaderart.vert */,
 				13D1E77D1F5676EB0027F3F1 /* vertexshaderart.geom */,
+				13CBF38A1F720FC6001B8CB1 /* ReactionDiffusion_BufA.frag */,
+				13CBF38B1F720FC6001B8CB1 /* ReactionDiffusion_Image.frag */,
 			);
 			name = shaders;
 			sourceTree = "<group>";
@@ -284,6 +291,8 @@
 				139379A81F68D34300E211AF /* Primitives.h */,
 				139379A01F6617D700E211AF /* PostProcessing.h */,
 				139379A11F6617F400E211AF /* PostProcessing.cpp */,
+				13CBF3861F720D52001B8CB1 /* ReactionDiffusion.cpp */,
+				13CBF3871F720D52001B8CB1 /* ReactionDiffusion.h */,
 				13999D341F4E410A00617019 /* OptimisedBox.h */,
 				13999CBD1F4D37A500617019 /* shaders */,
 			);
@@ -410,6 +419,7 @@
 				139379A21F6617F400E211AF /* PostProcessing.cpp in Sources */,
 				13999D271F4E40AD00617019 /* README.md in Sources */,
 				139379A91F68D34300E211AF /* Primitives.cpp in Sources */,
+				13CBF3881F720D52001B8CB1 /* ReactionDiffusion.cpp in Sources */,
 				13999D231F4E40AD00617019 /* imgui.cpp in Sources */,
 				13999D281F4E40AD00617019 /* BaseEngine.cpp in Sources */,
 				13999D2A1F4E40AD00617019 /* EngineGLFW.cpp in Sources */,
