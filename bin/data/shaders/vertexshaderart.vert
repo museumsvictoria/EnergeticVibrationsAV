@@ -31,6 +31,13 @@
 #pragma include <of_default_vertex_in_attributes.glsl>
 #pragma include <noise.glsl>
 
+#define NUM_INSTANCES 32
+#define TWO_PI 6.2831853072
+#define PI 3.14159265359
+#define HALF_PI 1.57079632679
+
+#pragma include <waveforms.glsl>
+
 uniform mat4 viewMatrix;
 
 out VertexAttrib {
@@ -45,25 +52,21 @@ out VertexAttrib {
 out mat4 perInstanceModelViewMatrix;
 
 
-const float TWO_PI = 6.28318530717959;
-const float PI = 3.141592653589793;
-
 uniform float time;
 uniform int is_active;
 uniform int tile_length;
 uniform sampler2D tex_unit_0; 		// 2d texture
 
-#define NUM_INSTANCES 32
-#define TWO_PI 6.2831853072
-#define PI 3.14159265359
-#define HALF_PI 1.57079632679
 
 uniform ShaderParams {
-    float speed;
+    float scale_speed;
+    float rot_speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
     float shape_morph;
     float circle_motion;
+    float waveform_speed;
+    int waveform_type;
 }params;
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -101,7 +104,8 @@ void main()
     // Arrange the objects in a grid
     vec4 translation_wave;
     translation_wave.x = 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
-    translation_wave.y = 0.5 + sin((gl_InstanceID+time*1.5)*0.2)*6.0; 	// translate z
+    translation_wave.y = 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0; 	// translate z
+//    translation_wave.y = 0.5 + sin((gl_InstanceID+time*1.5)*0.2)*6.0; 	// translate z
     translation_wave.z = 0; 					// translate y
     translation_wave.w = 1;
     
@@ -184,7 +188,7 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float lfo_scale = remap(sin(1. + gl_InstanceID  / 3. * time * (0.2*params.speed)),-1.0,1.0,-2.0,0.0);
+    float lfo_scale = remap(sin(1. + gl_InstanceID  / 3. * time * (1.2*params.scale_speed)),-1.0,1.0,0.0,-2.);
     
     if(params.active_chair[gl_InstanceID] == 1) lfo_scale = remap(sin(time * params.transducer_speed[gl_InstanceID]),-1.0,1.0,-2.0,0.0);
     
@@ -196,7 +200,7 @@ void main()
     
     // Bonus Points: translation alone too boring?
     // how about squeezing in a rotation matrix?
-    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID / tile_length + (time*(3.0*params.speed)));
+    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID / tile_length + (HALF_PI+time*(3.0*params.rot_speed)));
     
     // We move the box, before we even apply all the other matrices.
     // This works, because the next line really says:

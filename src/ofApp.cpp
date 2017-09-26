@@ -14,8 +14,12 @@
 void ofApp::init(){
     params.shape_morph = 0.0;
     params.circle_motion = 0.0;
-    params.speed = 1.0;
+    params.scale_speed = 1.0;
+    params.rot_speed = 1.0;
     explode_amount = 0.0;
+    
+    params.waveform_speed = 2.5;
+    params.waveform_type = 0;
     
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
@@ -116,11 +120,17 @@ void ofApp::drawGui(ofEventArgs & args){
     {
         // Basic columns
         if (ofxImGui::BeginTree("Geometry", mainSettings)){
-            ImGui::SliderFloat("Speed",&params.speed,0.0,1.0);
+            ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
+            ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
             ImGui::SliderFloat("Shape Morph",&params.shape_morph,0.0,1.0);
             ImGui::SliderFloat("Circle Motion",&params.circle_motion,0.0,1.0);
             ImGui::SliderFloat("Explode Scale",&explode_amount,0.0,20.0);
 
+            ofxImGui::EndTree(mainSettings);
+        }
+        if (ofxImGui::BeginTree("WAVEFORM", mainSettings)){
+            ImGui::SliderInt("Wave Type",&params.waveform_type,0,4);
+            ImGui::SliderFloat("Wave Speed",&params.waveform_speed,0.0,6.0);
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("DOF", mainSettings)){

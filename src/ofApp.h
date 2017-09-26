@@ -10,11 +10,14 @@
 
 
 struct ShaderParams {
-    float speed;
+    float scale_speed;
+    float rot_speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
     float shape_morph;
     float circle_motion;
+    float waveform_speed;
+    int waveform_type;
 };
 
 class ofApp : public ofBaseApp{
