@@ -99,6 +99,13 @@ void main()
 	mat4 perInstanceModelMatrix;
 
     // Arrange the objects in a grid
+    vec4 translation_wave;
+    translation_wave.x = 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
+    translation_wave.y = 0.5 + sin((gl_InstanceID+time*1.5)*0.2)*6.0; 	// translate z
+    translation_wave.z = 0; 					// translate y
+    translation_wave.w = 1;
+    
+    // Arrange the objects in a grid
     vec4 translation_grid;
     translation_grid.x = 0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
     translation_grid.y = 1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
@@ -113,7 +120,7 @@ void main()
     translation_circle.z = 0;
     translation_circle.w = 1;						// needs to remain 1.
 
-    vec4 translation = mix(translation_grid,translation_circle,params.shape_morph);
+    vec4 translation = mix(translation_wave,translation_circle,params.shape_morph);
     
     
     //translation.y = atan(translation.z/128.0,translation.x/128.0);
