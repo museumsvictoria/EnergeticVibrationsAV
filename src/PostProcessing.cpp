@@ -41,6 +41,7 @@ void PostProcessing::update(){
     /// PASS IN TEXTURE TO REACTION DUFFUSION
     ////////////////////
     reaction_diffusion.set_source_texture(depthOfField.getFbo());
+    
 }
 
 //--------------------------------------------------------------
