@@ -15,15 +15,15 @@ void AlphaTrails::setup(){
     // Use GL_TEXTURE_2D Textures (normalized texture coordinates 0..1)
     ofDisableArbTex();
     
-    shader_bufA.load("shaders/passthrough.vert","shaders/ReactionDiffusion_BufA.frag");
-    shader_image.load("shaders/passthrough.vert","shaders/ReactionDiffusion_Image.frag");
+    shader_bufA.load("shaders/passthrough.vert","shaders/AlphaTrail_BufA.frag");
+    shader_image.load("shaders/passthrough.vert","shaders/AlphaTrail_Image.frag");
     
     shader_image.begin();
     shader_image.setUniform1i( "iChannel0", 4);
     shader_image.end();
     
     createFullScreenQuad();
-    //init_fbos();
+    init_fbos();
 }
 //--------------------------------------------------------------
 void AlphaTrails::set_source_texture(ofFbo& tex){
@@ -46,9 +46,10 @@ void AlphaTrails::runSimulation()
     
     shader_bufA.begin();
     shader_bufA.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
+    shader_bufA.setUniform1f("delay", delay);
     shader_bufA.setUniform1f("iTime", ofGetElapsedTimef());
     shader_bufA.setUniform1i("iFrame", ofGetFrameNum());
-    
+
     shader_bufA.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
     
     int fboIndex = 0;
@@ -65,6 +66,10 @@ void AlphaTrails::runSimulation()
     shader_bufA.end();
 }
 
+//--------------------------------------------------------------
+void AlphaTrails::set_delay_amount(float _delay){
+    delay = _delay;
+}
 
 //--------------------------------------------------------------
 void AlphaTrails::draw(){

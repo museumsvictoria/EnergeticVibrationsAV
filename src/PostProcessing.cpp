@@ -21,7 +21,10 @@ void PostProcessing::setup(){
     dof_focal_range = 100.0;
     dof_focal_distance = 150.0;
     
+    trail_delay = 0.5;
+    
     reaction_diffusion.setup();
+    alpha_trails.setup();
 }
 
 //--------------------------------------------------------------
@@ -42,6 +45,10 @@ void PostProcessing::update(){
     ////////////////////
     reaction_diffusion.set_source_texture(depthOfField.getFbo());
     
+    /// PASS IN TEXTURE TO ALPHA TRAILS
+    ////////////////////
+    alpha_trails.set_delay_amount(trail_delay);
+    alpha_trails.set_source_texture(depthOfField.getFbo());
 }
 
 //--------------------------------------------------------------
@@ -62,5 +69,6 @@ void PostProcessing::draw(){
         depthOfField.getFbo().draw(0, 0);
     }
     
-    reaction_diffusion.draw();
+//    reaction_diffusion.draw();
+    alpha_trails.draw();
 }

@@ -11,6 +11,7 @@
 #include "ofMain.h"
 #include "ofxDOF.h"
 #include "ReactionDiffusion.h"
+#include "AlphaTrails.h"
 
 class PostProcessing {
 public:
@@ -23,8 +24,13 @@ public:
     
     ofxDOF depthOfField;
     ReactionDiffusion reaction_diffusion;
+    AlphaTrails alpha_trails;
     
+    //----- DOF
     float dof_blur_amount;
     float dof_focal_range;
     float dof_focal_distance;
+    
+    //----- TRAILS
+    float trail_delay;
 };

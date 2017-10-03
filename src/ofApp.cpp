@@ -140,6 +140,10 @@ void ofApp::drawGui(ofEventArgs & args){
             
             ofxImGui::EndTree(mainSettings);
         }
+        if (ofxImGui::BeginTree("ALPHA TRAILS", mainSettings)){
+            ImGui::SliderFloat("Delay Amount",&post.trail_delay,0.0,0.99);
+            ofxImGui::EndTree(mainSettings);
+        }
     }
     ofxImGui::EndWindow(mainSettings);
     
