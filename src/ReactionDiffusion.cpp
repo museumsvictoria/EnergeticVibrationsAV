@@ -12,7 +12,7 @@
 //--------------------------------------------------------------
 void ReactionDiffusion::setup(){
     // Use GL_TEXTURE_2D Textures (normalized texture coordinates 0..1)
-    ofDisableArbTex();
+    //ofDisableArbTex();
     
     reaction_shader_bufA.load("shaders/passthrough.vert","shaders/ReactionDiffusion_BufA.frag");
     reaction_shader_image.load("shaders/passthrough.vert","shaders/ReactionDiffusion_Image.frag");
@@ -22,7 +22,7 @@ void ReactionDiffusion::setup(){
     reaction_shader_image.end();
     
     createFullScreenQuad();
-    //init_fbos();
+    init_fbos();
 }
 //--------------------------------------------------------------
 void ReactionDiffusion::set_source_texture(ofFbo& tex){

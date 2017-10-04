@@ -13,7 +13,7 @@
 //--------------------------------------------------------------
 void AlphaTrails::setup(){
     // Use GL_TEXTURE_2D Textures (normalized texture coordinates 0..1)
-    ofDisableArbTex();
+    //ofDisableArbTex();
     
     shader_bufA.load("shaders/passthrough.vert","shaders/AlphaTrail_BufA.frag");
     shader_image.load("shaders/passthrough.vert","shaders/AlphaTrail_Image.frag");

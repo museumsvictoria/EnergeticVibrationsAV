@@ -11,6 +11,7 @@
 		00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E02D9F3A04B5573758EBCF8 /* imgui_draw.cpp */; };
 		016BB55A143AD429330F07DB /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0E2047B4D03D5151730B52B /* Gui.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
+		136E8F621F848792002FB971 /* PingPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 136E8F611F848792002FB971 /* PingPong.cpp */; };
 		13F2EFDD1F84494B0081160B /* AlphaTrails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13F2EFDB1F84494B0081160B /* AlphaTrails.cpp */; };
 		19ED43CE7B9637B273C7E373 /* ReactionDiffusion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6297703790926BA3272553 /* ReactionDiffusion.cpp */; };
 		1C36947250DCB09A8A375C0C /* ofxXmlPoco.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9998694E5001F9CF0B13BF0 /* ofxXmlPoco.cpp */; };
@@ -81,6 +82,7 @@
 		101E00135DD5F4A88AA3119E /* rc2.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = rc2.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/rc2.h; sourceTree = SOURCE_ROOT; };
 		1039CBA50BD184DFAE4A6ACF /* Primitives.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Primitives.h; path = src/Primitives.h; sourceTree = SOURCE_ROOT; };
 		12EBC5773B81D5E37E068E24 /* imgui_internal.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imgui_internal.h; path = ../../../addons/ofxImGui/libs/imgui/src/imgui_internal.h; sourceTree = SOURCE_ROOT; };
+		136E8F611F848792002FB971 /* PingPong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PingPong.cpp; sourceTree = "<group>"; };
 		13F2EFDA1F8447980081160B /* PingPong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingPong.h; sourceTree = "<group>"; };
 		13F2EFDB1F84494B0081160B /* AlphaTrails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaTrails.cpp; sourceTree = "<group>"; };
 		13F2EFDC1F84494B0081160B /* AlphaTrails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaTrails.h; sourceTree = "<group>"; };
@@ -581,6 +583,7 @@
 				EC6297703790926BA3272553 /* ReactionDiffusion.cpp */,
 				FC1E0890279DD9FD75E815EE /* ReactionDiffusion.h */,
 				13F2EFDA1F8447980081160B /* PingPong.h */,
+				136E8F611F848792002FB971 /* PingPong.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -749,6 +752,7 @@
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
+				136E8F621F848792002FB971 /* PingPong.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
