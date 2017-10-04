@@ -11,15 +11,15 @@
 		00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E02D9F3A04B5573758EBCF8 /* imgui_draw.cpp */; };
 		016BB55A143AD429330F07DB /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0E2047B4D03D5151730B52B /* Gui.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
-		136E8F621F848792002FB971 /* PingPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 136E8F611F848792002FB971 /* PingPong.cpp */; };
-		13F2EFDD1F84494B0081160B /* AlphaTrails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13F2EFDB1F84494B0081160B /* AlphaTrails.cpp */; };
-		19ED43CE7B9637B273C7E373 /* ReactionDiffusion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC6297703790926BA3272553 /* ReactionDiffusion.cpp */; };
+		13D49AE61F859E1400336C9B /* AlphaTrails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */; };
+		13D49AE71F859E1400336C9B /* PingPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE01F859E1400336C9B /* PingPong.cpp */; };
+		13D49AE81F859E1400336C9B /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE21F859E1400336C9B /* PostProcessing.cpp */; };
+		13D49AE91F859E1400336C9B /* ReactionDiffusion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE41F859E1400336C9B /* ReactionDiffusion.cpp */; };
 		1C36947250DCB09A8A375C0C /* ofxXmlPoco.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9998694E5001F9CF0B13BF0 /* ofxXmlPoco.cpp */; };
 		1FB13B2C1658CA138B0E96F6 /* ofxDOF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 682AE33A515E9EAD18C321A2 /* ofxDOF.cpp */; };
 		27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E362ECECD928E7B3EBA5C53 /* BaseTheme.cpp */; };
 		462C212713EFFA5383B35DAB /* EngineGLFW.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F1C686ADB50E8F79292BA80 /* EngineGLFW.cpp */; };
 		4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */; };
-		4FBFBE2ABD498C4F4394E04B /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B85D6C2B5309838197FA7D4 /* PostProcessing.cpp */; };
 		510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */; };
 		5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF49D76C45D5DB505A234880 /* ofxOscMessage.cpp */; };
 		5C2607C471F8D48C0036C56E /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6CF9B1FD213484DDDB7AE362 /* imgui.cpp */; };
@@ -82,10 +82,23 @@
 		101E00135DD5F4A88AA3119E /* rc2.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = rc2.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/rc2.h; sourceTree = SOURCE_ROOT; };
 		1039CBA50BD184DFAE4A6ACF /* Primitives.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Primitives.h; path = src/Primitives.h; sourceTree = SOURCE_ROOT; };
 		12EBC5773B81D5E37E068E24 /* imgui_internal.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imgui_internal.h; path = ../../../addons/ofxImGui/libs/imgui/src/imgui_internal.h; sourceTree = SOURCE_ROOT; };
-		136E8F611F848792002FB971 /* PingPong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PingPong.cpp; sourceTree = "<group>"; };
-		13F2EFDA1F8447980081160B /* PingPong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingPong.h; sourceTree = "<group>"; };
-		13F2EFDB1F84494B0081160B /* AlphaTrails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaTrails.cpp; sourceTree = "<group>"; };
-		13F2EFDC1F84494B0081160B /* AlphaTrails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaTrails.h; sourceTree = "<group>"; };
+		136E8F651F849DC3002FB971 /* AlphaTrail_BufA.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_BufA.frag; sourceTree = "<group>"; };
+		136E8F661F849DC3002FB971 /* AlphaTrail_Image.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_Image.frag; sourceTree = "<group>"; };
+		136E8F701F849DC3002FB971 /* passthrough.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = passthrough.vert; sourceTree = "<group>"; };
+		136E8F711F849DC3002FB971 /* ReactionDiffusion_BufA.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ReactionDiffusion_BufA.frag; sourceTree = "<group>"; };
+		136E8F721F849DC3002FB971 /* ReactionDiffusion_Image.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ReactionDiffusion_Image.frag; sourceTree = "<group>"; };
+		136E8F761F849DC3002FB971 /* waveforms.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = waveforms.glsl; sourceTree = "<group>"; };
+		136E8F771F849DDF002FB971 /* vertexshaderart.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.frag; sourceTree = "<group>"; };
+		136E8F781F849DDF002FB971 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
+		136E8F791F849DDF002FB971 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
+		13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaTrails.cpp; sourceTree = "<group>"; };
+		13D49ADF1F859E1400336C9B /* AlphaTrails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaTrails.h; sourceTree = "<group>"; };
+		13D49AE01F859E1400336C9B /* PingPong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PingPong.cpp; sourceTree = "<group>"; };
+		13D49AE11F859E1400336C9B /* PingPong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingPong.h; sourceTree = "<group>"; };
+		13D49AE21F859E1400336C9B /* PostProcessing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostProcessing.cpp; sourceTree = "<group>"; };
+		13D49AE31F859E1400336C9B /* PostProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostProcessing.h; sourceTree = "<group>"; };
+		13D49AE41F859E1400336C9B /* ReactionDiffusion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReactionDiffusion.cpp; sourceTree = "<group>"; };
+		13D49AE51F859E1400336C9B /* ReactionDiffusion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionDiffusion.h; sourceTree = "<group>"; };
 		16D8E1844A44453A0C287E72 /* ssl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ssl.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ssl.h; sourceTree = SOURCE_ROOT; };
 		17006150745E007FA32014F5 /* modes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = modes.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/modes.h; sourceTree = SOURCE_ROOT; };
 		1AEDCF9A6D7A9C81A1FFFB82 /* cmac.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cmac.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/cmac.h; sourceTree = SOURCE_ROOT; };
@@ -136,7 +149,6 @@
 		682AE33A515E9EAD18C321A2 /* ofxDOF.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxDOF.cpp; path = ../../../addons/ofxDOF/src/ofxDOF.cpp; sourceTree = SOURCE_ROOT; };
 		6B4197F8EF581E2F00041258 /* hmac.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = hmac.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/hmac.h; sourceTree = SOURCE_ROOT; };
 		6B65E6930994CC4B2D2B8B33 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
-		6B85D6C2B5309838197FA7D4 /* PostProcessing.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = PostProcessing.cpp; path = src/PostProcessing.cpp; sourceTree = SOURCE_ROOT; };
 		6CF9B1FD213484DDDB7AE362 /* imgui.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = imgui.cpp; path = ../../../addons/ofxImGui/libs/imgui/src/imgui.cpp; sourceTree = SOURCE_ROOT; };
 		6FAF79F4AD0DC48C239A0E3E /* idea.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = idea.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/idea.h; sourceTree = SOURCE_ROOT; };
 		7200EB1EC64977ED08AC0111 /* ofxXmlPoco.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlPoco.h; path = ../../../addons/ofxPoco/src/ofxXmlPoco.h; sourceTree = SOURCE_ROOT; };
@@ -193,7 +205,6 @@
 		C6937888E126BADC8777423B /* OscTypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscTypes.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h; sourceTree = SOURCE_ROOT; };
 		C9FE1E8D2E9BC8B7F5D308C8 /* asn1.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = asn1.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/asn1.h; sourceTree = SOURCE_ROOT; };
 		CB5C15EA0881D35A88C22937 /* EngineOpenGLES.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = EngineOpenGLES.h; path = ../../../addons/ofxImGui/src/EngineOpenGLES.h; sourceTree = SOURCE_ROOT; };
-		CCEF1E601A735286F9FEE487 /* PostProcessing.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PostProcessing.h; path = src/PostProcessing.h; sourceTree = SOURCE_ROOT; };
 		CD5FCD25E1E21DDF2D52DA12 /* Primitives.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Primitives.cpp; path = src/Primitives.cpp; sourceTree = SOURCE_ROOT; };
 		D184EE00EBEC316D4A57A17E /* ofxUbo.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxUbo.h; path = ../../../addons/ofxUbo/src/ofxUbo.h; sourceTree = SOURCE_ROOT; };
 		D1F2D509F3D753BBF52DAA19 /* rc4.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = rc4.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/rc4.h; sourceTree = SOURCE_ROOT; };
@@ -218,13 +229,11 @@
 		E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = UdpSocket.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/UdpSocket.cpp; sourceTree = SOURCE_ROOT; };
 		E811E52684D14AA533F8D72B /* whrlpool.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = whrlpool.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/whrlpool.h; sourceTree = SOURCE_ROOT; };
 		E9998694E5001F9CF0B13BF0 /* ofxXmlPoco.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlPoco.cpp; path = ../../../addons/ofxPoco/src/ofxXmlPoco.cpp; sourceTree = SOURCE_ROOT; };
-		EC6297703790926BA3272553 /* ReactionDiffusion.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ReactionDiffusion.cpp; path = src/ReactionDiffusion.cpp; sourceTree = SOURCE_ROOT; };
 		EEC2734565C1EDDDE6616883 /* ripemd.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ripemd.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ripemd.h; sourceTree = SOURCE_ROOT; };
 		F0B21373033A0907CFFFD055 /* des.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = des.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/des.h; sourceTree = SOURCE_ROOT; };
 		F0E2047B4D03D5151730B52B /* Gui.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Gui.cpp; path = ../../../addons/ofxImGui/src/Gui.cpp; sourceTree = SOURCE_ROOT; };
 		F4F5B6B8BA2BD52C646ED908 /* OscException.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscException.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscException.h; sourceTree = SOURCE_ROOT; };
 		F7FBC56859535E597B24BB91 /* NetworkingUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = NetworkingUtils.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h; sourceTree = SOURCE_ROOT; };
-		FC1E0890279DD9FD75E815EE /* ReactionDiffusion.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ReactionDiffusion.h; path = src/ReactionDiffusion.h; sourceTree = SOURCE_ROOT; };
 		FD24C7DBE373C3B79648C23F /* BaseEngine.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = BaseEngine.h; path = ../../../addons/ofxImGui/src/BaseEngine.h; sourceTree = SOURCE_ROOT; };
 		FDB04DA12ABAFBA5FFE217C9 /* opensslconf.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = opensslconf.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/opensslconf.h; sourceTree = SOURCE_ROOT; };
 		FDC037DF46F0D26E4621F89B /* ossl_typ.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ossl_typ.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ossl_typ.h; sourceTree = SOURCE_ROOT; };
@@ -260,12 +269,51 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		136E8F641F849DC3002FB971 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				136E8F651F849DC3002FB971 /* AlphaTrail_BufA.frag */,
+				136E8F661F849DC3002FB971 /* AlphaTrail_Image.frag */,
+				136E8F701F849DC3002FB971 /* passthrough.vert */,
+				136E8F711F849DC3002FB971 /* ReactionDiffusion_BufA.frag */,
+				136E8F721F849DC3002FB971 /* ReactionDiffusion_Image.frag */,
+				136E8F761F849DC3002FB971 /* waveforms.glsl */,
+				136E8F771F849DDF002FB971 /* vertexshaderart.frag */,
+				136E8F781F849DDF002FB971 /* vertexshaderart.geom */,
+				136E8F791F849DDF002FB971 /* vertexshaderart.vert */,
+			);
+			name = shaders;
+			path = bin/data/shaders;
+			sourceTree = SOURCE_ROOT;
+		};
 		13C2436A78CDB4354594CA7D /* include */ = {
 			isa = PBXGroup;
 			children = (
 				70E25EBAAB745F09329DDB44 /* openssl */,
 			);
 			name = include;
+			sourceTree = "<group>";
+		};
+		13D49ADC1F859E1400336C9B /* PathTracing */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PathTracing;
+			sourceTree = "<group>";
+		};
+		13D49ADD1F859E1400336C9B /* PostProcessing */ = {
+			isa = PBXGroup;
+			children = (
+				13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */,
+				13D49ADF1F859E1400336C9B /* AlphaTrails.h */,
+				13D49AE01F859E1400336C9B /* PingPong.cpp */,
+				13D49AE11F859E1400336C9B /* PingPong.h */,
+				13D49AE21F859E1400336C9B /* PostProcessing.cpp */,
+				13D49AE31F859E1400336C9B /* PostProcessing.h */,
+				13D49AE41F859E1400336C9B /* ReactionDiffusion.cpp */,
+				13D49AE51F859E1400336C9B /* ReactionDiffusion.h */,
+			);
+			path = PostProcessing;
 			sourceTree = "<group>";
 		};
 		1DAFD983644AD5D1FE0721D9 /* ofxUbo */ = {
@@ -574,16 +622,11 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				B304D05DA43149641F8DAE21 /* Constants.h */,
 				0A8320B91250ED2BADA15054 /* OptimisedBox.h */,
-				6B85D6C2B5309838197FA7D4 /* PostProcessing.cpp */,
-				CCEF1E601A735286F9FEE487 /* PostProcessing.h */,
 				CD5FCD25E1E21DDF2D52DA12 /* Primitives.cpp */,
 				1039CBA50BD184DFAE4A6ACF /* Primitives.h */,
-				13F2EFDB1F84494B0081160B /* AlphaTrails.cpp */,
-				13F2EFDC1F84494B0081160B /* AlphaTrails.h */,
-				EC6297703790926BA3272553 /* ReactionDiffusion.cpp */,
-				FC1E0890279DD9FD75E815EE /* ReactionDiffusion.h */,
-				13F2EFDA1F8447980081160B /* PingPong.h */,
-				136E8F611F848792002FB971 /* PingPong.cpp */,
+				13D49ADC1F859E1400336C9B /* PathTracing */,
+				13D49ADD1F859E1400336C9B /* PostProcessing */,
+				136E8F641F849DC3002FB971 /* shaders */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -732,9 +775,7 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				4FBFBE2ABD498C4F4394E04B /* PostProcessing.cpp in Sources */,
 				93A418A21D11C3146A54F389 /* Primitives.cpp in Sources */,
-				19ED43CE7B9637B273C7E373 /* ReactionDiffusion.cpp in Sources */,
 				1FB13B2C1658CA138B0E96F6 /* ofxDOF.cpp in Sources */,
 				DBBE189ECD171A97DCF46C6A /* BaseEngine.cpp in Sources */,
 				27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */,
@@ -744,17 +785,19 @@
 				A0F2BFB15B92B4C6EB9527DE /* Helpers.cpp in Sources */,
 				5C2607C471F8D48C0036C56E /* imgui.cpp in Sources */,
 				E984796BE84AA4315636B6E7 /* imgui_demo.cpp in Sources */,
+				13D49AE91F859E1400336C9B /* ReactionDiffusion.cpp in Sources */,
 				00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */,
-				13F2EFDD1F84494B0081160B /* AlphaTrails.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
+				13D49AE81F859E1400336C9B /* PostProcessing.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
+				13D49AE71F859E1400336C9B /* PingPong.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
-				136E8F621F848792002FB971 /* PingPong.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
+				13D49AE61F859E1400336C9B /* AlphaTrails.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,

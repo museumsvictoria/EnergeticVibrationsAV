@@ -23,7 +23,7 @@ void PostProcessing::setup(){
     trail_delay = 0.5;
     
     //reaction_diffusion.setup();
-    //alpha_trails.setup();
+    alpha_trails.setup();
 }
 
 //--------------------------------------------------------------
@@ -46,8 +46,8 @@ void PostProcessing::update(){
     
     /// PASS IN TEXTURE TO ALPHA TRAILS
     ////////////////////
-    //alpha_trails.set_delay_amount(trail_delay);
-    //alpha_trails.set_source_texture(depthOfField.getFbo());
+    alpha_trails.set_delay_amount(trail_delay);
+    alpha_trails.set_source_texture(depthOfField.getFbo());
 }
 
 //--------------------------------------------------------------
@@ -69,5 +69,5 @@ void PostProcessing::draw(){
     }
     
 //    reaction_diffusion.draw();
-//    alpha_trails.draw();
+    alpha_trails.draw();
 }

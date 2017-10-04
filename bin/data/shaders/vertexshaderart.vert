@@ -67,6 +67,7 @@ uniform ShaderParams {
     float circle_motion;
     float waveform_speed;
     int waveform_type;
+    vec2 instance_position[NUM_INSTANCES];
 }params;
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -103,9 +104,8 @@ void main()
 
     // Arrange the objects in a grid
     vec4 translation_wave;
-    translation_wave.x = 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
-    translation_wave.y = 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0; 	// translate z
-//    translation_wave.y = 0.5 + sin((gl_InstanceID+time*1.5)*0.2)*6.0; 	// translate z
+    translation_wave.x = params.instance_position[gl_InstanceID].x;// 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
+    translation_wave.y = params.instance_position[gl_InstanceID].y;// 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0;
     translation_wave.z = 0; 					// translate y
     translation_wave.w = 1;
     

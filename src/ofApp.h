@@ -18,6 +18,7 @@ struct ShaderParams {
     float circle_motion;
     float waveform_speed;
     int waveform_type;
+    glm::vec2 instance_position[NUM_INSTANCES];
 };
 
 class ofApp : public ofBaseApp{
@@ -31,6 +32,9 @@ class ofApp : public ofBaseApp{
     
         void setupGui();
         void drawGui(ofEventArgs & args);
+    
+        //Instance position
+        void update_instance_positions();
     
 
 		void keyPressed(int key);

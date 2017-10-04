@@ -85,6 +85,15 @@ float noise(float x) {
     return (fract(sin((x*2.) *(12.9898+78.233)) * 43758.5453)-0.5)*2.;
 }
 
+float lfo(int type, float x){
+    if(type == 0) return sin(x);
+    else if(type == 1) return tri(x);
+    else if(type == 2) return saw(x);
+    else if(type == 3) return puls(x);
+    else if(type == 4) return noise(x);
+    else return 0.0;
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
@@ -105,7 +114,7 @@ void ofApp::update(){
     //Post Processing
     post.update();
     
-    
+    update_instance_positions();
 }
 
 //--------------------------------------------------------------
@@ -148,6 +157,14 @@ void ofApp::drawGui(ofEventArgs & args){
     ofxImGui::EndWindow(mainSettings);
     
     this->gui.end();
+}
+
+//--------------------------------------------------------------
+void ofApp::update_instance_positions(){
+    for(int i = 0; i < NUM_INSTANCES; i++){
+        params.instance_position[i].x = 0.50 - (TILE_LENGTH*2.) + i;
+        params.instance_position[i].y = 0.5 + lfo(params.waveform_type,(i+ofGetElapsedTimef()*params.waveform_speed)*01.2)*6.0;
+    }
 }
 
 //--------------------------------------------------------------
@@ -239,7 +256,11 @@ void ofApp::draw(){
     ofSetColor(ofColor::white);
     ofDrawBitmapString(ofToString(ofGetFrameRate(),2,4,' '), ofGetWidth() - 4 * 8 - 50, 16 + 20);
     
-
+    for(int i = 0; i < NUM_INSTANCES; i++){
+        params.instance_position[i].x *= ofGetWidth();
+        params.instance_position[i].y *= ofGetHeight();
+        ofDrawLine(params.instance_position[i].x, params.instance_position[i].y, params.instance_position[(int)ofWrap(i+1,0,NUM_INSTANCES)].x, params.instance_position[(int)ofWrap(i+1,0,NUM_INSTANCES)].y);
+    }
 }
 
 //--------------------------------------------------------------
