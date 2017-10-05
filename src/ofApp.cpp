@@ -47,7 +47,7 @@ void ofApp::setup(){
     
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 60, 0.1, 5000);
-    mCam1.setDistance(20); // set default camera distance to 1000
+    mCam1.setDistance(50); // set default camera distance to 1000
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
@@ -141,6 +141,14 @@ void ofApp::drawGui(ofEventArgs & args){
             ImGui::SliderFloat("Circle Motion",&params.circle_motion,0.0,1.0);
             ImGui::SliderFloat("Explode Scale",&explode_amount,0.0,20.0);
 
+            if(ImGui::SmallButton("Random Primitive")){
+                primitives.randomise_objects();
+            }
+            ImGui::SameLine();
+            if(ImGui::SmallButton("Random Mesh Res")){
+                primitives.randomise_mesh_resolution();
+            }
+            
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("WAVEFORM", mainSettings)){

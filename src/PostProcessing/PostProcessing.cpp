@@ -16,7 +16,7 @@ void PostProcessing::init(){
 //--------------------------------------------------------------
 void PostProcessing::setup(){
     init();
-    dof_blur_amount = 1.7;
+    dof_blur_amount = 0.17;
     dof_focal_range = 100.0;
     dof_focal_distance = 150.0;
     
