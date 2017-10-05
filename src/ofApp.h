@@ -4,6 +4,7 @@
 #include "Constants.h"
 #include "ofxUbo.h"
 #include "ofxImGui.h"
+#include "GuiTheme.h"
 #include "PostProcessing.h"
 #include "Primitives.h"
 
@@ -60,6 +61,7 @@ class ofApp : public ofBaseApp{
 
         PostProcessing post;
         ofxImGui::Gui gui;
+        GuiTheme gui_theme;
     
         // Shader Params
         float explode_amount;

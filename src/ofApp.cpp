@@ -61,8 +61,14 @@ void ofApp::setup(){
 void ofApp::setupGui(){
     ofSetBackgroundColor(0);
 
+    //load fonts first
+    gui_theme.load_font();
+    
     //required call
     gui.setup();
+    
+    //load theme
+    gui_theme.init_theme();
 }
 
 //--------- LFO's --------------
@@ -255,12 +261,6 @@ void ofApp::draw(){
     // draw our frame rate
     ofSetColor(ofColor::white);
     ofDrawBitmapString(ofToString(ofGetFrameRate(),2,4,' '), ofGetWidth() - 4 * 8 - 50, 16 + 20);
-    
-    for(int i = 0; i < NUM_INSTANCES; i++){
-        params.instance_position[i].x *= ofGetWidth();
-        params.instance_position[i].y *= ofGetHeight();
-        ofDrawLine(params.instance_position[i].x, params.instance_position[i].y, params.instance_position[(int)ofWrap(i+1,0,NUM_INSTANCES)].x, params.instance_position[(int)ofWrap(i+1,0,NUM_INSTANCES)].y);
-    }
 }
 
 //--------------------------------------------------------------
