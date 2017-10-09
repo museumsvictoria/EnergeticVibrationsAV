@@ -22,8 +22,8 @@ void PostProcessing::setup(){
     
     trail_delay = 0.5;
     
-    //reaction_diffusion.setup();
-    alpha_trails.setup();
+    reaction_diffusion.setup();
+    //alpha_trails.setup();
 }
 
 //--------------------------------------------------------------
@@ -68,6 +68,6 @@ void PostProcessing::draw(){
         depthOfField.getFbo().draw(0, 0);
     }
     
-//    reaction_diffusion.draw();
-    alpha_trails.draw();
+    reaction_diffusion.draw();
+//    alpha_trails.draw();
 }

@@ -305,12 +305,18 @@ void ofApp::draw(){
     
     glDisable(GL_CULL_FACE);
     ofEnableAlphaBlending();
-    
+
     mCam1.end();
     
     post.dof_end();
 
     post.draw();
+    
+    mCam1.begin();
+    tracer.draw();
+    mCam1.end();
+    ofSetColor(255,50);
+    post.depthOfField.getFbo().draw(0, 0);
     
     // draw our frame rate
     ofSetColor(ofColor::white);

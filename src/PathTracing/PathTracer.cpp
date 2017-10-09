@@ -142,37 +142,20 @@ void PathTracer::draw(){
 void PathTracer::drawLines(){
     for(int i = 0; i < numPointsInPath; i++){
         
-        {
-            int num_iters = 4;
-            const float scale = 2.9;
+        int num_iters = 4;
+        const float scale = 2.9;
 
-            for(int j = 0; j < num_iters; j++){
-                int step = ofClamp(i-j, 0, numPointsInPath);
-                float dist = ofDist(pathPoints[step].x, pathPoints[step].y, pathPoints[i].x, pathPoints[i].y);
-                //cout << "dist =" << dist << endl;
-                float connection_dist = 4.0;
-                if(dist < connection_dist){
-                    ofSetColor(255,ofMap(dist,1.0,connection_dist,255,0));
-                    ofDrawLine(pathPoints[step].x * scale, pathPoints[step].y * scale, pathPoints[i].x * scale, pathPoints[i].y * scale);
-                }
+        for(int j = 0; j < num_iters; j++){
+            int step = ofClamp(i-j, 0, numPointsInPath);
+            float dist = ofDist(pathPoints[step].x, pathPoints[step].y, pathPoints[i].x, pathPoints[i].y);
+            //cout << "dist =" << dist << endl;
+            float connection_dist = 4.0;
+            if(dist < connection_dist){
+                ofSetColor(255,ofMap(dist,1.0,connection_dist,255,0));
+                ofDrawLine(pathPoints[step].x * scale, pathPoints[step].y * scale, pathPoints[i].x * scale, pathPoints[i].y * scale);
             }
-            
-//            float dist1 = ofDist(prevP1.x, prevP1.y, pathPoints[i].x, pathPoints[i].y);
-//            float dist2 = ofDist(prevP2.x, prevP2.y, pathPoints[i].x, pathPoints[i].y);
-//            cout << "dist =" << dist1 << endl;
-//            ofDrawBitmapString(ofToString(i), pathPoints[i].x * scale, pathPoints[i].y * scale);
-//            if(dist1 < 4.){
-//                ofSetColor(255,ofMap(dist1,1.0,10.0,0,255));
-//                ofDrawLine(prevP1.x * scale, prevP1.y * scale, pathPoints[i].x * scale, pathPoints[i].y * scale);
-//            }
-//            if(dist2 < 4.){
-//                ofSetColor(255,ofMap(dist2,1.0,10.0,0,255));
-//                ofDrawLine(prevP2.x * scale, prevP2.y * scale, pathPoints[i].x * scale, pathPoints[i].y * scale);
-//            }
-//            prevP1 = pathPoints[i];
-//            if(i!=0) prevP2 = pathPoints[i-1];
-//            else prevP2 = prevP1;
         }
+
         
         if(bSequential){
             ofSetColor(c1[i]);

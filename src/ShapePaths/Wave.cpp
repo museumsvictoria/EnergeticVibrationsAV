@@ -107,9 +107,12 @@ void Wave::updateShape(){
 
     shape.clear();
     for(int i = 0; i < shm.getSignal().size(); i++){
-        float x = 0.50 - (TILE_LENGTH*2.) + i;
-        float y = 0.5 + shm.getSignal()[i] * 6.0;
-        shape.addVertex(x,y);
+        float x = 0.50 - (TILE_LENGTH*2.0) + i;
+        float y = 0.5 + shm.getSignal()[i] * 7.0;
+        shape.addVertex(x * 1.1,y);
+        
+        //cout << "x " + ofToString(i+1) + " = "  << shape.getVertices()[i].x <<
+        //" --- y  = "  << shape.getVertices()[i].y << endl;
     }
 }
 

@@ -20,9 +20,6 @@ Grid::Grid(){
         float x = (0.5 - (TILE_LENGTH/2) + i % TILE_LENGTH) / (TILE_LENGTH/4);
         float y = (1.0 - (TILE_LENGTH/2) + i / TILE_LENGTH * 2.0) / (TILE_LENGTH/2);
         shape.addVertex(x,y);
-        
-        cout << "x " + ofToString(i+1) + " = "  << shape.getVertices()[i].x <<
-        " --- y  = "  << shape.getVertices()[i].y << endl;
     }
     shape.close();
 }

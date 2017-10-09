@@ -97,7 +97,7 @@ void main( void )
     col += vec3(.6, .85, 1.)*max(c2*c2 - c*c, 0.)*12.;
     
     // Apply a vignette and increase the brightness for that fake spotlight effect.
-    col *= pow( 16.0*uv.x*uv.y*(1.0-uv.x)*(1.0-uv.y) , .125)*1.15;
+   // col *= pow( 16.0*uv.x*uv.y*(1.0-uv.x)*(1.0-uv.y) , .125)*1.15;
     
     // Fade in for the first few seconds.
     col *= smoothstep(0., 1., iTime/2.);
