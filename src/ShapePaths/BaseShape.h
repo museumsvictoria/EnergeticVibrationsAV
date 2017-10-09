@@ -10,16 +10,18 @@
 /*
  Shapes:
  - Rectangle
- - Ellipse
  - N Polygon
- - Star
- - 2d Super Formula
- - Triangle
+ - Wave
+
+ Shapes are defined in screen coordinates and then normalised in the vertex 
+ shader.
  */
 
-#pragma once 
-
+#pragma once
 #include "ofMain.h"
+#include "Constants.h"
+
+
 
 class BaseShape{
 public:
@@ -37,7 +39,8 @@ public:
 
     //------------------ Polyline Shape
     ofPolyline shape;
-    
+    vector<glm::vec3> get_path();
+
     //------------------ Rectangle
     int size;
     float width;

@@ -175,10 +175,10 @@ void ofApp::drawGui(ofEventArgs & args){
 
 //--------------------------------------------------------------
 void ofApp::update_instance_positions(){
-    for(int i = 0; i < NUM_INSTANCES; i++){
-        params.instance_position[i].x = 0.50 - (TILE_LENGTH*2.) + i;
-        params.instance_position[i].y = 0.5 + lfo(params.waveform_type,(i+ofGetElapsedTimef()*params.waveform_speed)*01.2)*6.0;
-    }
+    paths.update();
+    
+    paths.set_grid_path(params.instance_pos_grid);
+    paths.set_wave_path(params.instance_pos_wave);
 }
 
 //--------------------------------------------------------------

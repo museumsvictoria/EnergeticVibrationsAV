@@ -16,11 +16,16 @@
 		13D49AE81F859E1400336C9B /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE21F859E1400336C9B /* PostProcessing.cpp */; };
 		13D49AE91F859E1400336C9B /* ReactionDiffusion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE41F859E1400336C9B /* ReactionDiffusion.cpp */; };
 		13D49B071F85BEA100336C9B /* BaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AFF1F85BEA100336C9B /* BaseShape.cpp */; };
-		13D49B081F85BEA100336C9B /* Ellipse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B011F85BEA100336C9B /* Ellipse.cpp */; };
+		13D49B081F85BEA100336C9B /* Wave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B011F85BEA100336C9B /* Wave.cpp */; };
 		13D49B091F85BEA100336C9B /* Ngon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B031F85BEA100336C9B /* Ngon.cpp */; };
-		13D49B0A1F85BEA100336C9B /* Rectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B051F85BEA100336C9B /* Rectangle.cpp */; };
+		13D49B0A1F85BEA100336C9B /* Grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B051F85BEA100336C9B /* Grid.cpp */; };
 		13D49B0D1F85BEC400336C9B /* PathTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B0B1F85BEC400336C9B /* PathTracer.cpp */; };
 		13D49B141F85D06600336C9B /* HarmonicMotion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B121F85D06600336C9B /* HarmonicMotion.cpp */; };
+		13D49B1F1F85D8C900336C9B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B171F85D8C900336C9B /* README.md */; };
+		13D49B201F85D8C900336C9B /* Algebraic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B191F85D8C900336C9B /* Algebraic.cpp */; };
+		13D49B211F85D8C900336C9B /* JenGaussian.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B1B1F85D8C900336C9B /* JenGaussian.cpp */; };
+		13D49B221F85D8C900336C9B /* ofxAlgebraic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B1D1F85D8C900336C9B /* ofxAlgebraic.cpp */; };
+		13D49B281F87082300336C9B /* TranslationPaths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49B261F87082300336C9B /* TranslationPaths.cpp */; };
 		1C36947250DCB09A8A375C0C /* ofxXmlPoco.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9998694E5001F9CF0B13BF0 /* ofxXmlPoco.cpp */; };
 		1FB13B2C1658CA138B0E96F6 /* ofxDOF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 682AE33A515E9EAD18C321A2 /* ofxDOF.cpp */; };
 		27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E362ECECD928E7B3EBA5C53 /* BaseTheme.cpp */; };
@@ -107,17 +112,27 @@
 		13D49AE51F859E1400336C9B /* ReactionDiffusion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactionDiffusion.h; sourceTree = "<group>"; };
 		13D49AFF1F85BEA100336C9B /* BaseShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseShape.cpp; sourceTree = "<group>"; };
 		13D49B001F85BEA100336C9B /* BaseShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseShape.h; sourceTree = "<group>"; };
-		13D49B011F85BEA100336C9B /* Ellipse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ellipse.cpp; sourceTree = "<group>"; };
-		13D49B021F85BEA100336C9B /* Ellipse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ellipse.h; sourceTree = "<group>"; };
+		13D49B011F85BEA100336C9B /* Wave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wave.cpp; sourceTree = "<group>"; };
+		13D49B021F85BEA100336C9B /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wave.h; sourceTree = "<group>"; };
 		13D49B031F85BEA100336C9B /* Ngon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ngon.cpp; sourceTree = "<group>"; };
 		13D49B041F85BEA100336C9B /* Ngon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ngon.h; sourceTree = "<group>"; };
-		13D49B051F85BEA100336C9B /* Rectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rectangle.cpp; sourceTree = "<group>"; };
-		13D49B061F85BEA100336C9B /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rectangle.h; sourceTree = "<group>"; };
+		13D49B051F85BEA100336C9B /* Grid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Grid.cpp; sourceTree = "<group>"; };
+		13D49B061F85BEA100336C9B /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
 		13D49B0B1F85BEC400336C9B /* PathTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathTracer.cpp; sourceTree = "<group>"; };
 		13D49B0C1F85BEC400336C9B /* PathTracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathTracer.h; sourceTree = "<group>"; };
 		13D49B0E1F85C71900336C9B /* GuiTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuiTheme.h; sourceTree = "<group>"; };
 		13D49B121F85D06600336C9B /* HarmonicMotion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HarmonicMotion.cpp; sourceTree = "<group>"; };
 		13D49B131F85D06600336C9B /* HarmonicMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HarmonicMotion.h; sourceTree = "<group>"; };
+		13D49B161F85D8C900336C9B /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		13D49B171F85D8C900336C9B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		13D49B191F85D8C900336C9B /* Algebraic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Algebraic.cpp; sourceTree = "<group>"; };
+		13D49B1A1F85D8C900336C9B /* Algebraic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Algebraic.h; sourceTree = "<group>"; };
+		13D49B1B1F85D8C900336C9B /* JenGaussian.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JenGaussian.cpp; sourceTree = "<group>"; };
+		13D49B1C1F85D8C900336C9B /* JenGaussian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JenGaussian.h; sourceTree = "<group>"; };
+		13D49B1D1F85D8C900336C9B /* ofxAlgebraic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAlgebraic.cpp; sourceTree = "<group>"; };
+		13D49B1E1F85D8C900336C9B /* ofxAlgebraic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAlgebraic.h; sourceTree = "<group>"; };
+		13D49B261F87082300336C9B /* TranslationPaths.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TranslationPaths.cpp; path = src/ShapePaths/TranslationPaths.cpp; sourceTree = SOURCE_ROOT; };
+		13D49B271F87082300336C9B /* TranslationPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TranslationPaths.h; path = src/ShapePaths/TranslationPaths.h; sourceTree = SOURCE_ROOT; };
 		16D8E1844A44453A0C287E72 /* ssl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ssl.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ssl.h; sourceTree = SOURCE_ROOT; };
 		17006150745E007FA32014F5 /* modes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = modes.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/modes.h; sourceTree = SOURCE_ROOT; };
 		1AEDCF9A6D7A9C81A1FFFB82 /* cmac.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cmac.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/cmac.h; sourceTree = SOURCE_ROOT; };
@@ -340,14 +355,16 @@
 		13D49AFE1F85BEA100336C9B /* ShapePaths */ = {
 			isa = PBXGroup;
 			children = (
+				13D49B261F87082300336C9B /* TranslationPaths.cpp */,
+				13D49B271F87082300336C9B /* TranslationPaths.h */,
 				13D49AFF1F85BEA100336C9B /* BaseShape.cpp */,
 				13D49B001F85BEA100336C9B /* BaseShape.h */,
-				13D49B011F85BEA100336C9B /* Ellipse.cpp */,
-				13D49B021F85BEA100336C9B /* Ellipse.h */,
+				13D49B011F85BEA100336C9B /* Wave.cpp */,
+				13D49B021F85BEA100336C9B /* Wave.h */,
 				13D49B031F85BEA100336C9B /* Ngon.cpp */,
 				13D49B041F85BEA100336C9B /* Ngon.h */,
-				13D49B051F85BEA100336C9B /* Rectangle.cpp */,
-				13D49B061F85BEA100336C9B /* Rectangle.h */,
+				13D49B051F85BEA100336C9B /* Grid.cpp */,
+				13D49B061F85BEA100336C9B /* Grid.h */,
 			);
 			path = ShapePaths;
 			sourceTree = "<group>";
@@ -359,6 +376,30 @@
 				13D49B131F85D06600336C9B /* HarmonicMotion.h */,
 			);
 			path = HarmonicMotion;
+			sourceTree = "<group>";
+		};
+		13D49B151F85D8C900336C9B /* ofxAlgebraic */ = {
+			isa = PBXGroup;
+			children = (
+				13D49B161F85D8C900336C9B /* .gitignore */,
+				13D49B171F85D8C900336C9B /* README.md */,
+				13D49B181F85D8C900336C9B /* src */,
+			);
+			name = ofxAlgebraic;
+			path = ../../../addons/ofxAlgebraic;
+			sourceTree = "<group>";
+		};
+		13D49B181F85D8C900336C9B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				13D49B191F85D8C900336C9B /* Algebraic.cpp */,
+				13D49B1A1F85D8C900336C9B /* Algebraic.h */,
+				13D49B1B1F85D8C900336C9B /* JenGaussian.cpp */,
+				13D49B1C1F85D8C900336C9B /* JenGaussian.h */,
+				13D49B1D1F85D8C900336C9B /* ofxAlgebraic.cpp */,
+				13D49B1E1F85D8C900336C9B /* ofxAlgebraic.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		1DAFD983644AD5D1FE0721D9 /* ofxUbo */ = {
@@ -584,6 +625,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				13D49B151F85D8C900336C9B /* ofxAlgebraic */,
 				B922E169D182E0584C76B14A /* ofxDOF */,
 				768C3255AF2F3E1A78DC4DF4 /* ofxImGui */,
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
@@ -821,13 +863,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13D49B211F85D8C900336C9B /* JenGaussian.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				93A418A21D11C3146A54F389 /* Primitives.cpp in Sources */,
 				1FB13B2C1658CA138B0E96F6 /* ofxDOF.cpp in Sources */,
 				DBBE189ECD171A97DCF46C6A /* BaseEngine.cpp in Sources */,
 				27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */,
-				13D49B081F85BEA100336C9B /* Ellipse.cpp in Sources */,
+				13D49B081F85BEA100336C9B /* Wave.cpp in Sources */,
 				462C212713EFFA5383B35DAB /* EngineGLFW.cpp in Sources */,
 				000315A9FA4E2F9A09533E05 /* EngineOpenGLES.cpp in Sources */,
 				016BB55A143AD429330F07DB /* Gui.cpp in Sources */,
@@ -835,7 +878,9 @@
 				13D49B071F85BEA100336C9B /* BaseShape.cpp in Sources */,
 				5C2607C471F8D48C0036C56E /* imgui.cpp in Sources */,
 				E984796BE84AA4315636B6E7 /* imgui_demo.cpp in Sources */,
+				13D49B221F85D8C900336C9B /* ofxAlgebraic.cpp in Sources */,
 				13D49AE91F859E1400336C9B /* ReactionDiffusion.cpp in Sources */,
+				13D49B201F85D8C900336C9B /* Algebraic.cpp in Sources */,
 				00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
@@ -853,9 +898,11 @@
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
+				13D49B1F1F85D8C900336C9B /* README.md in Sources */,
+				13D49B281F87082300336C9B /* TranslationPaths.cpp in Sources */,
 				1C36947250DCB09A8A375C0C /* ofxXmlPoco.cpp in Sources */,
 				13D49B0D1F85BEC400336C9B /* PathTracer.cpp in Sources */,
-				13D49B0A1F85BEA100336C9B /* Rectangle.cpp in Sources */,
+				13D49B0A1F85BEA100336C9B /* Grid.cpp in Sources */,
 				13D49B141F85D06600336C9B /* HarmonicMotion.cpp in Sources */,
 				9BC5C4F9070AB623ACFB4BE5 /* ofxUbo.cpp in Sources */,
 			);

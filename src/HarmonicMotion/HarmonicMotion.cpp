@@ -46,7 +46,7 @@ void HarmonicMotion::init(){
     xspacing = 18;
     theta = 1.0;
     
-    numOscilattors = 18;
+    numOscilattors = 32;
     shape = 0;
     dx = 0.110;//TWO_PI * xspacing;
     direction = true;
@@ -279,7 +279,7 @@ void HarmonicMotion::calculateMotion(){
         }
         current_dx = dx;
         phases[i] = x * 0.25;
-        
+
         osc[i].setFrequency(phases[ofWrap(i+phase_offset,0,phases.size())]);
         osc[i].setAmplitude(amplitude);
         osc[i].setPositionOffset(position_offset);

@@ -67,7 +67,9 @@ uniform ShaderParams {
     float circle_motion;
     float waveform_speed;
     int waveform_type;
-    vec2 instance_position[NUM_INSTANCES];
+    vec2 instance_pos_grid[NUM_INSTANCES];
+    vec2 instance_pos_ngon[NUM_INSTANCES];
+    vec2 instance_pos_wave[NUM_INSTANCES];
 }params;
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -104,15 +106,15 @@ void main()
 
     // Arrange the objects in a grid
     vec4 translation_wave;
-    translation_wave.x = params.instance_position[gl_InstanceID].x;// 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
-    translation_wave.y = params.instance_position[gl_InstanceID].y;// 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0;
+    translation_wave.x = params.instance_pos_wave[gl_InstanceID].x;// 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
+    translation_wave.y = params.instance_pos_wave[gl_InstanceID].y;// 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0;
     translation_wave.z = 0; 					// translate y
     translation_wave.w = 1;
     
     // Arrange the objects in a grid
     vec4 translation_grid;
-    translation_grid.x = 0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
-    translation_grid.y = 1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
+    translation_grid.x = params.instance_pos_grid[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
+    translation_grid.y = params.instance_pos_grid[gl_InstanceID].y;;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
     translation_grid.z = 0; 					// translate y
     translation_grid.w = 1;						// needs to remain 1.
     
@@ -124,7 +126,7 @@ void main()
     translation_circle.z = 0;
     translation_circle.w = 1;						// needs to remain 1.
 
-    vec4 translation = mix(translation_wave,translation_circle,params.shape_morph);
+    vec4 translation = mix(translation_wave,translation_grid,params.shape_morph);
     
     
     //translation.y = atan(translation.z/128.0,translation.x/128.0);

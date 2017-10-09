@@ -1,5 +1,5 @@
 //
-//  Primitives.hpp
+//  Primitives.h
 //  vertexshaderart
 //
 //  Created by Joshua Batty on 13/9/17.

@@ -7,6 +7,7 @@
 #include "GuiTheme.h"
 #include "PostProcessing.h"
 #include "Primitives.h"
+#include "TranslationPaths.h"
 
 
 
@@ -19,7 +20,9 @@ struct ShaderParams {
     float circle_motion;
     float waveform_speed;
     int waveform_type;
-    glm::vec2 instance_position[NUM_INSTANCES];
+    glm::vec2 instance_pos_grid[NUM_INSTANCES];
+    glm::vec2 instance_pos_ngon[NUM_INSTANCES];
+    glm::vec2 instance_pos_wave[NUM_INSTANCES];
 };
 
 class ofApp : public ofBaseApp{
@@ -50,6 +53,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        TranslationPaths paths;
         Primitives primitives;
     
         ofEasyCam mCam1;

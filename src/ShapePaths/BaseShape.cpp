@@ -17,6 +17,11 @@ void BaseShape::init(){
     rotationAmount = 0.0;
 }
 
+//----------------------------------------------------------------
+vector<glm::vec3> BaseShape::get_path(){
+    return shape.getVertices();
+}
+
 void BaseShape::draw(){
     
 }
