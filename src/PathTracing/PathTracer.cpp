@@ -10,16 +10,18 @@
 
 //--------------------------------------------------------
 PathTracer::PathTracer(){
-    numPointsInPath = 17;
+    numPointsInPath = NUM_INSTANCES;
     bDrawPoints = false;
-    bDrawLines = false;
+    bDrawLines = true;
     bDrawLaserBeam = false;
     
-    bSequential = true;
+    bSequential = false;
     bBiDirectional = false;
     
     setColour1();
     setColour2();
+    
+    traceSpeed = 0.1;
     
     pathPointsLinear.reserve(50);
     pathPointsBiDirectional.reserve(50);
@@ -47,10 +49,15 @@ void PathTracer::traceShape(ofPolyline shape){
     float counter2 = fmod(speed2, 1.0);
     float half;
     
+    pathPoints.clear();
     pathPointsLinear.clear();
     pathPointsBiDirectional.clear();
+    
+    
 
     for(int j = 0; j < numPointsInPath; j++){
+        pathPoints.push_back(shape.getVertices()[j].xy());
+        
         half = (j%numPointsInPath)*1.0/(numPointsInPath/2);
         
         if(j==0){
@@ -135,11 +142,31 @@ void PathTracer::draw(){
 void PathTracer::drawLines(){
     for(int i = 0; i < numPointsInPath; i++){
         
+        {
+            float dist1 = ofDist(prevP1.x, prevP1.y, pathPoints[i].x, pathPoints[i].y);
+            float dist2 = ofDist(prevP2.x, prevP2.y, pathPoints[i].x, pathPoints[i].y);
+            float scale = 2.9;
+            //cout << "dist =" << dist1 << endl;
+            ofDrawBitmapString(ofToString(i), pathPoints[i].x * scale, pathPoints[i].y * scale);
+            if(dist1 < 4.){
+                ofSetColor(255);
+                ofDrawLine(prevP1.x * scale, prevP1.y * scale, pathPoints[i].x * scale, pathPoints[i].y * scale);
+            }
+            if(dist2 < 4.){
+                ofSetColor(0,0,255);
+                ofDrawLine(prevP2.x * scale, prevP2.y * scale, pathPoints[i].x * scale, pathPoints[i].y * scale);
+            }
+            prevP1 = pathPoints[i];
+            if(i!=0) prevP2 = pathPoints[i-1];
+            else prevP2 = prevP1;
+        }
+        
         if(bSequential){
             ofSetColor(c1[i]);
             ofDrawLine(prevP1.x, prevP1.y, pathPointsLinear[i].x, pathPointsLinear[i].y);
             prevP1 = pathPointsLinear[i];
         }
+        
         
         if(bBiDirectional){
             ofSetColor(c2[i]);

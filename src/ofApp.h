@@ -8,6 +8,7 @@
 #include "PostProcessing.h"
 #include "Primitives.h"
 #include "TranslationPaths.h"
+#include "PathTracer.h"
 
 
 
@@ -52,6 +53,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
         TranslationPaths paths;
+        PathTracer tracer;
         Primitives primitives;
     
         ofEasyCam mCam1;

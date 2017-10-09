@@ -9,6 +9,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Constants.h"
 
 class PathTracer{
 public:
@@ -46,6 +47,7 @@ private:
     ofPoint prevP1;
     ofPoint prevP2;
     
+    vector<ofPoint> pathPoints;
     vector<ofPoint> pathPointsLinear;
     vector<ofPoint> pathPointsBiDirectional;
     

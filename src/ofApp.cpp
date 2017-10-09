@@ -101,6 +101,7 @@ void ofApp::update(){
     post.update();
     
     update_instance_positions();
+    tracer.traceShape(paths.wave.shape);
 }
 
 //--------------------------------------------------------------
@@ -266,6 +267,8 @@ void ofApp::draw(){
     // let's see if disabling it will help us a little.
     //ofDisableBlendMode();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
+    
+    tracer.draw();
     
     // also, let's get rid of the back faces.
     glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
