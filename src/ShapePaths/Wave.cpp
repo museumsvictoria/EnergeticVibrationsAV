@@ -15,7 +15,7 @@ Wave::Wave(){
     shm.amplitude = 1.0;
     shm.position_offset = 0.0;
     shm.speed = 0.01;
-    shm.offset = .001;
+    shm.currentOffset = .001;
     
     shm_oscillator = 0;
     shm_phaseLock = 0;
@@ -27,8 +27,8 @@ Wave::Wave(){
     setOscillator(shm_oscillator);
     setPhaseLock(shm_phaseLock);
     setDirection(shm_direction);
-    setMirrorMode(shm_invert);
-    setInvert(shm_mirror_mode);
+    setMirrorMode(shm_mirror_mode);
+    setInvert(shm_invert);
     setOffsetPattern(shm_offset_pattern);
     
     updateShape();
@@ -93,7 +93,7 @@ float Wave::get_current_dx(){
 float Wave::get_shm_amplitude() {return shm.amplitude;}
 float Wave::get_shm_position_offset() {return shm.position_offset;}
 float Wave::get_shm_period() {return shm.speed;}
-float Wave::get_shm_offset_speed() {return shm.offset;}
+float Wave::get_shm_offset_speed() {return shm.currentOffset;}
 int Wave::get_shm_oscillator() {return shm_oscillator;}
 int Wave::get_shm_phaseLock() {return shm_phaseLock;}
 int Wave::get_shm_direction() {return shm_direction;}
@@ -103,8 +103,6 @@ int Wave::get_shm_offset_pattern() {return shm_offset_pattern;}
 
 //----------------------------------------------------------------
 void Wave::updateShape(){
-    cout << " size = "  << endl;
-
     shm.update();
 
     shape.clear();

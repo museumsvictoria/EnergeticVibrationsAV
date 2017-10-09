@@ -18,8 +18,6 @@ struct ShaderParams {
     int active_chair[NUM_INSTANCES];
     float shape_morph;
     float circle_motion;
-    float waveform_speed;
-    int waveform_type;
     glm::vec2 instance_pos_grid[NUM_INSTANCES];
     glm::vec2 instance_pos_ngon[NUM_INSTANCES];
     glm::vec2 instance_pos_wave[NUM_INSTANCES];
@@ -64,8 +62,22 @@ class ofApp : public ofBaseApp{
         ofTexture mTex1;
 
         PostProcessing post;
-        ofxImGui::Gui gui;
-        GuiTheme gui_theme;
+    
+    ///------------- GUI
+    ofxImGui::Gui gui;
+    GuiTheme gui_theme;
+    
+    GLuint directionButtonOnID;
+    GLuint directionButtonOffID;
+    
+    GLuint mirrorButtonOnID;
+    GLuint mirrorButtonOffID;
+    
+    GLuint invertButtonOnID;
+    GLuint invertButtonOffID;
+    
+    GLuint lockButtonOnID;
+    GLuint lockButtonOffID;
     
         // Shader Params
         float explode_amount;

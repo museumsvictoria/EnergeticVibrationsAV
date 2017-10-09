@@ -65,8 +65,6 @@ uniform ShaderParams {
     int active_chair[NUM_INSTANCES];
     float shape_morph;
     float circle_motion;
-    float waveform_speed;
-    int waveform_type;
     vec2 instance_pos_grid[NUM_INSTANCES];
     vec2 instance_pos_ngon[NUM_INSTANCES];
     vec2 instance_pos_wave[NUM_INSTANCES];

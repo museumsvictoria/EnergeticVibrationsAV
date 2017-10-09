@@ -18,9 +18,6 @@ void ofApp::init(){
     params.rot_speed = 1.0;
     explode_amount = 0.0;
     
-    params.waveform_speed = 2.5;
-    params.waveform_type = 0;
-    
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
         params.active_chair[i] = 0;
@@ -69,43 +66,26 @@ void ofApp::setupGui(){
     
     //load theme
     gui_theme.init_theme();
-}
-
-//--------- LFO's --------------
-float fract(float f) {
-    float temp;
-    return modf(f, &temp);
-}
-
-// FLOATS
-float tri(float x) {
-    return asin(sin(x))/(PI/2.);
-}
-float puls(float x) {
-    return (floor(sin(x))+0.5)*2.;
-}
-float saw(float x) {
-    return (fract((x/2.)/PI)-0.5)*2.;
-}
-float noise(float x) {
-    return (fract(sin((x*2.) *(12.9898+78.233)) * 43758.5453)-0.5)*2.;
-}
-
-float lfo(int type, float x){
-    if(type == 0) return sin(x);
-    else if(type == 1) return tri(x);
-    else if(type == 2) return saw(x);
-    else if(type == 3) return puls(x);
-    else if(type == 4) return noise(x);
-    else return 0.0;
+    
+    directionButtonOnID = gui.loadImage("Images/SHM/directionon.png");
+    directionButtonOffID = gui.loadImage("Images/SHM/direction.png");
+    
+    mirrorButtonOnID = gui.loadImage("Images/SHM/mirroron.png");
+    mirrorButtonOffID = gui.loadImage("Images/SHM/mirror.png");
+    
+    invertButtonOnID = gui.loadImage("Images/SHM/inverton.png");
+    invertButtonOffID = gui.loadImage("Images/SHM/invert.png");
+    
+    lockButtonOnID = gui.loadImage("Images/SHM/lockon.png");
+    lockButtonOffID = gui.loadImage("Images/SHM/lock.png");
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
-    float orbit_x = 0.5+(saw(ofGetElapsedTimef()*0.4)*0.5)*360.;
-    float orbit_y = 0.5+(saw(ofGetElapsedTimef()*0.2)*0.5)*360.;
+    //float orbit_x = 0.5+(saw(ofGetElapsedTimef()*0.4)*0.5)*360.;
+    //float orbit_y = 0.5+(saw(ofGetElapsedTimef()*0.2)*0.5)*360.;
 //    mCam1.orbitDeg(orbit_x, orbit_y, 10);
 //    mCam1.truck(val);
 //   mCam1.boom(val);
@@ -151,11 +131,75 @@ void ofApp::drawGui(ofEventArgs & args){
             
             ofxImGui::EndTree(mainSettings);
         }
-        if (ofxImGui::BeginTree("WAVEFORM", mainSettings)){
-            ImGui::SliderInt("Wave Type",&params.waveform_type,0,4);
-            ImGui::SliderFloat("Wave Speed",&params.waveform_speed,0.0,6.0);
+        
+        if (ofxImGui::BeginTree("WAVEFORM", mainSettings)) {
+            // Radio Toggle
+            vector<string> osc_shapes = {"sine","tri","saw","ramp","sqr"};
+            int osc = paths.wave.get_shm_oscillator();
+            ImGui::Columns(osc_shapes.size());
+            for(int i = 0; i < osc_shapes.size(); i++){
+                if(ImGui::RadioButton(ofxImGui::GetUniqueName(osc_shapes[i]), &osc, i)){
+                    paths.wave.setOscillator(osc);
+                }
+                ImGui::NextColumn();
+            }
+            ImGui::Columns(1);
+            
+            // Params
+            float begin = paths.wave.get_shm_position_offset()*100;
+            float end = paths.wave.get_shm_amplitude()*100;
+            if(ImGui::DragFloatRange2("Amplitude", &begin, &end, 0.1f, 0.0f, 100.0f, "Min: %.1f %%", "Max: %.1f %%")){
+                paths.wave.setPositionOffset(begin/100);
+                paths.wave.setAmplitude(end/100);
+            }
+            
+            float period = paths.wave.get_shm_period();
+            if(ImGui::SliderFloat("period",&period,0.0,1.0)){
+                paths.wave.setPeriod(period);
+            }
+            
+            float offset_speed = paths.wave.get_shm_offset_speed();
+            if(ImGui::SliderFloat("offset speed",&offset_speed,0.0,0.02)){
+                paths.wave.setOffsetSpeed(offset_speed);
+            }
+            
+            int offset_pattern = paths.wave.get_shm_offset_pattern();
+            if(ImGui::SliderInt("offset pattern",&offset_pattern,0,12)){
+                paths.wave.setOffsetPattern(offset_pattern);
+            }
+            
+            // Settings
+            int size = 20;
+            bool pressed = paths.wave.get_shm_direction();
+            ImTextureID texID = (ImTextureID)(uintptr_t) (pressed ? directionButtonOnID : directionButtonOffID);
+            if(ImGui::ImageButton(texID, ImVec2(size,size))){
+                paths.wave.setDirection(!pressed);
+            }
+            
+            ImGui::SameLine();
+            pressed = paths.wave.get_shm_mirror_mode();
+            texID = (ImTextureID)(uintptr_t) (pressed ? mirrorButtonOnID : mirrorButtonOffID);
+            if(ImGui::ImageButton(texID, ImVec2(size,size))){
+                paths.wave.setMirrorMode(!pressed);
+            }
+            
+            ImGui::SameLine();
+            pressed = paths.wave.get_shm_invert();
+            texID = (ImTextureID)(uintptr_t) (pressed ? invertButtonOnID : invertButtonOffID);
+            if(ImGui::ImageButton(texID, ImVec2(size,size))){
+                paths.wave.setInvert(!pressed);
+            }
+            
+            ImGui::SameLine();
+            pressed = paths.wave.get_shm_phaseLock();
+            texID = (ImTextureID)(uintptr_t) (pressed ? lockButtonOnID : lockButtonOffID);
+            if(ImGui::ImageButton(texID, ImVec2(size,size))){
+                paths.wave.setPhaseLock(!pressed);
+            }
+            
             ofxImGui::EndTree(mainSettings);
         }
+
         if (ofxImGui::BeginTree("DOF", mainSettings)){
             ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
             ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,0.0,600.0);
@@ -203,8 +247,7 @@ void ofApp::draw(){
         tmpShader->setGeometryInputType(GL_TRIANGLES);
         tmpShader->setGeometryOutputType(GL_TRIANGLE_STRIP);
         tmpShader->setGeometryOutputCount(4);
-        
-//        if (tmpShader->load("shaders/instanced-2.vert", "shaders/instanced-2.frag")){
+
         if (tmpShader->load("shaders/vertexshaderart.vert", "shaders/vertexshaderart.frag", "shaders/vertexshaderart.geom")){
             mShd1 = tmpShader;
             ofLogNotice() << ofGetTimestampString() << " reloaded Shader.";
