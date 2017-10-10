@@ -116,7 +116,7 @@ void HarmonicMotion::setSize(int size){
         phases.push_back(0);
         Algebraic alg;
         osc.push_back(alg);
-        osc[i].setDMXMode(true);
+        osc[i].setDMXMode(false);
     }
     
     setupPatterns(numOscilattors);

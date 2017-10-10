@@ -91,11 +91,15 @@ void main(){
 
         fragColor.rgb += clamp(glowAmt*0.4,0.,1.)*vec3(.3,.5,.7);
     } else {
-    
         fragColor = vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0);
     }
     
     if(tick_position == vertex.instance_ID){
+        fragColor = vec4(1.0,0.0,0.0,1.0);
+    }
+
+    
+    if(vertex.position.y < -0.3 && vertex.position.y > 0.3){
         fragColor = vec4(1.0,0.0,0.0,1.0);
     }
     

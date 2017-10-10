@@ -46,7 +46,7 @@ void main() {
     vertexOut.texcoord = vertex[0].texcoord;
     vertexOut.height = vertex[0].height;
     vertexOut.instance_ID = vertex[0].instance_ID;
-    
+  
     // Calculate two vectors in the plane of the input triangle
     vec3 ab = gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz;
     vec3 ac = gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz;
@@ -92,16 +92,17 @@ void main() {
         {
             vec4 P = gl_in[i].gl_Position;
             vec3 N = normalize(cross(V1, V0));
-//            float len = sqrt(P.x*P.x + P.z*P.z);
+            //            float len = sqrt(P.x*P.x + P.z*P.z);
             float len = sqrt(P.z*P.z);
             float scale = (0.5 + cos(time*2.0 + len)*0.5) * explode_amount ;
-
+            
             vec4 face = (P + vec4(N * normal_length * scale,1.0)) + vec4(N * vec3(0.05, 0.05, 0.05),1.0);
             gl_Position = face;
             EmitVertex();
         }
         EndPrimitive();
+        
     }
-
-
+    
+    
 }

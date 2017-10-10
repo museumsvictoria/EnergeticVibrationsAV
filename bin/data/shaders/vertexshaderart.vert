@@ -104,9 +104,10 @@ void main()
 
     // Arrange the objects in a grid
     vec4 translation_wave;
-    translation_wave.x = params.instance_pos_wave[gl_InstanceID].x;// 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
-    translation_wave.y = params.instance_pos_wave[gl_InstanceID].y;// 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0;
-    translation_wave.z = 0; 					// translate y
+    float idx = mod(gl_InstanceID, 32.);
+    translation_wave.x = params.instance_pos_wave[int(idx)].x;// 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
+    translation_wave.y = params.instance_pos_wave[int(idx)].y;// 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0;
+    translation_wave.z = 0.0;//remap(gl_InstanceID,0,NUM_INSTANCES*8,1.0,4.0)*10; 					// translate y
     translation_wave.w = 1;
     
     // Arrange the objects in a grid
