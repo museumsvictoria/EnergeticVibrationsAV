@@ -31,7 +31,8 @@
 #pragma include <of_default_vertex_in_attributes.glsl>
 #pragma include <noise.glsl>
 
-#define NUM_INSTANCES 32
+#define INSTANCES_PER_SHM 32
+#define SHM_PER_BLOCK 8
 #define TWO_PI 6.2831853072
 #define PI 3.14159265359
 #define HALF_PI 1.57079632679
@@ -61,13 +62,13 @@ uniform sampler2D tex_unit_0; 		// 2d texture
 uniform ShaderParams {
     float scale_speed;
     float rot_speed;
-    float transducer_speed[NUM_INSTANCES];
-    int active_chair[NUM_INSTANCES];
+    float transducer_speed[INSTANCES_PER_SHM];
+    int active_chair[INSTANCES_PER_SHM];
     float shape_morph;
     float circle_motion;
-    vec2 instance_pos_grid[NUM_INSTANCES];
-    vec2 instance_pos_ngon[NUM_INSTANCES];
-    vec2 instance_pos_wave[NUM_INSTANCES];
+    vec2 instance_pos_grid[INSTANCES_PER_SHM];
+    vec2 instance_pos_ngon[INSTANCES_PER_SHM];
+    vec2 instance_pos_wave[INSTANCES_PER_SHM];
 }params;
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -103,11 +104,19 @@ void main()
 	mat4 perInstanceModelMatrix;
 
     // Arrange the objects in a grid
+//    float shm_instance_idx = mod(gl_InstanceID, INSTANCES_PER_SHM);
+    int shm_instance_idx = gl_InstanceID % INSTANCES_PER_SHM;
+    int shm_idx = gl_InstanceID / INSTANCES_PER_SHM;
+    int block_idx = shm_idx / SHM_PER_BLOCK;
+    int block_shm_idx = block_idx % SHM_PER_BLOCK;
+    int stack_idx = block_idx / SHM_PER_BLOCK;
+    float z_res = mod(floor(remap(gl_InstanceID,0,INSTANCES_PER_SHM*(SHM_PER_BLOCK*1),0.0,SHM_PER_BLOCK)),SHM_PER_BLOCK);
+
+    float distance_offset = sin(time*0.2)*150.0;
     vec4 translation_wave;
-    float idx = mod(gl_InstanceID, 32.);
-    translation_wave.x = params.instance_pos_wave[int(idx)].x;// 0.50 - (tile_length*2.) + gl_InstanceID;// % tile_length;	// translate x
-    translation_wave.y = params.instance_pos_wave[int(idx)].y;// 0.5 + lfo(params.waveform_type,(gl_InstanceID+time*params.waveform_speed)*0.2)*6.0;
-    translation_wave.z = 0.0;//remap(gl_InstanceID,0,NUM_INSTANCES*8,1.0,4.0)*10; 					// translate y
+    translation_wave.x = params.instance_pos_wave[shm_instance_idx].x + (((-SHM_PER_BLOCK/2) + block_shm_idx) * (distance_offset*2.0)); //params.instance_pos_wave[int(idx)].x
+    translation_wave.y = params.instance_pos_wave[shm_instance_idx].y + (((-SHM_PER_BLOCK/2) + stack_idx) * distance_offset);
+    translation_wave.z = z_res * distance_offset; 					// translate y
     translation_wave.w = 1;
     
     // Arrange the objects in a grid
@@ -120,12 +129,12 @@ void main()
     // Try to make a circle using cos and sin
     vec4 translation_circle;
     float r = (3.0 - params.circle_motion) + sin(1. + gl_InstanceID  / 3. * time * .4) * params.circle_motion;
-    translation_circle.x = r * cos(remap(gl_InstanceID,0.0,NUM_INSTANCES,0.0,TWO_PI));
-    translation_circle.y = r * sin(remap(gl_InstanceID,0.0,NUM_INSTANCES,0.0,TWO_PI));
+    translation_circle.x = r * cos(remap(gl_InstanceID,0.0,INSTANCES_PER_SHM,0.0,TWO_PI));
+    translation_circle.y = r * sin(remap(gl_InstanceID,0.0,INSTANCES_PER_SHM,0.0,TWO_PI));
     translation_circle.z = 0;
     translation_circle.w = 1;						// needs to remain 1.
 
-    vec4 translation = mix(translation_wave,translation_grid,params.shape_morph);
+    vec4 translation = translation_wave;// mix(translation_wave,translation_grid,params.shape_morph);
     
     
     //translation.y = atan(translation.z/128.0,translation.x/128.0);

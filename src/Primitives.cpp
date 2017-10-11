@@ -22,6 +22,15 @@ void Primitives::setup(){
     active_idx = 3;
     
     init();
+    
+//    for(int i = 0; i < NUM_INSTANCES * X_RES * Y_RES * Z_RES; i++){
+//        int gl_InstanceID = i;
+//        float idx = gl_InstanceID % 32;
+//        float z_idx = (int)floor(ofMap(gl_InstanceID,0,NUM_INSTANCES*Z_RES,0.0,Z_RES)) % Z_RES;
+//        float x_idx = (int)floor(ofMap(gl_InstanceID,0,NUM_INSTANCES*X_RES*Z_RES,0.0,X_RES)) % X_RES;
+//        float y_idx = (int)floor(ofMap(gl_InstanceID,0,NUM_INSTANCES*Y_RES*X_RES*Z_RES,0.0,Y_RES)) % Y_RES;
+//        //cout << "gl_InstanceID = " << gl_InstanceID << " -- Z = " << z_idx << " -- X = " << x_idx << " -- Y = " << y_idx << endl;
+//    }
 }
 
 //--------------------------------------------------------------
@@ -41,7 +50,8 @@ void Primitives::init(){
 
 //--------------------------------------------------------------
 void Primitives::draw_idle_mesh(){
-    idle_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+    idle_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES * X_RES * Y_RES * Z_RES);
+
 }
 
 //--------------------------------------------------------------
