@@ -13,6 +13,7 @@
 void ReactionDiffusion::setup(){
     // Use GL_TEXTURE_2D Textures (normalized texture coordinates 0..1)
     //ofDisableArbTex();
+    intensity = 1.0;
     
     reaction_shader_bufA.load("shaders/passthrough.vert","shaders/ReactionDiffusion_BufA.frag");
     reaction_shader_image.load("shaders/passthrough.vert","shaders/ReactionDiffusion_Image.frag");
@@ -47,6 +48,7 @@ void ReactionDiffusion::runSimulation()
     reaction_shader_bufA.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
     reaction_shader_bufA.setUniform1f("iTime", ofGetElapsedTimef());
     reaction_shader_bufA.setUniform1i("iFrame", ofGetFrameNum());
+    reaction_shader_bufA.setUniform1f("intensity", intensity);
     
     reaction_shader_bufA.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
     

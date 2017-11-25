@@ -62,6 +62,7 @@ uniform sampler2D tex_unit_0; 		// 2d texture
 uniform ShaderParams {
     float scale_speed;
     float rot_speed;
+    float grid_offset;
     float transducer_speed[INSTANCES_PER_SHM];
     int active_chair[INSTANCES_PER_SHM];
     float shape_morph;
@@ -112,7 +113,7 @@ void main()
     int stack_idx = block_idx / SHM_PER_BLOCK;
     float z_res = mod(floor(remap(gl_InstanceID,0,INSTANCES_PER_SHM*(SHM_PER_BLOCK*1),0.0,SHM_PER_BLOCK)),SHM_PER_BLOCK);
 
-    float distance_offset = sin(time*0.2)*150.0;
+    float distance_offset = sin(time*0.02)*params.grid_offset;
     vec4 translation_wave;
     translation_wave.x = params.instance_pos_wave[shm_instance_idx].x + (((-SHM_PER_BLOCK/2) + block_shm_idx) * (distance_offset*2.0)); //params.instance_pos_wave[int(idx)].x
     translation_wave.y = params.instance_pos_wave[shm_instance_idx].y + (((-SHM_PER_BLOCK/2) + stack_idx) * distance_offset);
@@ -198,7 +199,7 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float lfo_scale = remap(sin(1. + gl_InstanceID  / 3. * time * (1.2*params.scale_speed)),-1.0,1.0,0.0,-2.);
+    float lfo_scale = remap(sin(1. + shm_instance_idx  / 3. * time * (1.2*params.scale_speed)),-1.0,1.0,0.0,-2.);
     
     if(params.active_chair[gl_InstanceID] == 1) lfo_scale = remap(sin(time * params.transducer_speed[gl_InstanceID]),-1.0,1.0,-2.0,0.0);
     

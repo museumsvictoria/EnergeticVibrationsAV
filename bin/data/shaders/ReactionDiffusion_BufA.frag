@@ -15,6 +15,8 @@ uniform float     iSampleRate;
 
 uniform vec2      uTexelSize;
 
+uniform float intensity;
+
 // inputs
 in vec2 vTexCoord;
 
@@ -115,7 +117,7 @@ void main( void )
     
     // Stochastic decay. Ie: A differention equation, influenced by noise.
     // You need the decay, otherwise things would keep increasing, which in this case means a white screen.
-    float newReactDiff = tx(uv).x + (noise.z - 0.5)*0.0025 - 0.002;
+    float newReactDiff = tx(uv).x + (noise.z - 0.5)*0.0025 - (0.002 + (0.1-(intensity*0.1)));
     
     // Reaction-diffusion.
     newReactDiff += dot(tx(uv + (noise.xy-0.5)*pw).xy, vec2(1, -1))*0.145;

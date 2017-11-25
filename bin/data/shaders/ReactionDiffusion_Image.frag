@@ -88,7 +88,7 @@ void main( void )
     col = mix(col, col.zyx, clamp(pattern-.2, 0., 1.) );
     
     // Extra color variations.
-    //vec3 col = mix(vec3(c*1.2, pow(c, 8.), pow(c, 2.)), vec3(c*1.3, pow(c, 2.), pow(c, 10.)), pattern );
+    //col = mix(vec3(c*1.2, pow(c, 8.), pow(c, 2.)), vec3(c*1.3, pow(c, 2.), pow(c, 10.)), pattern );
     //vec3 col = mix(vec3(c*1.3, c*c, pow(c, 10.)), vec3(c*c*c, c*sqrt(c), c), pattern );
     
     col -= orig.rbb;

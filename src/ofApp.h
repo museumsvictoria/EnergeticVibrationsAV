@@ -15,6 +15,7 @@
 struct ShaderParams {
     float scale_speed;
     float rot_speed;
+    float grid_offset;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
     float shape_morph;

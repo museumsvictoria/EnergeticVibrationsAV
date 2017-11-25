@@ -8,8 +8,8 @@ int main( ){
     
     ofGLFWWindowSettings settings;
     settings.setGLVersion(4, 1);
-    settings.width = 1920;
-    settings.height = 1000;
+    settings.width =  1280;//1920;
+    settings.height = 800;//1000;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);

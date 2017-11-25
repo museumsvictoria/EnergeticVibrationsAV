@@ -20,4 +20,6 @@ public:
 
     ofShader reaction_shader_bufA;
     ofShader reaction_shader_image;
+    
+    float intensity;
 };

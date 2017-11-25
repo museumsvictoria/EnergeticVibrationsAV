@@ -16,6 +16,7 @@ void ofApp::init(){
     params.circle_motion = 0.0;
     params.scale_speed = 1.0;
     params.rot_speed = 1.0;
+    params.grid_offset = 150.0;
     explode_amount = 0.0;
     
     for(int i = 0; i < NUM_INSTANCES; i++){
@@ -118,6 +119,7 @@ void ofApp::drawGui(ofEventArgs & args){
         if (ofxImGui::BeginTree("Geometry", mainSettings)){
             ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
             ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
+            ImGui::SliderFloat("Grid Offset",&params.grid_offset,0.0,300.0);
             ImGui::SliderFloat("Shape Morph",&params.shape_morph,0.0,1.0);
             ImGui::SliderFloat("Circle Motion",&params.circle_motion,0.0,1.0);
             ImGui::SliderFloat("Explode Scale",&explode_amount,0.0,20.0);
@@ -208,6 +210,10 @@ void ofApp::drawGui(ofEventArgs & args){
             
             ofxImGui::EndTree(mainSettings);
         }
+        if (ofxImGui::BeginTree("REACTION DIFFUSION", mainSettings)){
+            ImGui::SliderFloat("Intensity",&post.reaction_diffusion.intensity,0.0,1.0);
+            ofxImGui::EndTree(mainSettings);
+        }
         if (ofxImGui::BeginTree("ALPHA TRAILS", mainSettings)){
             ImGui::SliderFloat("Delay Amount",&post.trail_delay,0.0,0.99);
             ofxImGui::EndTree(mainSettings);
@@ -266,7 +272,7 @@ void ofApp::draw(){
     // alpha blending is enabled by default,
     // let's see if disabling it will help us a little.
     //ofDisableBlendMode();
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    //ofEnableBlendMode(OF_BLENDMODE_ADD);
     
     tracer.draw();
     
