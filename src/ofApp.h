@@ -7,22 +7,14 @@
 #include "GuiTheme.h"
 #include "PostProcessing.h"
 #include "Primitives.h"
-#include "TranslationPaths.h"
-#include "PathTracer.h"
 
 
 
 struct ShaderParams {
     float scale_speed;
     float rot_speed;
-    float grid_offset;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
-    float shape_morph;
-    float circle_motion;
-    glm::vec2 instance_pos_grid[NUM_INSTANCES];
-    glm::vec2 instance_pos_ngon[NUM_INSTANCES];
-    glm::vec2 instance_pos_wave[NUM_INSTANCES];
 };
 
 class ofApp : public ofBaseApp{
@@ -36,10 +28,6 @@ class ofApp : public ofBaseApp{
     
         void setupGui();
         void drawGui(ofEventArgs & args);
-    
-        //Instance position
-        void update_instance_positions();
-    
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -53,8 +41,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        TranslationPaths paths;
-        PathTracer tracer;
         Primitives primitives;
     
         ofEasyCam mCam1;
@@ -70,17 +56,6 @@ class ofApp : public ofBaseApp{
     ofxImGui::Gui gui;
     GuiTheme gui_theme;
     
-    GLuint directionButtonOnID;
-    GLuint directionButtonOffID;
-    
-    GLuint mirrorButtonOnID;
-    GLuint mirrorButtonOffID;
-    
-    GLuint invertButtonOnID;
-    GLuint invertButtonOffID;
-    
-    GLuint lockButtonOnID;
-    GLuint lockButtonOffID;
     
         // Shader Params
         float explode_amount;

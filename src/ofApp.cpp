@@ -12,11 +12,8 @@
 
 //--------------------------------------------------------------
 void ofApp::init(){
-    params.shape_morph = 0.0;
-    params.circle_motion = 0.0;
     params.scale_speed = 1.0;
     params.rot_speed = 1.0;
-    params.grid_offset = 150.0;
     explode_amount = 0.0;
     
     for(int i = 0; i < NUM_INSTANCES; i++){
@@ -67,18 +64,7 @@ void ofApp::setupGui(){
     
     //load theme
     gui_theme.init_theme();
-    
-    directionButtonOnID = gui.loadImage("Images/SHM/directionon.png");
-    directionButtonOffID = gui.loadImage("Images/SHM/direction.png");
-    
-    mirrorButtonOnID = gui.loadImage("Images/SHM/mirroron.png");
-    mirrorButtonOffID = gui.loadImage("Images/SHM/mirror.png");
-    
-    invertButtonOnID = gui.loadImage("Images/SHM/inverton.png");
-    invertButtonOffID = gui.loadImage("Images/SHM/invert.png");
-    
-    lockButtonOnID = gui.loadImage("Images/SHM/lockon.png");
-    lockButtonOffID = gui.loadImage("Images/SHM/lock.png");
+
 }
 
 //--------------------------------------------------------------
@@ -101,8 +87,6 @@ void ofApp::update(){
     //Post Processing
     post.update();
     
-    update_instance_positions();
-    tracer.traceShape(paths.wave.shape);
 }
 
 //--------------------------------------------------------------
@@ -119,9 +103,6 @@ void ofApp::drawGui(ofEventArgs & args){
         if (ofxImGui::BeginTree("Geometry", mainSettings)){
             ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
             ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
-            ImGui::SliderFloat("Grid Offset",&params.grid_offset,0.0,300.0);
-            ImGui::SliderFloat("Shape Morph",&params.shape_morph,0.0,1.0);
-            ImGui::SliderFloat("Circle Motion",&params.circle_motion,0.0,1.0);
             ImGui::SliderFloat("Explode Scale",&explode_amount,0.0,20.0);
 
             if(ImGui::SmallButton("Random Primitive")){
@@ -130,74 +111,6 @@ void ofApp::drawGui(ofEventArgs & args){
             ImGui::SameLine();
             if(ImGui::SmallButton("Random Mesh Res")){
                 primitives.randomise_mesh_resolution();
-            }
-            
-            ofxImGui::EndTree(mainSettings);
-        }
-        
-        if (ofxImGui::BeginTree("WAVEFORM", mainSettings)) {
-            // Radio Toggle
-            vector<string> osc_shapes = {"sine","tri","saw","ramp","sqr"};
-            int osc = paths.wave.get_shm_oscillator();
-            ImGui::Columns(osc_shapes.size());
-            for(int i = 0; i < osc_shapes.size(); i++){
-                if(ImGui::RadioButton(ofxImGui::GetUniqueName(osc_shapes[i]), &osc, i)){
-                    paths.wave.setOscillator(osc);
-                }
-                ImGui::NextColumn();
-            }
-            ImGui::Columns(1);
-            
-            // Params
-            float begin = paths.wave.get_shm_position_offset()*100;
-            float end = paths.wave.get_shm_amplitude()*100;
-            if(ImGui::DragFloatRange2("Amplitude", &begin, &end, 0.1f, 0.0f, 100.0f, "Min: %.1f %%", "Max: %.1f %%")){
-                paths.wave.setPositionOffset(begin/100);
-                paths.wave.setAmplitude(end/100);
-            }
-            
-            float period = paths.wave.get_shm_period();
-            if(ImGui::SliderFloat("period",&period,0.0,1.0)){
-                paths.wave.setPeriod(period);
-            }
-            
-            float offset_speed = paths.wave.get_shm_offset_speed();
-            if(ImGui::SliderFloat("offset speed",&offset_speed,0.0,0.02)){
-                paths.wave.setOffsetSpeed(offset_speed);
-            }
-            
-            int offset_pattern = paths.wave.get_shm_offset_pattern();
-            if(ImGui::SliderInt("offset pattern",&offset_pattern,0,12)){
-                paths.wave.setOffsetPattern(offset_pattern);
-            }
-            
-            // Settings
-            int size = 20;
-            bool pressed = paths.wave.get_shm_direction();
-            ImTextureID texID = (ImTextureID)(uintptr_t) (pressed ? directionButtonOnID : directionButtonOffID);
-            if(ImGui::ImageButton(texID, ImVec2(size,size))){
-                paths.wave.setDirection(!pressed);
-            }
-            
-            ImGui::SameLine();
-            pressed = paths.wave.get_shm_mirror_mode();
-            texID = (ImTextureID)(uintptr_t) (pressed ? mirrorButtonOnID : mirrorButtonOffID);
-            if(ImGui::ImageButton(texID, ImVec2(size,size))){
-                paths.wave.setMirrorMode(!pressed);
-            }
-            
-            ImGui::SameLine();
-            pressed = paths.wave.get_shm_invert();
-            texID = (ImTextureID)(uintptr_t) (pressed ? invertButtonOnID : invertButtonOffID);
-            if(ImGui::ImageButton(texID, ImVec2(size,size))){
-                paths.wave.setInvert(!pressed);
-            }
-            
-            ImGui::SameLine();
-            pressed = paths.wave.get_shm_phaseLock();
-            texID = (ImTextureID)(uintptr_t) (pressed ? lockButtonOnID : lockButtonOffID);
-            if(ImGui::ImageButton(texID, ImVec2(size,size))){
-                paths.wave.setPhaseLock(!pressed);
             }
             
             ofxImGui::EndTree(mainSettings);
@@ -224,13 +137,6 @@ void ofApp::drawGui(ofEventArgs & args){
     this->gui.end();
 }
 
-//--------------------------------------------------------------
-void ofApp::update_instance_positions(){
-    paths.update();
-    
-    paths.set_grid_path(params.instance_pos_grid);
-    paths.set_wave_path(params.instance_pos_wave);
-}
 
 //--------------------------------------------------------------
 void ofApp::draw(){
@@ -266,15 +172,13 @@ void ofApp::draw(){
     }
     
     // begin scene to post process
-    post.dof_begin();
+    //post.dof_begin();
     mCam1.begin();
     
     // alpha blending is enabled by default,
     // let's see if disabling it will help us a little.
     //ofDisableBlendMode();
     //ofEnableBlendMode(OF_BLENDMODE_ADD);
-    
-    tracer.draw();
     
     // also, let's get rid of the back faces.
     glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
@@ -292,7 +196,6 @@ void ofApp::draw(){
         mShd1->begin();
         mShd1->setUniform1i("is_active", 0);
         mShd1->setUniform1f("tick_position", (int)(ofGetElapsedTimef() * 4.4) % NUM_INSTANCES);
-        mShd1->setUniform1i("tile_length", TILE_LENGTH);
         mShd1->setUniform1f("time", ofGetElapsedTimef());
         mShd1->setUniform1f("explode_amount", explode_amount);
         mShd1->setUniformBuffer("ShaderParams", params);
@@ -314,15 +217,12 @@ void ofApp::draw(){
 
     mCam1.end();
     
-    post.dof_end();
+    //post.dof_end();
 
-    post.draw();
-    
-    mCam1.begin();
-    tracer.draw();
-    mCam1.end();
+    //post.draw();
+
     ofSetColor(255,50);
-    post.depthOfField.getFbo().draw(0, 0);
+    //post.depthOfField.getFbo().draw(0, 0);
     
     // draw our frame rate
     ofSetColor(ofColor::white);

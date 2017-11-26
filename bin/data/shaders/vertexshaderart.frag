@@ -68,6 +68,7 @@ void addRimLighting(in vec3 N, in vec3 viewVector, inout vec3 rimLight_){
 // See if I can bring over tri planar or flat shading algorithm
 // to then create my own textures. 
 
+// have a look at this technique http://greggman.github.io/doodles/lightball03.html
 // ----------------------------------------------------------------------
 void main(){
     
@@ -94,10 +95,11 @@ void main(){
         fragColor = vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0);
     }
     
+    /*
     if(tick_position == vertex.instance_ID){
         fragColor = vec4(1.0,0.0,0.0,1.0);
     }
-
+*/
     
     if(vertex.position.y < -0.3 && vertex.position.y > 0.3){
         fragColor = vec4(1.0,0.0,0.0,1.0);

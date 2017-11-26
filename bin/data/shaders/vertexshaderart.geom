@@ -52,17 +52,31 @@ void main() {
     vec3 ac = gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz;
     vec3 normal = normalize(cross(ab, ac));
     
-    float explode_factor = .20;
+    float explode_factor = 2.0;
+
+
+    float lfo_scale = abs(sin(gl_PrimitiveIDIn+time*01.5));
+    mat4 scaleMatrix;
+    scaleMatrix[0] = vec4(lfo_scale,0,0,0);
+    scaleMatrix[1] = vec4(0,lfo_scale,0,0); // we use translation value here
+    scaleMatrix[2] = vec4(0,0,lfo_scale,0);
+    scaleMatrix[3] = vec4(0,0,0,1);
     
 //    //------ Pass Through
-//    for (int i = 0; i < gl_in.length(); i++)
-//    {
-//        gl_Position = gl_in[i].gl_Position + vec4(explode_factor * normal,0.0);
-//        EmitVertex();
-//    }
-//    EndPrimitive();
+    for (int i = 0; i < gl_in.length(); i++)
+    {
+        //gl_Position = gl_in[i].gl_Position * 0.91 + (center*0.1);// + vec4(explode_factor * normal,0.0);
+        //gl_Position = (gl_in[i].gl_Position * (0.5+abs(sin(time))*2.5)) + center*1.0;
+        
+        float scaleFactor = 0.5;//0.005;
+        gl_Position =  (gl_in[i].gl_Position / (0.5+(lfo_scale*.5 )))  + vec4(normal,1.0) * scaleMatrix;//* scaleFactor;
+        
+        EmitVertex();
+    }
+    EndPrimitive();
     
 
+    /*
     //------ Face normal
     //
     vec3 P0 = gl_in[0].gl_Position.xyz;
@@ -98,11 +112,12 @@ void main() {
             
             vec4 face = (P + vec4(N * normal_length * scale,1.0)) + vec4(N * vec3(0.05, 0.05, 0.05),1.0);
             gl_Position = face;
+
+
             EmitVertex();
         }
         EndPrimitive();
-        
     }
-    
+    */
     
 }

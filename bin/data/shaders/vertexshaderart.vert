@@ -55,21 +55,14 @@ out mat4 perInstanceModelViewMatrix;
 
 uniform float time;
 uniform int is_active;
-uniform int tile_length;
 uniform sampler2D tex_unit_0; 		// 2d texture
 
 
 uniform ShaderParams {
     float scale_speed;
     float rot_speed;
-    float grid_offset;
     float transducer_speed[INSTANCES_PER_SHM];
     int active_chair[INSTANCES_PER_SHM];
-    float shape_morph;
-    float circle_motion;
-    vec2 instance_pos_grid[INSTANCES_PER_SHM];
-    vec2 instance_pos_ngon[INSTANCES_PER_SHM];
-    vec2 instance_pos_wave[INSTANCES_PER_SHM];
 }params;
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -104,38 +97,11 @@ void main()
 	// We use this, to manipulate each instance individually.
 	mat4 perInstanceModelMatrix;
 
-    // Arrange the objects in a grid
-//    float shm_instance_idx = mod(gl_InstanceID, INSTANCES_PER_SHM);
-    int shm_instance_idx = gl_InstanceID % INSTANCES_PER_SHM;
-    int shm_idx = gl_InstanceID / INSTANCES_PER_SHM;
-    int block_idx = shm_idx / SHM_PER_BLOCK;
-    int block_shm_idx = block_idx % SHM_PER_BLOCK;
-    int stack_idx = block_idx / SHM_PER_BLOCK;
-    float z_res = mod(floor(remap(gl_InstanceID,0,INSTANCES_PER_SHM*(SHM_PER_BLOCK*1),0.0,SHM_PER_BLOCK)),SHM_PER_BLOCK);
-
-    float distance_offset = sin(time*0.02)*params.grid_offset;
-    vec4 translation_wave;
-    translation_wave.x = params.instance_pos_wave[shm_instance_idx].x + (((-SHM_PER_BLOCK/2) + block_shm_idx) * (distance_offset*2.0)); //params.instance_pos_wave[int(idx)].x
-    translation_wave.y = params.instance_pos_wave[shm_instance_idx].y + (((-SHM_PER_BLOCK/2) + stack_idx) * distance_offset);
-    translation_wave.z = z_res * distance_offset; 					// translate y
-    translation_wave.w = 1;
-    
-    // Arrange the objects in a grid
-    vec4 translation_grid;
-    translation_grid.x = params.instance_pos_grid[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
-    translation_grid.y = params.instance_pos_grid[gl_InstanceID].y;;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
-    translation_grid.z = 0; 					// translate y
-    translation_grid.w = 1;						// needs to remain 1.
-    
-    // Try to make a circle using cos and sin
-    vec4 translation_circle;
-    float r = (3.0 - params.circle_motion) + sin(1. + gl_InstanceID  / 3. * time * .4) * params.circle_motion;
-    translation_circle.x = r * cos(remap(gl_InstanceID,0.0,INSTANCES_PER_SHM,0.0,TWO_PI));
-    translation_circle.y = r * sin(remap(gl_InstanceID,0.0,INSTANCES_PER_SHM,0.0,TWO_PI));
-    translation_circle.z = 0;
-    translation_circle.w = 1;						// needs to remain 1.
-
-    vec4 translation = translation_wave;// mix(translation_wave,translation_grid,params.shape_morph);
+    vec4 translation;
+    translation.x = 0.;
+    translation.y = 0.;
+    translation.z = 1;
+    translation.w = 1; // needs to remain 1.
     
     
     //translation.y = atan(translation.z/128.0,translation.x/128.0);
@@ -154,7 +120,8 @@ void main()
     // let's take a step back, and sample the colors for each of our boxes using
     // a texture. First, get the correct sample coordinates.
     
-    vec2 sampleCoords = vec2(vec2(translation.x,translation.y) / (tile_length/2));
+//    vec2 sampleCoords = vec2(vec2(translation.x,translation.y) / (tile_length/2));
+    vec2 sampleCoords = vec2(translation.x,translation.y);
     
     // let's just visualise these to see if they are correct!
     vertex.color.b = 0;
@@ -188,7 +155,7 @@ void main()
     
     
     // nice! now, let's move everything apart a little.
-    translation.xyz *= 3;
+    //translation.xyz *= 3;
     
     // let's contain it to elements that sit on a circle,
     // where the distance to the midpoint is less than 128.0
@@ -199,9 +166,11 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float lfo_scale = remap(sin(1. + shm_instance_idx  / 3. * time * (1.2*params.scale_speed)),-1.0,1.0,0.0,-2.);
+    // pass triangleId to the fragment shader
+    float v_triangleId = floor(gl_VertexID / 3.0) + 0.05;
+    float lfo_scale = 4.0;// + sin((v_triangleId*0.2) * time);// remap(sin(time * (1.2*params.scale_speed)),-1.0,1.0,0.0,-2.);
     
-    if(params.active_chair[gl_InstanceID] == 1) lfo_scale = remap(sin(time * params.transducer_speed[gl_InstanceID]),-1.0,1.0,-2.0,0.0);
+    //if(params.active_chair[gl_InstanceID] == 1) lfo_scale = remap(sin(time * params.transducer_speed[gl_InstanceID]),-1.0,1.0,-2.0,0.0);
     
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(lfo_scale,0,0,0);
@@ -211,7 +180,7 @@ void main()
     
     // Bonus Points: translation alone too boring?
     // how about squeezing in a rotation matrix?
-    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID / tile_length + (HALF_PI+time*(3.0*params.rot_speed)));
+    mat4 perInstanceRotationMatrix = rotationMatrix(vec3(1,1,0), gl_InstanceID + (HALF_PI+time*(3.0*params.rot_speed)));
     
     // We move the box, before we even apply all the other matrices.
     // This works, because the next line really says:
