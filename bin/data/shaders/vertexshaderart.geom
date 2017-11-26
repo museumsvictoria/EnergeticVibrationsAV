@@ -69,7 +69,8 @@ void main() {
         //gl_Position = (gl_in[i].gl_Position * (0.5+abs(sin(time))*2.5)) + center*1.0;
         
         float scaleFactor = 0.5;//0.005;
-        gl_Position =  (gl_in[i].gl_Position / (0.5+(lfo_scale*.5 )))  + vec4(normal,1.0) * scaleMatrix;//* scaleFactor;
+//        gl_Position =  (gl_in[i].gl_Position * (0.5+(lfo_scale*.5 )))  + vec4(normal,1.0) * scaleMatrix;//* scaleFactor;
+        gl_Position =  mix(gl_in[i].gl_Position, vec4(normal*0.55,1.0), abs(sin(time*0.5)));//* scaleFactor;
         
         EmitVertex();
     }
