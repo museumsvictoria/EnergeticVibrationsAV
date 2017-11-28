@@ -172,7 +172,7 @@ void ofApp::draw(){
     }
     
     // begin scene to post process
-    //post.dof_begin();
+   // post.dof_begin();
     mCam1.begin();
     
     // alpha blending is enabled by default,
@@ -197,6 +197,7 @@ void ofApp::draw(){
         mShd1->setUniform1i("is_active", 0);
         mShd1->setUniform1f("tick_position", (int)(ofGetElapsedTimef() * 4.4) % NUM_INSTANCES);
         mShd1->setUniform1f("time", ofGetElapsedTimef());
+        mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
         mShd1->setUniform1f("explode_amount", explode_amount);
         mShd1->setUniformBuffer("ShaderParams", params);
         mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
@@ -206,6 +207,7 @@ void ofApp::draw(){
         
         mShd1->begin();
         mShd1->setUniform1i("is_active", 1);
+        mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef()*0.5)*255));
         primitives.draw_active_mesh();
         mShd1->end();
         

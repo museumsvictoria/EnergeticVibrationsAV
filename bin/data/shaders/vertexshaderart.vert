@@ -52,6 +52,7 @@ out VertexAttrib {
 
 out mat4 perInstanceModelViewMatrix;
 
+out mat4 vertexTransformMatrix;
 
 uniform float time;
 uniform int is_active;
@@ -190,8 +191,8 @@ void main()
     perInstanceModelViewMatrix = modelViewMatrix * perInstanceModelMatrix * scaleMatrix;
 
 	//vertex.position = modelViewMatrix * perInstanceModelMatrix  * perInstanceRotationMatrix *position;
-    if(params.active_chair[gl_InstanceID] == is_active)
-    vertex.position = perInstanceModelViewMatrix * perInstanceRotationMatrix * position;
+    //if(params.active_chair[gl_InstanceID] == is_active)
+    vertex.position = projectionMatrix * perInstanceModelViewMatrix * perInstanceRotationMatrix * position;
 
     // ---------------------------
     // # Let's calculate per-vertex normals:
@@ -200,5 +201,9 @@ void main()
     // contribute to the normal matrix.
     vertex.normal =  mat3(translatedModelView) * normal;
 
-	gl_Position = projectionMatrix * vertex.position;
+//    gl_Position = projectionMatrix*cameraMatrix*modelMatrix*vec4(vertex.xyz,1.0)+ normal*scaleFactor;
+
+	gl_Position = vertex.position;
+    vertexTransformMatrix = projectionMatrix * perInstanceModelViewMatrix;
+
 }

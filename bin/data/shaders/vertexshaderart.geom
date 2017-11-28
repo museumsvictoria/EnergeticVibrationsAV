@@ -6,6 +6,7 @@
 ************************************************/
 
 #version 330
+#pragma include <of_default_uniforms.glsl>
 
 layout(triangles) in;
 layout(triangle_strip, max_vertices=3) out;
@@ -36,10 +37,11 @@ out VertexAttrib {
 
 //uniform mat4 gxl3d_ModelViewProjectionMatrix;
 //in mat4 perInstanceModelViewMatrix;
+//out mat4 perInstanceModelViewMatrix;
 //uniform mat4 modelViewMatrix;
+in mat4 vertexTransformMatrix[];
 
 void main() {
-    
     vertexOut.position = vertex[0].position;
     vertexOut.color = vertex[0].color;
     vertexOut.normal = vertex[0].normal;
@@ -55,7 +57,7 @@ void main() {
     float explode_factor = 2.0;
 
 
-    float lfo_scale = abs(sin(gl_PrimitiveIDIn+time*01.5));
+    float lfo_scale = abs(sin((gl_PrimitiveIDIn*0.058)+time*01.5));
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(lfo_scale,0,0,0);
     scaleMatrix[1] = vec4(0,lfo_scale,0,0); // we use translation value here
@@ -68,10 +70,22 @@ void main() {
         //gl_Position = gl_in[i].gl_Position * 0.91 + (center*0.1);// + vec4(explode_factor * normal,0.0);
         //gl_Position = (gl_in[i].gl_Position * (0.5+abs(sin(time))*2.5)) + center*1.0;
         
-        float scaleFactor = 0.5;//0.005;
+        float scaleFactor = abs(sin(time))*14.0;//0.005;
 //        gl_Position =  (gl_in[i].gl_Position * (0.5+(lfo_scale*.5 )))  + vec4(normal,1.0) * scaleMatrix;//* scaleFactor;
-        gl_Position =  mix(gl_in[i].gl_Position, vec4(normal*0.55,1.0), abs(sin(time*0.5)));//* scaleFactor;
         
+        //        gl_Position = vertex[i].position  * scaleFactor;
+        //        gl_Position = projectionMatrix*cameraMatrix*modelMatrix*vec4(vertex.xyz,1.0)+ normal*scaleFactor;
+        
+        //gl_Position = mix(gl_in[i].gl_Position, vec4(normal.xyz,1.0), abs(sin(time*0.5)));//* scaleFactor; // THIS ONE WORKS BEST SO FAR
+        
+        vec4 tri_height = mix(vertex[i].position, vertexTransformMatrix[i] * vertex[i].position + vec4(normal.xyz,1.0), lfo_scale);
+
+        vec4 tri_size = mix(vertex[i].position, vertexTransformMatrix[i] * vec4(normal.xyz,1.0), lfo_scale);
+        
+        gl_Position = mix(tri_height, tri_size, abs(sin((gl_PrimitiveIDIn*0.008)+time*0.1)));
+
+
+       // if(lfo_scale < 0.1 + abs(sin(time*0.2)))
         EmitVertex();
     }
     EndPrimitive();

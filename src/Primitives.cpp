@@ -72,8 +72,9 @@ void Primitives::randomise_mesh_resolution(){
 
 //--------------------------------------------------------------
 void Primitives::randomise_objects(){
-    idle_idx = (int)ofRandom(primitives.size());
-    active_idx = (int)ofRandom(primitives.size());
+    int random = (int)ofRandom(primitives.size());
+    idle_idx = random;
+    active_idx = random;
     idle_primitive_mesh = primitives[idle_idx].getMesh();
     active_primitive_mesh = primitives[active_idx].getMesh();
 }

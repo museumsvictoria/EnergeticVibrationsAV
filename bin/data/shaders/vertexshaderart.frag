@@ -31,8 +31,10 @@ const float PI = 3.141592653589793;
 uniform mat4 modelViewMatrix;
 uniform int is_active;
 uniform float tick_position;
+uniform float alpha;
+uniform float time;
 
-in mat4 perInstanceModelViewMatrix;
+//in mat4 perInstanceModelViewMatrix;
 
 in VertexAttrib {
     vec4 position;
@@ -81,7 +83,7 @@ void main(){
     addRimLighting(N, vec3(0,0,1), rimLight);
 
     if(is_active == 1){
-        fragColor = vec4(0,0,0,1);
+        fragColor = vec4(0,0,0,abs(sin(time*0.3)));
 
         fragColor.rgb += boxColor;
         
@@ -92,7 +94,8 @@ void main(){
 
         fragColor.rgb += clamp(glowAmt*0.4,0.,1.)*vec3(.3,.5,.7);
     } else {
-        fragColor = vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0);
+        vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
+        fragColor = tex*vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,abs(sin(time)));
     }
     
     /*
@@ -102,7 +105,7 @@ void main(){
 */
     
     if(vertex.position.y < -0.3 && vertex.position.y > 0.3){
-        fragColor = vec4(1.0,0.0,0.0,1.0);
+        fragColor = vec4(1.0,0.0,0.0,alpha);
     }
     
     //fragColor.rgb += vertex.normal * vertex.height;
