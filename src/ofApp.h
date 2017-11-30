@@ -52,15 +52,20 @@ class ofApp : public ofBaseApp{
 
         PostProcessing post;
     
-    ///------------- GUI
-    ofxImGui::Gui gui;
-    GuiTheme gui_theme;
+        ///------------- GUI
+        ofxImGui::Gui gui;
+        GuiTheme gui_theme;
     
     
         // Shader Params
         float explode_amount;
     
-    // Camera
-    float cam_near_clip;
-    float cam_far_clip;
+        // Camera
+        float cam_near_clip;
+        float cam_far_clip;
+    
+        // OPEN GL STATE
+    bool toggle_post_processing;
+    bool toggle_blending;
+    bool toggle_backface_cull;
 };

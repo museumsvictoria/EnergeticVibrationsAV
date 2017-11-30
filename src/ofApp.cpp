@@ -16,6 +16,10 @@ void ofApp::init(){
     params.rot_speed = 1.0;
     explode_amount = 0.0;
     
+    toggle_post_processing = false;
+    toggle_blending = false;
+    toggle_backface_cull = true;
+    
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
         params.active_chair[i] = 0;
@@ -85,8 +89,9 @@ void ofApp::update(){
     mCam1.setFarClip(cam_far_clip);
     
     //Post Processing
-    post.update();
-    
+    if(toggle_post_processing){
+        post.update();
+    }
 }
 
 //--------------------------------------------------------------
@@ -131,6 +136,12 @@ void ofApp::drawGui(ofEventArgs & args){
             ImGui::SliderFloat("Delay Amount",&post.trail_delay,0.0,0.99);
             ofxImGui::EndTree(mainSettings);
         }
+        if (ofxImGui::BeginTree("GL STATE", mainSettings)){
+            ImGui::Checkbox("Post Processing", &toggle_post_processing);
+            ImGui::Checkbox("GL Blending Add", &toggle_blending);
+            ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
+            ofxImGui::EndTree(mainSettings);
+        }
     }
     ofxImGui::EndWindow(mainSettings);
     
@@ -172,23 +183,29 @@ void ofApp::draw(){
     }
     
     // begin scene to post process
-   // post.dof_begin();
+    if(toggle_post_processing){
+        post.dof_begin();
+    }
+    
     mCam1.begin();
     
     // alpha blending is enabled by default,
     // let's see if disabling it will help us a little.
     //ofDisableBlendMode();
-    //ofEnableBlendMode(OF_BLENDMODE_ADD);
+    if(toggle_blending){
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+    }
     
     // also, let's get rid of the back faces.
-    glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
-    glFrontFace(GL_CCW);
+    if(toggle_backface_cull){
+        glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
+        glFrontFace(GL_CCW);
+    }
+    
     // tell GLSL to use the first vertex for flat shading the whole triangle, instead
     // of the last one, as would be the default.
-    
     glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
     // and enable depth testing.
-    
     ofEnableDepthTest();
     
     if (mShd1) {
@@ -210,25 +227,24 @@ void ofApp::draw(){
         mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef()*0.5)*255));
         primitives.draw_active_mesh();
         mShd1->end();
-        
     }
+    
     ofDisableDepthTest();
     
-    glDisable(GL_CULL_FACE);
+    if(toggle_backface_cull){
+        glDisable(GL_CULL_FACE);
+    }
+    
     ofEnableAlphaBlending();
 
     mCam1.end();
     
-    //post.dof_end();
-
-    //post.draw();
-
-    ofSetColor(255,50);
-    //post.depthOfField.getFbo().draw(0, 0);
-    
-    // draw our frame rate
-    ofSetColor(ofColor::white);
-    ofDrawBitmapString(ofToString(ofGetFrameRate(),2,4,' '), ofGetWidth() - 4 * 8 - 50, 16 + 20);
+    if(toggle_post_processing){
+        post.dof_end();
+        post.draw();
+        ofSetColor(255,50);
+        post.depthOfField.getFbo().draw(0, 0);
+    }
 }
 
 //--------------------------------------------------------------
