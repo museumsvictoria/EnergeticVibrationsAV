@@ -29,6 +29,12 @@ void ofApp::init(){
     geom_effect_lfo_speed = 0.1;
     geom_effect_lfo_amp = 1.0;
     
+    //Fragment Shader
+    xray_mix = 1.0;
+    xray_lfo_offset = 0.0;
+    xray_lfo_speed = 0.5;
+    xray_lfo_amp = 1.0;
+    
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
         params.active_chair[i] = 0;
@@ -143,7 +149,15 @@ void ofApp::drawGui(ofEventArgs & args){
             ofxImGui::EndTree(mainSettings);
         }
 
-        
+        if (ofxImGui::BeginTree("Fragment Shader", mainSettings)){
+            ImGui::SliderFloat("Xray Offset",&xray_lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Xray Speed",&xray_lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Xray Amp",&xray_lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Xray Mix",&xray_mix,0.0,1.0);
+            ImGui::Separator();
+            
+            ofxImGui::EndTree(mainSettings);
+        }
         
         
         
@@ -251,17 +265,20 @@ void ofApp::draw(){
         mShd1->setUniform1f("geom_lfo_offset", geom_lfo_offset);
         mShd1->setUniform1f("geom_lfo_speed", geom_lfo_speed);
         mShd1->setUniform1f("geom_lfo_amp", geom_lfo_amp);
-        mShd1->setUniform1f("geom_effect_mix", geom_effect_mix);
         mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect_lfo_offset);
         mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect_lfo_speed);
         mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect_lfo_amp);
+        mShd1->setUniform1f("geom_effect_mix", geom_effect_mix);
         
         primitives.draw_idle_mesh();
         mShd1->end();
         
         mShd1->begin();
         mShd1->setUniform1i("is_active", 1);
-        mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef()*0.5)*255));
+        mShd1->setUniform1f("xray_lfo_offset", xray_lfo_offset);
+        mShd1->setUniform1f("xray_lfo_speed", xray_lfo_speed);
+        mShd1->setUniform1f("xray_lfo_amp", xray_lfo_amp);
+        mShd1->setUniform1f("xray_mix", xray_mix);
         primitives.draw_active_mesh();
         mShd1->end();
     }

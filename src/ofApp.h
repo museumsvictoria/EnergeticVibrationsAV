@@ -78,4 +78,10 @@ class ofApp : public ofBaseApp{
     float geom_effect_lfo_offset;
     float geom_effect_lfo_speed;
     float geom_effect_lfo_amp;
+    
+    // FRAGMENT SHADER
+    float xray_mix;
+    float xray_lfo_offset;
+    float xray_lfo_speed;
+    float xray_lfo_amp;
 };

@@ -7,6 +7,7 @@
 
 #version 330
 #pragma include <of_default_uniforms.glsl>
+#pragma include "Util/easing_lfo.glsl"
 
 layout(triangles) in;
 layout(triangle_strip, max_vertices=3) out;
@@ -16,9 +17,11 @@ layout(triangle_strip, max_vertices=3) out;
 uniform float time;
 uniform float explode_amount;
 
+uniform int geom_lfo_type;
 uniform float geom_lfo_offset;
 uniform float geom_lfo_speed;
 uniform float geom_lfo_amp;
+uniform int geom_effect_lfo_type;
 uniform float geom_effect_lfo_offset;
 uniform float geom_effect_lfo_speed;
 uniform float geom_effect_lfo_amp;
@@ -43,6 +46,7 @@ out VertexAttrib {
     vec2 texcoord;
     float height;
     float instance_ID;
+    float primitive_ID;
 } vertexOut;
 
 //uniform mat4 gxl3d_ModelViewProjectionMatrix;
@@ -58,6 +62,8 @@ void main() {
     vertexOut.texcoord = vertex[0].texcoord;
     vertexOut.height = vertex[0].height;
     vertexOut.instance_ID = vertex[0].instance_ID;
+    vertexOut.primitive_ID = gl_PrimitiveIDIn;
+    
   
     // Calculate two vectors in the plane of the input triangle
     vec3 ab = gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz;
@@ -67,10 +73,10 @@ void main() {
     float explode_factor = 2.0;
 
 
-    float effect_lfo = abs(sin((gl_PrimitiveIDIn*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;
+    float effect_lfo = abs(easing_lfo(29,((gl_PrimitiveIDIn*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp);
 
     
-    float lfo_scale = abs(fract((gl_PrimitiveIDIn*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*2.0)))*geom_lfo_amp;
+    float lfo_scale = abs(easing_lfo(28,((gl_PrimitiveIDIn*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*2.0)))*geom_lfo_amp);
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(lfo_scale,0,0,0);
     scaleMatrix[1] = vec4(0,lfo_scale,0,0); // we use translation value here

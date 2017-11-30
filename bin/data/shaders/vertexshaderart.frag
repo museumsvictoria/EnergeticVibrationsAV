@@ -31,8 +31,16 @@ const float PI = 3.141592653589793;
 uniform mat4 modelViewMatrix;
 uniform int is_active;
 uniform float tick_position;
-uniform float alpha;
 uniform float time;
+
+#pragma include "Util/easing_lfo.glsl"
+
+uniform float xray_mix;
+uniform float xray_lfo_offset;
+uniform float xray_lfo_speed;
+uniform float xray_lfo_amp;
+
+
 
 //in mat4 perInstanceModelViewMatrix;
 
@@ -43,6 +51,7 @@ in VertexAttrib {
     vec2 texcoord;
     float height;
     float instance_ID;
+    float primitive_ID;
 } vertex;
 
 out vec4 fragColor;
@@ -76,14 +85,20 @@ void main(){
     
     float glowAmt = 0.5;
     
+    
     vec3 boxColor = getHeatmapRGBColourForNormalisedValue(vertex.height / 6.0);
     vec3 N = normalize(vertex.normal);
     
     vec3 rimLight = vec3(0);
     addRimLighting(N, vec3(0,0,1), rimLight);
 
+    float alpha_fill_lfo = easing_lfo(19,((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
+    
+    float alpha_wireframe_lfo = easing_lfo(28,((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
+
+    
     if(is_active == 1){
-        fragColor = vec4(0,0,0,abs(sin(time*0.3)));
+        fragColor = vec4(0,0,0,mix(xray_mix,alpha_wireframe_lfo,xray_lfo_amp));
 
         fragColor.rgb += boxColor;
         
@@ -96,7 +111,7 @@ void main(){
         fragColor.rgb *= vec3(0.3,0.5,1.0);
     } else {
         vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
-        fragColor = tex*vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,abs(sin(time)));
+        fragColor = tex*vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
     }
     
     /*
@@ -106,7 +121,7 @@ void main(){
 */
     
     if(vertex.position.y < -0.3 && vertex.position.y > 0.3){
-        fragColor = vec4(1.0,0.0,0.0,alpha);
+        fragColor = vec4(1.0,0.0,0.0,alpha_fill_lfo);
     }
     
     //fragColor.rgb += vertex.normal * vertex.height;
