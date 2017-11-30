@@ -68,4 +68,14 @@ class ofApp : public ofBaseApp{
     bool toggle_post_processing;
     bool toggle_blending;
     bool toggle_backface_cull;
+    
+    // GEOMETERY SHADER
+    float geom_lfo_offset;
+    float geom_lfo_speed;
+    float geom_lfo_amp;
+    
+    float geom_effect_mix;
+    float geom_effect_lfo_offset;
+    float geom_effect_lfo_speed;
+    float geom_effect_lfo_amp;
 };

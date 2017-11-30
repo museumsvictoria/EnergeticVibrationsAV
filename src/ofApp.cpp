@@ -13,12 +13,21 @@
 //--------------------------------------------------------------
 void ofApp::init(){
     params.scale_speed = 1.0;
-    params.rot_speed = 1.0;
+    params.rot_speed = 0.3;
     explode_amount = 0.0;
     
     toggle_post_processing = false;
     toggle_blending = false;
     toggle_backface_cull = true;
+    
+    //Geometry shader
+    geom_lfo_offset = 0.58;
+    geom_lfo_speed = 0.5;
+    geom_lfo_amp = 1.0;
+    geom_effect_mix = 1.0;
+    geom_effect_lfo_offset = 0.2;
+    geom_effect_lfo_speed = 0.1;
+    geom_effect_lfo_amp = 1.0;
     
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
@@ -120,7 +129,24 @@ void ofApp::drawGui(ofEventArgs & args){
             
             ofxImGui::EndTree(mainSettings);
         }
+        
+        if (ofxImGui::BeginTree("Geometry Shader", mainSettings)){
+            ImGui::SliderFloat("Geom LFO Offset",&geom_lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Speed",&geom_lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Amp",&geom_lfo_amp,0.0,1.0);
+            ImGui::Separator();
+            ImGui::SliderFloat("Geom Efct Offset",&geom_effect_lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Speed",&geom_effect_lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Amp",&geom_effect_lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Mix",&geom_effect_mix,0.0,1.0);
 
+            ofxImGui::EndTree(mainSettings);
+        }
+
+        
+        
+        
+        
         if (ofxImGui::BeginTree("DOF", mainSettings)){
             ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
             ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,0.0,600.0);
@@ -219,6 +245,17 @@ void ofApp::draw(){
         mShd1->setUniformBuffer("ShaderParams", params);
         mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
         // draw lots of boxes
+        
+        
+        //---- Geometry shader pass
+        mShd1->setUniform1f("geom_lfo_offset", geom_lfo_offset);
+        mShd1->setUniform1f("geom_lfo_speed", geom_lfo_speed);
+        mShd1->setUniform1f("geom_lfo_amp", geom_lfo_amp);
+        mShd1->setUniform1f("geom_effect_mix", geom_effect_mix);
+        mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect_lfo_offset);
+        mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect_lfo_speed);
+        mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect_lfo_amp);
+        
         primitives.draw_idle_mesh();
         mShd1->end();
         

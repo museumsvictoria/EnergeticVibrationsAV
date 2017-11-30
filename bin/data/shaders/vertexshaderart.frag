@@ -93,6 +93,7 @@ void main(){
         fragColor.rgb *= vec3(0.3,0.85,1.0);
 
         fragColor.rgb += clamp(glowAmt*0.4,0.,1.)*vec3(.3,.5,.7);
+        fragColor.rgb *= vec3(0.3,0.5,1.0);
     } else {
         vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
         fragColor = tex*vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,abs(sin(time)));

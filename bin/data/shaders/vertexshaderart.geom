@@ -16,6 +16,16 @@ layout(triangle_strip, max_vertices=3) out;
 uniform float time;
 uniform float explode_amount;
 
+uniform float geom_lfo_offset;
+uniform float geom_lfo_speed;
+uniform float geom_lfo_amp;
+uniform float geom_effect_lfo_offset;
+uniform float geom_effect_lfo_speed;
+uniform float geom_effect_lfo_amp;
+
+
+uniform float geom_effect_mix;
+
 in VertexAttrib {
     vec4 position;
     vec4 color;
@@ -57,7 +67,10 @@ void main() {
     float explode_factor = 2.0;
 
 
-    float lfo_scale = abs(sin((gl_PrimitiveIDIn*0.058)+time*01.5));
+    float effect_lfo = abs(sin((gl_PrimitiveIDIn*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;
+
+    
+    float lfo_scale = abs(fract((gl_PrimitiveIDIn*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*2.0)))*geom_lfo_amp;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(lfo_scale,0,0,0);
     scaleMatrix[1] = vec4(0,lfo_scale,0,0); // we use translation value here
@@ -70,7 +83,7 @@ void main() {
         //gl_Position = gl_in[i].gl_Position * 0.91 + (center*0.1);// + vec4(explode_factor * normal,0.0);
         //gl_Position = (gl_in[i].gl_Position * (0.5+abs(sin(time))*2.5)) + center*1.0;
         
-        float scaleFactor = abs(sin(time))*14.0;//0.005;
+        //float scaleFactor = abs(sin(time))*14.0;//0.005;
 //        gl_Position =  (gl_in[i].gl_Position * (0.5+(lfo_scale*.5 )))  + vec4(normal,1.0) * scaleMatrix;//* scaleFactor;
         
         //        gl_Position = vertex[i].position  * scaleFactor;
@@ -82,10 +95,11 @@ void main() {
 
         vec4 tri_size = mix(vertex[i].position, vertexTransformMatrix[i] * vec4(normal.xyz,1.0), lfo_scale);
         
-        gl_Position = mix(tri_height, tri_size, abs(sin((gl_PrimitiveIDIn*0.008)+time*0.1)));
+        
+        gl_Position = mix(tri_height, tri_size,mix(geom_effect_mix,effect_lfo,geom_effect_lfo_amp));
 
 
-       // if(lfo_scale < 0.1 + abs(sin(time*0.2)))
+        //if(lfo_scale < 0.1 + abs(sin(time*0.2)))
         EmitVertex();
     }
     EndPrimitive();
