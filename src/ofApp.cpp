@@ -51,12 +51,10 @@ void ofApp::setup(){
 
     isShaderDirty = true; // initialise dirty shader
     
-    // step 1: load our height map image
+    //Post Processing
+    post.setup();
     
-    ofDisableArbTex(); 	///< we need normalised image coordinates
-    //ofLoadImage(mTex1, "elevation2.png");
-    ofLoadImage(mTex1, "Gilmore1.jpg");
-    ofEnableArbTex();
+    textures.setup();
     
     // step 2: we will want to draw our geometry as instances
     // therefore, we will use a vbo
@@ -71,8 +69,7 @@ void ofApp::setup(){
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
-    //Post Processing
-    post.setup();
+
 
     init();
 }
@@ -213,6 +210,16 @@ void ofApp::drawGui(ofEventArgs & args){
             ofxImGui::EndTree(mainSettings);
         }
         
+        if (ofxImGui::BeginTree("TEXTURES", mainSettings)){
+            static bool vid_toggle = false;
+            ImGui::Checkbox("Toggle Play", &vid_toggle);
+            if(vid_toggle == true) {
+                textures.vid.play();
+            } else {
+                textures.vid.stop();
+            }
+            ofxImGui::EndTree(mainSettings);
+        }
         
         
         if (ofxImGui::BeginTree("DOF", mainSettings)){
@@ -328,7 +335,7 @@ void ofApp::draw(){
         mShd1->end();
         
         mShd1->begin();
-        mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
+        mShd1->setUniformTexture("tex_unit_0", textures.getTexture(), 0); // first texture unit has index 0, name is not that important!
         mShd1->setUniform1i("is_active", 1);
         mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
         mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
@@ -368,6 +375,12 @@ void ofApp::keyReleased(int key){
     switch (key) {
         case ' ':
             isShaderDirty = true;
+            break;
+        case 'f':
+            ofToggleFullscreen();
+            break;
+        case 't':
+            textures.load_random_texture();
             break;
         case 'e':
             geom.lfo_type1 = (int)ofRandom(34);

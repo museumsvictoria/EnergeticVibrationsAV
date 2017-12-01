@@ -11,6 +11,7 @@
 		00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E02D9F3A04B5573758EBCF8 /* imgui_draw.cpp */; };
 		016BB55A143AD429330F07DB /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0E2047B4D03D5151730B52B /* Gui.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
+		13B3C7061FD0F94300B46EF0 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */; };
 		13D49AE61F859E1400336C9B /* AlphaTrails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */; };
 		13D49AE71F859E1400336C9B /* PingPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE01F859E1400336C9B /* PingPong.cpp */; };
 		13D49AE81F859E1400336C9B /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE21F859E1400336C9B /* PostProcessing.cpp */; };
@@ -96,6 +97,8 @@
 		136E8F771F849DDF002FB971 /* vertexshaderart.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.frag; sourceTree = "<group>"; };
 		136E8F781F849DDF002FB971 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
 		136E8F791F849DDF002FB971 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
+		13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialTextures.cpp; sourceTree = "<group>"; };
+		13B3C7051FD0F94300B46EF0 /* MaterialTextures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTextures.h; sourceTree = "<group>"; };
 		13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaTrails.cpp; sourceTree = "<group>"; };
 		13D49ADF1F859E1400336C9B /* AlphaTrails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaTrails.h; sourceTree = "<group>"; };
 		13D49AE01F859E1400336C9B /* PingPong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PingPong.cpp; sourceTree = "<group>"; };
@@ -664,6 +667,8 @@
 				13D49B0E1F85C71900336C9B /* GuiTheme.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */,
+				13B3C7051FD0F94300B46EF0 /* MaterialTextures.h */,
 				B304D05DA43149641F8DAE21 /* Constants.h */,
 				0A8320B91250ED2BADA15054 /* OptimisedBox.h */,
 				CD5FCD25E1E21DDF2D52DA12 /* Primitives.cpp */,
@@ -824,6 +829,7 @@
 				1FB13B2C1658CA138B0E96F6 /* ofxDOF.cpp in Sources */,
 				DBBE189ECD171A97DCF46C6A /* BaseEngine.cpp in Sources */,
 				27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */,
+				13B3C7061FD0F94300B46EF0 /* MaterialTextures.cpp in Sources */,
 				462C212713EFFA5383B35DAB /* EngineGLFW.cpp in Sources */,
 				000315A9FA4E2F9A09533E05 /* EngineOpenGLES.cpp in Sources */,
 				016BB55A143AD429330F07DB /* Gui.cpp in Sources */,

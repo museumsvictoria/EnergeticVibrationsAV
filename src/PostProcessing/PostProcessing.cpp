@@ -68,6 +68,6 @@ void PostProcessing::draw(){
         depthOfField.getFbo().draw(0, 0);
     }
     
-    reaction_diffusion.draw();
+//    reaction_diffusion.draw();
 //    alpha_trails.draw();
 }

@@ -7,6 +7,7 @@
 #include "GuiTheme.h"
 #include "PostProcessing.h"
 #include "Primitives.h"
+#include "MaterialTextures.h"
 
 
 
@@ -50,6 +51,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        MaterialTextures textures;
         Primitives primitives;
     
         ofEasyCam mCam1;
@@ -57,7 +59,6 @@ class ofApp : public ofBaseApp{
         shared_ptr<ofxUboShader> mShd1;
         ShaderParams params;
         bool isShaderDirty;
-        ofTexture mTex1;
 
         PostProcessing post;
     
