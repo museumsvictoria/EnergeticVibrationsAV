@@ -214,9 +214,9 @@ void ofApp::drawGui(ofEventArgs & args){
             static bool vid_toggle = false;
             ImGui::Checkbox("Toggle Play", &vid_toggle);
             if(vid_toggle == true) {
-                textures.vid.play();
+                textures.vid.setPaused(false);
             } else {
-                textures.vid.stop();
+                textures.vid.setPaused(true);
             }
             ofxImGui::EndTree(mainSettings);
         }

@@ -24,7 +24,6 @@ void MaterialTextures::setup(){
     vid.load(get_random_path());
     vid.play();
     
-    grabber.initGrabber(640,480);
     
     /*
     ofFbo::Settings fboSettings;
@@ -62,9 +61,7 @@ string MaterialTextures::get_random_path(){
 
 //-------------------------------------
 ofTexture& MaterialTextures::getTexture(){
-    grabber.update();
     vid.update();
-    
     tex = vid.getTexture();
 
     /*

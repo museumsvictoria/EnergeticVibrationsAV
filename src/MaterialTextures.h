@@ -22,7 +22,6 @@ public:
 private:
     ofFbo fbo;
     ofTexture tex;
-    ofVideoGrabber grabber;
     
     ofDirectory dir;
 
