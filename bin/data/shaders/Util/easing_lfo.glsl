@@ -21,9 +21,9 @@ float easing_lfo(int type, float x){
     if(type == 14) return quarticIn(fract(x));
     if(type == 15) return quarticOut(fract(x));
     if(type == 16) return quarticInOut(fract(x));
-    if(type == 17) return quadraticInOut(fract(x));
-    if(type == 18) return quadraticIn(fract(x));
-    if(type == 19) return quadraticOut(fract(x));
+    if(type == 17) return quadraticIn(fract(x));
+    if(type == 18) return quadraticOut(fract(x));
+    if(type == 19) return quadraticInOut(fract(x));
     if(type == 20) return cubicIn(fract(x));
     if(type == 21) return cubicOut(fract(x));
     if(type == 22) return cubicInOut(fract(x));
@@ -31,11 +31,12 @@ float easing_lfo(int type, float x){
     if(type == 24) return elasticOut(fract(x));
     if(type == 25) return elasticInOut(fract(x));
     if(type == 26) return circularIn(fract(x));
-    if(type == 27) return circularInOut(fract(x));
-    if(type == 28) return bounceIn(fract(x));
-    if(type == 29) return bounceOut(fract(x));
-    if(type == 30) return bounceInOut(fract(x));
-    if(type == 31) return backIn(fract(x));
-    if(type == 32) return backOut(fract(x));
-    if(type == 33) return backInOut(fract(x));
+    if(type == 27) return circularOut(fract(x));
+    if(type == 28) return circularInOut(fract(x));
+    if(type == 29) return bounceIn(fract(x));
+    if(type == 30) return bounceOut(fract(x));
+    if(type == 31) return bounceInOut(fract(x));
+    if(type == 32) return backIn(fract(x));
+    if(type == 33) return backOut(fract(x));
+    if(type == 34) return backInOut(fract(x));
 }

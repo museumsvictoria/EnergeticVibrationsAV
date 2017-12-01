@@ -73,10 +73,10 @@ void main() {
     float explode_factor = 2.0;
 
 
-    float effect_lfo = abs(easing_lfo(29,((gl_PrimitiveIDIn*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp);
+    float effect_lfo = abs(easing_lfo(geom_effect_lfo_type,((gl_PrimitiveIDIn*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp);
 
     
-    float lfo_scale = abs(easing_lfo(28,((gl_PrimitiveIDIn*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*2.0)))*geom_lfo_amp);
+    float lfo_scale = abs(easing_lfo(geom_lfo_type,((gl_PrimitiveIDIn*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*2.0)))*geom_lfo_amp);
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(lfo_scale,0,0,0);
     scaleMatrix[1] = vec4(0,lfo_scale,0,0); // we use translation value here

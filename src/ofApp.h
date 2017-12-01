@@ -17,6 +17,15 @@ struct ShaderParams {
     int active_chair[NUM_INSTANCES];
 };
 
+struct LfoControl {
+    int lfo_type1;
+    int lfo_type2;
+    float lfo_offset;
+    float lfo_speed;
+    float lfo_amp;
+    float mix;
+};
+
 class ofApp : public ofBaseApp{
 
         
@@ -70,18 +79,21 @@ class ofApp : public ofBaseApp{
     bool toggle_backface_cull;
     
     // GEOMETERY SHADER
-    float geom_lfo_offset;
-    float geom_lfo_speed;
-    float geom_lfo_amp;
-    
-    float geom_effect_mix;
-    float geom_effect_lfo_offset;
-    float geom_effect_lfo_speed;
-    float geom_effect_lfo_amp;
+    LfoControl geom;
+
+    LfoControl geom_effect;
+//    int geom_effect_lfo_type;
+//    float geom_effect_lfo_offset;
+//    float geom_effect_lfo_speed;
+//    float geom_effect_lfo_amp;
+//    float geom_effect_mix;
     
     // FRAGMENT SHADER
-    float xray_mix;
-    float xray_lfo_offset;
-    float xray_lfo_speed;
-    float xray_lfo_amp;
+    LfoControl xray;
+//    int xray_lfo_type;
+//    float xray_lfo_offset;
+//    float xray_lfo_speed;
+//    float xray_lfo_amp;
+//    float xray_mix;
+
 };

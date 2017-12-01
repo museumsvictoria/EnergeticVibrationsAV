@@ -21,19 +21,24 @@ void ofApp::init(){
     toggle_backface_cull = true;
     
     //Geometry shader
-    geom_lfo_offset = 0.58;
-    geom_lfo_speed = 0.5;
-    geom_lfo_amp = 1.0;
-    geom_effect_mix = 1.0;
-    geom_effect_lfo_offset = 0.2;
-    geom_effect_lfo_speed = 0.1;
-    geom_effect_lfo_amp = 1.0;
+    geom.lfo_type1 = (int)ofRandom(33);
+    geom.lfo_offset = 0.58;
+    geom.lfo_speed = 0.5;
+    geom.lfo_amp = 1.0;
+    geom_effect.lfo_type1 = (int)ofRandom(33);
+    geom_effect.mix = 1.0;
+    geom_effect.lfo_offset = 0.2;
+    geom_effect.lfo_speed = 0.1;
+    geom_effect.lfo_amp = 1.0;
     
     //Fragment Shader
-    xray_mix = 1.0;
-    xray_lfo_offset = 0.0;
-    xray_lfo_speed = 0.5;
-    xray_lfo_amp = 1.0;
+    xray.lfo_type1 = (int)ofRandom(33);
+    xray.lfo_type2 = (int)ofRandom(33);
+    xray.mix = 1.0;
+    xray.lfo_offset = 0.0;
+    xray.lfo_speed = 0.5;
+    xray.lfo_amp = 1.0;
+
     
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
@@ -107,6 +112,46 @@ void ofApp::update(){
     if(toggle_post_processing){
         post.update();
     }
+    
+ /*
+    if(ofGetFrameNum() % 100 == 0){
+        geom.lfo_type1 = (int)ofRandom(34);
+        geom_effect.lfo_type1 = (int)ofRandom(34);
+        xray.lfo_type1 = (int)ofRandom(34);
+        xray.lfo_type2 = (int)ofRandom(34);
+
+        geom.lfo_offset = ofRandomuf();
+        geom.lfo_speed = ofRandomuf();
+        geom.lfo_amp = ofRandomuf();
+        geom_effect.mix = ofRandomuf();
+        geom_effect.lfo_offset = ofRandomuf();
+        geom_effect.lfo_speed = ofRandomuf();
+        geom_effect.lfo_amp = ofRandomuf();
+        
+        //Fragment Shader
+        xray.mix = ofRandomuf();
+        xray.lfo_offset = ofRandomuf();
+        xray.lfo_speed = ofRandomuf();
+        xray.lfo_amp = ofRandomuf();
+        
+        primitives.randomise_mesh_resolution();
+    }
+   
+    float speed = ofGetElapsedTimef() * 0.01;
+    geom.lfo_offset = ofNoise(speed);
+    geom.lfo_speed = ofNoise(speed+1);
+    geom.lfo_amp = ofNoise(speed+2);
+    geom_effect.mix = ofNoise(speed+3);
+    geom_effect.lfo_offset = ofNoise(speed+4);
+    geom_effect.lfo_speed = ofNoise(speed+5);
+    geom_effect.lfo_amp = ofNoise(speed+6);
+    
+    //Fragment Shader
+    xray.mix = ofNoise(speed+7);
+    xray.lfo_offset = ofNoise(speed+8);
+    xray.lfo_speed = ofNoise(speed+10);
+    xray.lfo_amp = ofNoise(speed+11);
+    */
 }
 
 //--------------------------------------------------------------
@@ -116,7 +161,9 @@ void ofApp::drawGui(ofEventArgs & args){
     auto mainSettings = ofxImGui::Settings();
     mainSettings.windowPos = ofVec2f(0, 0);
 
-
+    #define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
+    const char* items[] = { "Sine", "Triangle", "Saw", "Pulse", "Noise", "Exponential In", "Exponential Out", "Exponential In Out", "Sine In", "Sine Out", "Sine In Out", "Qintic In", "Qintic Out", "Qintic In Out", "Quartic In", "Quartic Out", "Quartic In Out", "Quadratic In", "Quadratic Out", "Quadratic In Out", "Cubic In", "Cubic Out", "Cubic In Out", "Elastic In", "Elastic Out", "Elastic In Out", "Circular In", "Circular Out", "Circular In Out", "Bounce In", "Bounce Out", "Bounce In Out", "Back In", "Back Out", "Back In Out" };
+    
     if (ofxImGui::BeginWindow("Layer Assignments", mainSettings, false))
     {
         // Basic columns
@@ -137,23 +184,29 @@ void ofApp::drawGui(ofEventArgs & args){
         }
         
         if (ofxImGui::BeginTree("Geometry Shader", mainSettings)){
-            ImGui::SliderFloat("Geom LFO Offset",&geom_lfo_offset,0.0,1.0);
-            ImGui::SliderFloat("Geom LFO Speed",&geom_lfo_speed,0.0,1.0);
-            ImGui::SliderFloat("Geom LFO Amp",&geom_lfo_amp,0.0,1.0);
+            ImGui::Combo("Geom LFO", &geom.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Geom LFO Offset",&geom.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Speed",&geom.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Amp",&geom.lfo_amp,0.0,1.0);
             ImGui::Separator();
-            ImGui::SliderFloat("Geom Efct Offset",&geom_effect_lfo_offset,0.0,1.0);
-            ImGui::SliderFloat("Geom Efct Speed",&geom_effect_lfo_speed,0.0,1.0);
-            ImGui::SliderFloat("Geom Efct Amp",&geom_effect_lfo_amp,0.0,1.0);
-            ImGui::SliderFloat("Geom Efct Mix",&geom_effect_mix,0.0,1.0);
+            ImGui::Combo("Efct LFO", &geom_effect.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Geom Efct Offset",&geom_effect.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Speed",&geom_effect.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Amp",&geom_effect.lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Mix",&geom_effect.mix,0.0,1.0);
 
             ofxImGui::EndTree(mainSettings);
         }
 
         if (ofxImGui::BeginTree("Fragment Shader", mainSettings)){
-            ImGui::SliderFloat("Xray Offset",&xray_lfo_offset,0.0,1.0);
-            ImGui::SliderFloat("Xray Speed",&xray_lfo_speed,0.0,1.0);
-            ImGui::SliderFloat("Xray Amp",&xray_lfo_amp,0.0,1.0);
-            ImGui::SliderFloat("Xray Mix",&xray_mix,0.0,1.0);
+
+            ImGui::Combo("Fill LFO", &xray.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::Combo("Wireframe LFO", &xray.lfo_type2, items, IM_ARRAYSIZE(items));
+            
+            ImGui::SliderFloat("Xray Offset",&xray.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Xray Speed",&xray.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Xray Amp",&xray.lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Xray Mix",&xray.mix,0.0,1.0);
             ImGui::Separator();
             
             ofxImGui::EndTree(mainSettings);
@@ -262,23 +315,27 @@ void ofApp::draw(){
         
         
         //---- Geometry shader pass
-        mShd1->setUniform1f("geom_lfo_offset", geom_lfo_offset);
-        mShd1->setUniform1f("geom_lfo_speed", geom_lfo_speed);
-        mShd1->setUniform1f("geom_lfo_amp", geom_lfo_amp);
-        mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect_lfo_offset);
-        mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect_lfo_speed);
-        mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect_lfo_amp);
-        mShd1->setUniform1f("geom_effect_mix", geom_effect_mix);
+        mShd1->setUniform1f("geom_lfo_type", geom.lfo_type1);
+        mShd1->setUniform1f("geom_lfo_offset", geom.lfo_offset);
+        mShd1->setUniform1f("geom_lfo_speed", geom.lfo_speed);
+        mShd1->setUniform1f("geom_lfo_amp", geom.lfo_amp);
+        mShd1->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
+        mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
+        mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
+        mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
+        mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
         
         primitives.draw_idle_mesh();
         mShd1->end();
         
         mShd1->begin();
         mShd1->setUniform1i("is_active", 1);
-        mShd1->setUniform1f("xray_lfo_offset", xray_lfo_offset);
-        mShd1->setUniform1f("xray_lfo_speed", xray_lfo_speed);
-        mShd1->setUniform1f("xray_lfo_amp", xray_lfo_amp);
-        mShd1->setUniform1f("xray_mix", xray_mix);
+        mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
+        mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
+        mShd1->setUniform1f("xray_lfo_offset", xray.lfo_offset);
+        mShd1->setUniform1f("xray_lfo_speed", xray.lfo_speed);
+        mShd1->setUniform1f("xray_lfo_amp", xray.lfo_amp);
+        mShd1->setUniform1f("xray_mix", xray.mix);
         primitives.draw_active_mesh();
         mShd1->end();
     }
@@ -311,6 +368,27 @@ void ofApp::keyReleased(int key){
     switch (key) {
         case ' ':
             isShaderDirty = true;
+            break;
+        case 'e':
+            geom.lfo_type1 = (int)ofRandom(34);
+            geom_effect.lfo_type1 = (int)ofRandom(34);
+            xray.lfo_type1 = (int)ofRandom(34);
+            xray.lfo_type2 = (int)ofRandom(34);
+            break;
+        case 'g':
+            geom.lfo_offset = ofRandomuf();
+            geom.lfo_speed = ofRandomuf();
+            geom.lfo_amp = ofRandomuf();
+            geom_effect.mix = ofRandomuf();
+            geom_effect.lfo_offset = ofRandomuf();
+            geom_effect.lfo_speed = ofRandomuf();
+            geom_effect.lfo_amp = ofRandomuf();
+            
+            //Fragment Shader
+            xray.mix = ofRandomuf();
+            xray.lfo_offset = ofRandomuf();
+            xray.lfo_speed = ofRandomuf();
+            xray.lfo_amp = ofRandomuf();
             break;
         case 'r':
             for(int i = 0; i < NUM_INSTANCES; i++){
