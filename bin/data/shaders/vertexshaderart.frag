@@ -43,6 +43,7 @@ uniform float xray_lfo_amp;
 uniform float xray_mix;
 
 
+uniform sampler2D tex_unit_0; 		// 2d texture
 
 //in mat4 perInstanceModelViewMatrix;
 
@@ -83,6 +84,37 @@ void addRimLighting(in vec3 N, in vec3 viewVector, inout vec3 rimLight_){
 
 // have a look at this technique http://greggman.github.io/doodles/lightball03.html
 // ----------------------------------------------------------------------
+
+vec3 get_texture(){
+    
+    // find out the texture dimensions in pixels, at LOD 0
+    ivec2 texSize = textureSize(tex_unit_0, 0 );
+    
+//    vec2 sampleCoords = vec2(translation.x,translation.y);
+    vec2 sampleCoords = vec2(vertex.texcoord.x,vertex.texcoord.y);
+    
+    // hmmm. that looks squished.
+    // it's because the texture coordinates run from -1 to +1, but should go from 0 to 1.
+    
+    // first divide by 2
+    sampleCoords *= vec2(0.5);
+    
+    // then add 0.5
+    sampleCoords += vec2(0.5);
+
+    
+    // ok, now sample from the texture.
+    
+    // now, to hit the pixel fair and square, we need to offset the sampling point by half a pixel
+    // because we have normalised texture coordinates, we need to find out how much the offset
+    // woud be in normalised pixel coordinates. We get there, by dividing half a pixel in x through
+    // width in pixels in x, and half a pixel in y divided by height in pixels in y.
+    
+    vec2 sampleOffset = vec2(0.5,0.5) * vec2(1.0/texSize.x,1.0/texSize.y);
+    
+    return texture(tex_unit_0, sampleCoords + sampleOffset).rgb;
+}
+
 void main(){
     
     float glowAmt = 0.5;
@@ -114,6 +146,10 @@ void main(){
     } else {
         vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
         fragColor = tex*vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
+        
+        fragColor = vec4(0.0,0.0,1.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
+        
+        fragColor = vec4(get_texture(),1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
     }
     
     /*

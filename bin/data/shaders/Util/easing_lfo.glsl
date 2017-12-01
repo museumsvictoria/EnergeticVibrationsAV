@@ -1,13 +1,14 @@
 #pragma include "lfos.glsl"
 #pragma include "easings.glsl"
+#pragma include "remap.glsl"
 
 float easing_lfo(int type, float x){
     //----LFOS
-    if(type == 0) return sin(x);
-    if(type == 1) return tri(x);
-    if(type == 2) return saw(x);
-    if(type == 3) return pulse(x);
-    if(type == 4) return noise(x);
+    if(type == 0) return remap(sin(x),-1.0,1.0,0.0,1.0);
+    if(type == 1) return remap(tri(x),-1.0,1.0,0.0,1.0);
+    if(type == 2) return remap(saw(x),-1.0,1.0,0.0,1.0);
+    if(type == 3) return remap(pulse(x),-1.0,1.0,0.0,1.0);
+    if(type == 4) return remap(noise(x),-1.0,1.0,0.0,1.0);
     //----EASINGS
     if(type == 5) return exponentialIn(fract(x));
     if(type == 6) return exponentialOut(fract(x));

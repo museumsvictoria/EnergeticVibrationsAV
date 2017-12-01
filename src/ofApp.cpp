@@ -54,7 +54,8 @@ void ofApp::setup(){
     // step 1: load our height map image
     
     ofDisableArbTex(); 	///< we need normalised image coordinates
-    ofLoadImage(mTex1, "elevation2.png");
+    //ofLoadImage(mTex1, "elevation2.png");
+    ofLoadImage(mTex1, "Gilmore1.jpg");
     ofEnableArbTex();
     
     // step 2: we will want to draw our geometry as instances
@@ -310,12 +311,10 @@ void ofApp::draw(){
         mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
         mShd1->setUniform1f("explode_amount", explode_amount);
         mShd1->setUniformBuffer("ShaderParams", params);
-        mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
         // draw lots of boxes
         
-        
         //---- Geometry shader pass
-        mShd1->setUniform1f("geom_lfo_type", geom.lfo_type1);
+        mShd1->setUniform1i("geom_lfo_type", geom.lfo_type1);
         mShd1->setUniform1f("geom_lfo_offset", geom.lfo_offset);
         mShd1->setUniform1f("geom_lfo_speed", geom.lfo_speed);
         mShd1->setUniform1f("geom_lfo_amp", geom.lfo_amp);
@@ -329,6 +328,7 @@ void ofApp::draw(){
         mShd1->end();
         
         mShd1->begin();
+        mShd1->setUniformTexture("tex_unit_0", mTex1, 0); // first texture unit has index 0, name is not that important!
         mShd1->setUniform1i("is_active", 1);
         mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
         mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
