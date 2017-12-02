@@ -18,15 +18,15 @@ void ofApp::init(){
     
     toggle_post_processing = false;
     toggle_blending = false;
-    toggle_backface_cull = true;
+    toggle_backface_cull = false;
     
     //Geometry shader
     geom.lfo_type1 = (int)ofRandom(33);
     geom.lfo_offset = 0.58;
-    geom.lfo_speed = 0.5;
-    geom.lfo_amp = 0.0;
+    geom.lfo_speed = 0.02;
+    geom.lfo_amp = 1.0;
     geom_effect.lfo_type1 = (int)ofRandom(33);
-    geom_effect.mix = 1.0;
+    geom_effect.mix = 0.0;
     geom_effect.lfo_offset = 0.2;
     geom_effect.lfo_speed = 0.1;
     geom_effect.lfo_amp = 1.0;
@@ -60,8 +60,8 @@ void ofApp::setup(){
     // therefore, we will use a vbo
     primitives.setup();
     
-    cam_near_clip = 0.0;
-    cam_far_clip = 0.0;
+    cam_near_clip = 1.0;
+    cam_far_clip = 1000.0;
     
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 50, 0.001, 8000);
@@ -198,7 +198,7 @@ void ofApp::drawGui(ofEventArgs & args){
 
         if (ofxImGui::BeginTree("Camera", mainSettings)){
 
-            ImGui::SliderFloat("Near Cluip",&cam_near_clip,0.0,1000.0);
+            ImGui::SliderFloat("Near Clip",&cam_near_clip,0.0,1000.0);
             ImGui::SliderFloat("Far Clip",&cam_far_clip,0.0,1000.0);
    
             
@@ -326,7 +326,7 @@ void ofApp::draw(){
         mShd1->setUniform1f("time", ofGetElapsedTimef());
         mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
         mShd1->setUniform1f("explode_amount", explode_amount);
-        mShd1->setUniformBuffer("ShaderParams", params);
+        //mShd1->setUniformBuffer("ShaderParams", params);
         // draw lots of boxes
         
         //---- Geometry shader pass

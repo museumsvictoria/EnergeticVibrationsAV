@@ -56,14 +56,13 @@ uniform float time;
 uniform int is_active;
 uniform sampler2D tex_unit_0; 		// 2d texture
 
-/*
+
 uniform ShaderParams {
     float scale_speed;
     float rot_speed;
     float transducer_speed[INSTANCES_PER_SHM];
     int active_chair[INSTANCES_PER_SHM];
 }params;
-*/
 
 mat4 rotationMatrix(vec3 axis, float angle)
 {
@@ -83,69 +82,6 @@ float remap( float value, float inMin, float inMax, float outMin, float outMax )
     return ( (value - inMin) / ( inMax - inMin ) * ( outMax - outMin ) ) + outMin;
 }
 
-
-void main()
-{
-    vertex.instance_ID = gl_InstanceID;
-    vertex.color = vec4(1); // we have to set our own color here.
-    vertex.texcoord = texcoord;
-    
-
-    // For instanced rendering, we will get `gl_InstanceID`, a unique id for each instance.
-    // We use this, to manipulate each instance individually.
-    
-    mat4 perInstanceModelMatrix;
-    
-    vec4 translation;
-    translation.x = 0; 	// translate x
-    translation.y = 0;  // translate y
-    translation.z = 0; 	// translate z
-    translation.w =	1;	// needs to remain 1.
-
-    
-    // nice! now, let's move everything apart a little.
-    translation.xyz *= 3;
-    
-    // store the height as a vertex attribute.
-    vertex.height = translation.z;
-    
-    perInstanceModelMatrix[0] = vec4(1,0,0,0);
-    perInstanceModelMatrix[1] = vec4(0,1,0,0);
-    perInstanceModelMatrix[2] = vec4(0,0,1,0);
-    perInstanceModelMatrix[3] = translation;
-    
-    float scale = 4.0;
-    mat4 scaleMatrix;
-    scaleMatrix[0] = vec4(scale,0,0,0);
-    scaleMatrix[1] = vec4(0,scale,0,0); // we use translation value here
-    scaleMatrix[2] = vec4(0,0,scale,0);
-    scaleMatrix[3] = vec4(0,0,0,1);
-    
-    perInstanceModelMatrix *= rotationMatrix(vec3(1,1,0), time*0.2);
-    // ---------------------------
-    
-    // We move the box, before we even apply all the other matrices.
-    // This works, because the next line really says:
-    // vertex.position = viewMatrix * modelMatrix * perInstanceModelMatrix * position
-    mat4 translatedModelView = modelViewMatrix * perInstanceModelMatrix;
-    
-    perInstanceModelViewMatrix = modelViewMatrix * perInstanceModelMatrix * scaleMatrix;
-    
-    vertex.position = perInstanceModelViewMatrix * position;
-    
-    vertexTransformMatrix = perInstanceModelViewMatrix;
-    
-    // ---------------------------
-    // # Let's calculate per-vertex normals:
-    
-    // Note that we disregard the scale operation, since in our case it must not 
-    // contribute to the normal matrix. 
-    vertex.normal =  mat3(translatedModelView) * normal;
-    
-    gl_Position = vertex.position;
-}
-
-/*
 void main()
 {
     
@@ -254,10 +190,8 @@ void main()
 
 	//vertex.position = modelViewMatrix * perInstanceModelMatrix  * perInstanceRotationMatrix *position;
     //if(params.active_chair[gl_InstanceID] == is_active)
-    vertex.position = projectionMatrix * perInstanceModelViewMatrix * perInstanceRotationMatrix * position; // i was using this one
-//    vertex.position = perInstanceModelViewMatrix * perInstanceRotationMatrix * position;
-    
-    //vertex.position = modelViewMatrix * position;
+    vertex.position = projectionMatrix * perInstanceModelViewMatrix * perInstanceRotationMatrix * position;
+
     // ---------------------------
     // # Let's calculate per-vertex normals:
     
@@ -267,17 +201,8 @@ void main()
 
 //    gl_Position = projectionMatrix*cameraMatrix*modelMatrix*vec4(vertex.xyz,1.0)+ normal*scaleFactor;
 
-	//gl_Position = vertex.position;
-    vertexTransformMatrix = projectionMatrix * perInstanceModelViewMatrix; // i was using this one
-    
-
-    mat4 modelMatrix = perInstanceModelMatrix * perInstanceRotationMatrix * scaleMatrix;
-    mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
-    //vertex.position = mvp * position;
-    gl_Position = mvp * position;
-    
-    //vertexTransformMatrix =  mvp * scaleMatrix;
-
+	gl_Position = vertex.position;
+    vertexTransformMatrix = projectionMatrix * perInstanceModelViewMatrix;
+    //vertexTransformMatrix = perInstanceModelViewMatrix;
 
 }
-*/

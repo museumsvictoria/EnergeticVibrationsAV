@@ -76,13 +76,12 @@ void main() {
     float effect_lfo = easing_lfo(geom_effect_lfo_type,((primitive_id*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;
 
     
-    float lfo_scale = easing_lfo(geom_lfo_type,((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*20.0)))*geom_lfo_amp;
+    float lfo_scale = easing_lfo(geom_lfo_type,((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*2.0)))*geom_lfo_amp;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(lfo_scale,0,0,0);
     scaleMatrix[1] = vec4(0,lfo_scale,0,0); // we use translation value here
     scaleMatrix[2] = vec4(0,0,lfo_scale,0);
     scaleMatrix[3] = vec4(0,0,0,1);
-    
     
 //    //------ Pass Through
     for (int i = 0; i < gl_in.length(); i++)
@@ -98,27 +97,12 @@ void main() {
         
         //gl_Position = mix(gl_in[i].gl_Position, vec4(normal.xyz,1.0), abs(sin(time*0.5)));//* scaleFactor; // THIS ONE WORKS BEST SO FAR
         
-        //vec4 tri_height = mix(vertex[i].position, vertexTransformMatrix[i] * vertex[i].position + vec4(normal.xyz,1.0), lfo_scale);
+        vec4 tri_height = mix(vertex[i].position, vertexTransformMatrix[i] * vertex[i].position + vec4(normal.xyz,1.0), lfo_scale);
 
-        //vec4 tri_size = mix(vertex[i].position, vertexTransformMatrix[i] * vec4(normal.xyz,1.0), lfo_scale);
+        vec4 tri_size = mix(vertex[i].position, vertexTransformMatrix[i] * vec4(normal.xyz,1.0), lfo_scale);
         
-        //gl_Position =  projectionMatrix*mix(tri_height, tri_size,mix(geom_effect_mix,effect_lfo,geom_effect_lfo_amp));
-        
-        //---------------------------
-        // Calculate the centroid point (just sum up all coordinates and divide by 3
-        // You can see built-in variable gl_in here, notice adding normal multiplied by bender value
-        vec3 vMiddle = (gl_in[0].gl_Position.xyz+gl_in[1].gl_Position.xyz+gl_in[2].gl_Position.xyz)/3.0;
+        gl_Position = mix(tri_height, tri_size,mix(geom_effect_mix,effect_lfo,geom_effect_lfo_amp));
 
-        vec4 tri_height = mix(vertex[i].position, vertex[i].position + vec4(normal.xyz,1.0), lfo_scale);
-        
-        vec4 tri_size = mix(vertex[i].position, vec4(vMiddle,1.0) , lfo_scale);
-       
-        gl_Position = projectionMatrix * mix(tri_height, tri_size,mix(geom_effect_mix,effect_lfo,geom_effect_lfo_amp));
-       // gl_Position = projectionMatrix * gl_in[i].gl_Position  ;
-        
-        
-        ///--------------------------------------------
-        
         //modelViewMatriz*position;
 
         //projectiionMatrix;
