@@ -8,6 +8,7 @@
 #include "PostProcessing.h"
 #include "Primitives.h"
 #include "MaterialTextures.h"
+#include "Easings.h"
 
 
 
@@ -55,7 +56,9 @@ class ofApp : public ofBaseApp{
         Primitives primitives;
     
         ofEasyCam mCam1;
-        
+        Easings cam_tweens;
+        vector<int> cam_tween_types = {0,0,0};
+    
         shared_ptr<ofxUboShader> mShd1;
         ShaderParams params;
         bool isShaderDirty;

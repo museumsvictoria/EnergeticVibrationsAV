@@ -10,6 +10,7 @@
     "BFC135EF24D9019A18FD967A9BEDA0439C246ADD" : 9223372036854775807,
     "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : 9223372036854775807,
     "3F04C9D1D793210C4DA26F0054C08BBE2F768B3C" : 9223372036854775807,
+    "86145F1292B789AB93966AE12565F1D778504ABC" : 9223372036854775807,
     "BCA0DC16491F98A3055F675274FD6DB3C9D136E3" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "CC2CAFAF-5DAD-463C-A509-2D5E21642089",
@@ -20,6 +21,7 @@
     "BFC135EF24D9019A18FD967A9BEDA0439C246ADD" : "..\/..\/addons\/ofxDOF",
     "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : "..\/..",
     "3F04C9D1D793210C4DA26F0054C08BBE2F768B3C" : "..\/..\/addons\/ofxAlgebraic",
+    "86145F1292B789AB93966AE12565F1D778504ABC" : "..\/..\/addons\/ofxEasing",
     "BCA0DC16491F98A3055F675274FD6DB3C9D136E3" : "..\/..\/addons\/ofxPlaymodes"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "EnergeticVibrationsAV",
@@ -45,6 +47,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jvcleave\/ofxImGui",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "55505DE6675E1AEB4CF72AD63A972936EC984D97"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/arturoc\/ofxEasing",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "86145F1292B789AB93966AE12565F1D778504ABC"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Ahbee\/ofxUbo",

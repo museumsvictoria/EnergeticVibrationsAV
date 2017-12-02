@@ -11,6 +11,7 @@
 		00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E02D9F3A04B5573758EBCF8 /* imgui_draw.cpp */; };
 		016BB55A143AD429330F07DB /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0E2047B4D03D5151730B52B /* Gui.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
+		138004141FD29A1100560A11 /* Easings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 138004121FD29A1100560A11 /* Easings.cpp */; };
 		13B3C7061FD0F94300B46EF0 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */; };
 		13D49AE61F859E1400336C9B /* AlphaTrails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */; };
 		13D49AE71F859E1400336C9B /* PingPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE01F859E1400336C9B /* PingPong.cpp */; };
@@ -97,6 +98,10 @@
 		136E8F771F849DDF002FB971 /* vertexshaderart.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.frag; sourceTree = "<group>"; };
 		136E8F781F849DDF002FB971 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
 		136E8F791F849DDF002FB971 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
+		138004031FD299F100560A11 /* easing_terms_of_use.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = easing_terms_of_use.html; sourceTree = "<group>"; };
+		138004041FD299F100560A11 /* ofxEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
+		138004121FD29A1100560A11 /* Easings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Easings.cpp; sourceTree = "<group>"; };
+		138004131FD29A1100560A11 /* Easings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easings.h; sourceTree = "<group>"; };
 		13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialTextures.cpp; sourceTree = "<group>"; };
 		13B3C7051FD0F94300B46EF0 /* MaterialTextures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTextures.h; sourceTree = "<group>"; };
 		13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaTrails.cpp; sourceTree = "<group>"; };
@@ -304,6 +309,24 @@
 			name = shaders;
 			path = bin/data/shaders;
 			sourceTree = SOURCE_ROOT;
+		};
+		138003D81FD299F100560A11 /* ofxEasing */ = {
+			isa = PBXGroup;
+			children = (
+				138004021FD299F100560A11 /* src */,
+			);
+			name = ofxEasing;
+			path = ../../../addons/ofxEasing;
+			sourceTree = "<group>";
+		};
+		138004021FD299F100560A11 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				138004031FD299F100560A11 /* easing_terms_of_use.html */,
+				138004041FD299F100560A11 /* ofxEasing.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
 		};
 		13C2436A78CDB4354594CA7D /* include */ = {
 			isa = PBXGroup;
@@ -584,6 +607,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				138003D81FD299F100560A11 /* ofxEasing */,
 				13D49B151F85D8C900336C9B /* ofxAlgebraic */,
 				B922E169D182E0584C76B14A /* ofxDOF */,
 				768C3255AF2F3E1A78DC4DF4 /* ofxImGui */,
@@ -673,6 +697,8 @@
 				0A8320B91250ED2BADA15054 /* OptimisedBox.h */,
 				CD5FCD25E1E21DDF2D52DA12 /* Primitives.cpp */,
 				1039CBA50BD184DFAE4A6ACF /* Primitives.h */,
+				138004121FD29A1100560A11 /* Easings.cpp */,
+				138004131FD29A1100560A11 /* Easings.h */,
 				13D49B111F85D06600336C9B /* HarmonicMotion */,
 				13D49ADD1F859E1400336C9B /* PostProcessing */,
 				136E8F641F849DC3002FB971 /* shaders */,
@@ -828,6 +854,7 @@
 				93A418A21D11C3146A54F389 /* Primitives.cpp in Sources */,
 				1FB13B2C1658CA138B0E96F6 /* ofxDOF.cpp in Sources */,
 				DBBE189ECD171A97DCF46C6A /* BaseEngine.cpp in Sources */,
+				138004141FD29A1100560A11 /* Easings.cpp in Sources */,
 				27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */,
 				13B3C7061FD0F94300B46EF0 /* MaterialTextures.cpp in Sources */,
 				462C212713EFFA5383B35DAB /* EngineGLFW.cpp in Sources */,

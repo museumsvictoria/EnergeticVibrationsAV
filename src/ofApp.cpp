@@ -93,9 +93,23 @@ void ofApp::setupGui(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
-    float orbit_x = 0.5+(sin(ofGetElapsedTimef()*0.4)*0.5)*360.;
-    float orbit_y = 0.5+(sin(ofGetElapsedTimef()*0.2)*0.5)*360.;
-    mCam1.orbitDeg(orbit_x, orbit_y, 350);
+    if(ofGetFrameNum() % 200 == 0){
+        cam_tweens.randomise_distance();
+        cam_tweens.trigger();
+        vector<float> speeds;
+        for(int i = 0; i < cam_tweens.size(); i++){
+            speeds.push_back(ofRandom(1,3));
+        }
+        cam_tweens.set_duration(speeds);
+        for(int i = 0; i < cam_tween_types.size(); i++){
+            cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
+        }
+    }
+  
+    float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
+    float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
+    float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,250,10);
+    mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
 //    mCam1.truck(val);
 //   mCam1.boom(val);
 //    mCam1.dolly(val);
@@ -434,6 +448,20 @@ void ofApp::keyReleased(int key){
         case 'm':
             primitives.randomise_mesh_resolution();
             break;
+        case 'z':
+        {
+            cam_tweens.randomise_distance();
+            cam_tweens.trigger();
+            vector<float> speeds;
+            for(int i = 0; i < cam_tweens.size(); i++){
+                speeds.push_back(ofRandom(1,3));
+            }
+            cam_tweens.set_duration(speeds);
+            for(int i = 0; i < cam_tween_types.size(); i++){
+                cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
+            }
+            break;
+        }
         default:
             break;
     }
