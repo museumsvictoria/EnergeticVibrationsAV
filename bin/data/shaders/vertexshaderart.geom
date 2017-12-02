@@ -101,11 +101,42 @@ void main() {
 
         vec4 tri_size = mix(vertex[i].position, vertexTransformMatrix[i] * vec4(normal.xyz,1.0), lfo_scale);
         
-        
         gl_Position = mix(tri_height, tri_size,mix(geom_effect_mix,effect_lfo,geom_effect_lfo_amp));
 
+        //modelViewMatriz*position;
 
+        //projectiionMatrix;
+        
+        //1 model space =  raw vertex position + translate to model view prjotion space
+        //2 view space = transform vetticves to view space. raltive to camera
+        
+        
+        // model veiwMATERIX * vertex.psotion = gl_potiions
+        
+        // Gl_in = view view space
+        
+        // ws or vs - go with world space!
         //if(lfo_scale < 0.1 + abs(sin(time*0.2)))
+        
+        // vertex out = modelMatrix* vertex.position !!
+        
+        // Normal * inversetranspose(modeviewmatriz); /// Normals might be in view space.
+        
+        // make a fragment sahder that just draws the normal.
+        
+        // Just saty in world sapce, colour will stay the same.
+        
+        // Texrure buffer object. 4 byte floats per pixel. vertexIf as alookup into that texture.
+        
+        //viewSpace *
+        
+        //projectionMatirx * result.
+        
+        //multiply by inverse of viewMatrix
+        
+        // Normals use sine, use the faces to move along the normal. if direction chages, then you know that your normal isn't being calcuated properlt. You need the normal matrix. inverse transpose of modelViewmatrix.
+        
+        // Normal * normalMatrix; 
         EmitVertex();
     }
     EndPrimitive();

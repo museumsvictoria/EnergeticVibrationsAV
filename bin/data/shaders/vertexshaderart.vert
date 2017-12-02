@@ -37,8 +37,6 @@
 #define PI 3.14159265359
 #define HALF_PI 1.57079632679
 
-#pragma include <waveforms.glsl>
-
 uniform mat4 viewMatrix;
 
 out VertexAttrib {
@@ -101,7 +99,7 @@ void main()
     vec4 translation;
     translation.x = 0.;
     translation.y = 0.;
-    translation.z = 1;
+    translation.z = 0.;
     translation.w = 1; // needs to remain 1.
     
     
@@ -205,5 +203,6 @@ void main()
 
 	gl_Position = vertex.position;
     vertexTransformMatrix = projectionMatrix * perInstanceModelViewMatrix;
+    //vertexTransformMatrix = perInstanceModelViewMatrix;
 
 }

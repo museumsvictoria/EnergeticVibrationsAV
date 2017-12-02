@@ -24,7 +24,7 @@ void ofApp::init(){
     geom.lfo_type1 = (int)ofRandom(33);
     geom.lfo_offset = 0.58;
     geom.lfo_speed = 0.5;
-    geom.lfo_amp = 1.0;
+    geom.lfo_amp = 0.0;
     geom_effect.lfo_type1 = (int)ofRandom(33);
     geom_effect.mix = 1.0;
     geom_effect.lfo_offset = 0.2;
@@ -64,7 +64,7 @@ void ofApp::setup(){
     cam_far_clip = 0.0;
     
     // we will also need a camera, so we can move around in the scene
-    mCam1.setupPerspective(false, 60, 0.1, 5000);
+    mCam1.setupPerspective(false, 50, 0.001, 8000);
     mCam1.setDistance(50); // set default camera distance to 1000
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
@@ -196,6 +196,15 @@ void ofApp::drawGui(ofEventArgs & args){
             ofxImGui::EndTree(mainSettings);
         }
 
+        if (ofxImGui::BeginTree("Camera", mainSettings)){
+
+            ImGui::SliderFloat("Near Cluip",&cam_near_clip,0.0,1000.0);
+            ImGui::SliderFloat("Far Clip",&cam_far_clip,0.0,1000.0);
+   
+            
+            ofxImGui::EndTree(mainSettings);
+        }
+        
         if (ofxImGui::BeginTree("Fragment Shader", mainSettings)){
 
             ImGui::Combo("Fill LFO", &xray.lfo_type1, items, IM_ARRAYSIZE(items));
