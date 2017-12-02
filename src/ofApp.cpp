@@ -16,7 +16,7 @@ void ofApp::init(){
     params.rot_speed = 0.3;
     explode_amount = 0.0;
     
-    toggle_post_processing = false;
+    toggle_post_processing = true;
     toggle_blending = false;
     toggle_backface_cull = false;
     
@@ -93,9 +93,9 @@ void ofApp::setupGui(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
-    //float orbit_x = 0.5+(saw(ofGetElapsedTimef()*0.4)*0.5)*360.;
-    //float orbit_y = 0.5+(saw(ofGetElapsedTimef()*0.2)*0.5)*360.;
-//    mCam1.orbitDeg(orbit_x, orbit_y, 10);
+    float orbit_x = 0.5+(sin(ofGetElapsedTimef()*0.4)*0.5)*360.;
+    float orbit_y = 0.5+(sin(ofGetElapsedTimef()*0.2)*0.5)*360.;
+    mCam1.orbitDeg(orbit_x, orbit_y, 350);
 //    mCam1.truck(val);
 //   mCam1.boom(val);
 //    mCam1.dolly(val);
@@ -233,8 +233,8 @@ void ofApp::drawGui(ofEventArgs & args){
         
         if (ofxImGui::BeginTree("DOF", mainSettings)){
             ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
-            ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,0.0,600.0);
-            ImGui::SliderFloat("Focal Range",&post.dof_focal_range,0.0,500.0);
+            ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,20.0,200.0);
+            ImGui::SliderFloat("Focal Range",&post.dof_focal_range,0.0,200.0);
             
             ofxImGui::EndTree(mainSettings);
         }

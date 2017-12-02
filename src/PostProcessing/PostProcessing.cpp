@@ -10,15 +10,17 @@
 
 //--------------------------------------------------------------
 void PostProcessing::init(){
+    ofEnableArbTex();
     depthOfField.setup(ofGetWidth(), ofGetHeight());
 }
+
 
 //--------------------------------------------------------------
 void PostProcessing::setup(){
     init();
-    dof_blur_amount = 0.17;
-    dof_focal_range = 100.0;
-    dof_focal_distance = 150.0;
+    dof_blur_amount = 0.5;
+    dof_focal_range = 50.0;
+    dof_focal_distance = 105.0;
     
     trail_delay = 0.5;
     
@@ -33,12 +35,14 @@ void PostProcessing::update(){
     
     // where is the focal plane from the camera
     depthOfField.setFocalDistance(dof_focal_distance);
+    //	depthOfField.setFocalDistance(ofMap(sin(ofGetElapsedTimef()/2),-1,1, 20, 150));
     
     //usually between 0 and 2 or 3
     depthOfField.setBlurAmount(dof_blur_amount);
     
     // how much of the scene is in focus, smaller number is a narrower focal distance
     depthOfField.setFocalRange(dof_focal_range);
+    
     
     /// PASS IN TEXTURE TO REACTION DUFFUSION
     ////////////////////

@@ -56,6 +56,7 @@ uniform float time;
 uniform int is_active;
 uniform sampler2D tex_unit_0; 		// 2d texture
 
+
 /*
 uniform ShaderParams {
     float scale_speed;
@@ -96,15 +97,16 @@ void main()
     
     mat4 perInstanceModelMatrix;
     
+    int tile_length = 4;
     vec4 translation;
-    translation.x = 0; 	// translate x
-    translation.y = 0;  // translate y
+    translation.x = 0;//0.5 - (tile_length/2) + gl_InstanceID % tile_length; 	// translate x
+    translation.y = 0;//1.075 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 							// translate y
     translation.z = 0; 	// translate z
     translation.w =	1;	// needs to remain 1.
 
     
     // nice! now, let's move everything apart a little.
-    translation.xyz *= 3;
+    translation.xyz *= 40;
     
     // store the height as a vertex attribute.
     vertex.height = translation.z;
@@ -114,7 +116,7 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float scale = 4.0;
+    float scale = 20.0;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(scale,0,0,0);
     scaleMatrix[1] = vec4(0,scale,0,0); // we use translation value here
