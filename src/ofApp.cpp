@@ -109,7 +109,7 @@ void ofApp::update(){
     float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
     float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
     float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,250,10);
-    mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
+    //mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
 //    mCam1.truck(val);
 //   mCam1.boom(val);
 //    mCam1.dolly(val);
@@ -125,6 +125,9 @@ void ofApp::update(){
         post.update();
     }
     
+    paths.update();
+    paths.set_grid_path(params.instance_pos_grid);
+
  /*
     if(ofGetFrameNum() % 100 == 0){
         geom.lfo_type1 = (int)ofRandom(34);
@@ -340,7 +343,7 @@ void ofApp::draw(){
         mShd1->setUniform1f("time", ofGetElapsedTimef());
         mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
         mShd1->setUniform1f("explode_amount", explode_amount);
-        //mShd1->setUniformBuffer("ShaderParams", params);
+        mShd1->setUniformBuffer("ShaderParams", params);
         // draw lots of boxes
         
         //---- Geometry shader pass

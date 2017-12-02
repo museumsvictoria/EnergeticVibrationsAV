@@ -9,6 +9,7 @@
 #include "Primitives.h"
 #include "MaterialTextures.h"
 #include "Easings.h"
+#include "TranslationPaths.h"
 
 
 
@@ -17,6 +18,7 @@ struct ShaderParams {
     float rot_speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
+    glm::vec2 instance_pos_grid[NUM_INSTANCES];
 };
 
 struct LfoControl {
@@ -52,6 +54,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        TranslationPaths paths;
+
         MaterialTextures textures;
         Primitives primitives;
     

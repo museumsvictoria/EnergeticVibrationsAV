@@ -12,6 +12,11 @@
 		016BB55A143AD429330F07DB /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0E2047B4D03D5151730B52B /* Gui.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
 		138004141FD29A1100560A11 /* Easings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 138004121FD29A1100560A11 /* Easings.cpp */; };
+		138004211FD2C8E000560A11 /* BaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 138004171FD2C8E000560A11 /* BaseShape.cpp */; };
+		138004221FD2C8E000560A11 /* Grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 138004191FD2C8E000560A11 /* Grid.cpp */; };
+		138004231FD2C8E000560A11 /* Ngon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1380041B1FD2C8E000560A11 /* Ngon.cpp */; };
+		138004241FD2C8E000560A11 /* TranslationPaths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1380041D1FD2C8E000560A11 /* TranslationPaths.cpp */; };
+		138004251FD2C8E000560A11 /* Wave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1380041F1FD2C8E000560A11 /* Wave.cpp */; };
 		13B3C7061FD0F94300B46EF0 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */; };
 		13D49AE61F859E1400336C9B /* AlphaTrails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */; };
 		13D49AE71F859E1400336C9B /* PingPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE01F859E1400336C9B /* PingPong.cpp */; };
@@ -102,6 +107,16 @@
 		138004041FD299F100560A11 /* ofxEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxEasing.h; sourceTree = "<group>"; };
 		138004121FD29A1100560A11 /* Easings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Easings.cpp; sourceTree = "<group>"; };
 		138004131FD29A1100560A11 /* Easings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easings.h; sourceTree = "<group>"; };
+		138004171FD2C8E000560A11 /* BaseShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseShape.cpp; sourceTree = "<group>"; };
+		138004181FD2C8E000560A11 /* BaseShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseShape.h; sourceTree = "<group>"; };
+		138004191FD2C8E000560A11 /* Grid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Grid.cpp; sourceTree = "<group>"; };
+		1380041A1FD2C8E000560A11 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
+		1380041B1FD2C8E000560A11 /* Ngon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ngon.cpp; sourceTree = "<group>"; };
+		1380041C1FD2C8E000560A11 /* Ngon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ngon.h; sourceTree = "<group>"; };
+		1380041D1FD2C8E000560A11 /* TranslationPaths.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TranslationPaths.cpp; sourceTree = "<group>"; };
+		1380041E1FD2C8E000560A11 /* TranslationPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationPaths.h; sourceTree = "<group>"; };
+		1380041F1FD2C8E000560A11 /* Wave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wave.cpp; sourceTree = "<group>"; };
+		138004201FD2C8E000560A11 /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wave.h; sourceTree = "<group>"; };
 		13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialTextures.cpp; sourceTree = "<group>"; };
 		13B3C7051FD0F94300B46EF0 /* MaterialTextures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTextures.h; sourceTree = "<group>"; };
 		13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaTrails.cpp; sourceTree = "<group>"; };
@@ -326,6 +341,23 @@
 				138004041FD299F100560A11 /* ofxEasing.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		138004161FD2C8E000560A11 /* ShapePaths */ = {
+			isa = PBXGroup;
+			children = (
+				138004171FD2C8E000560A11 /* BaseShape.cpp */,
+				138004181FD2C8E000560A11 /* BaseShape.h */,
+				138004191FD2C8E000560A11 /* Grid.cpp */,
+				1380041A1FD2C8E000560A11 /* Grid.h */,
+				1380041B1FD2C8E000560A11 /* Ngon.cpp */,
+				1380041C1FD2C8E000560A11 /* Ngon.h */,
+				1380041D1FD2C8E000560A11 /* TranslationPaths.cpp */,
+				1380041E1FD2C8E000560A11 /* TranslationPaths.h */,
+				1380041F1FD2C8E000560A11 /* Wave.cpp */,
+				138004201FD2C8E000560A11 /* Wave.h */,
+			);
+			path = ShapePaths;
 			sourceTree = "<group>";
 		};
 		13C2436A78CDB4354594CA7D /* include */ = {
@@ -699,6 +731,7 @@
 				1039CBA50BD184DFAE4A6ACF /* Primitives.h */,
 				138004121FD29A1100560A11 /* Easings.cpp */,
 				138004131FD29A1100560A11 /* Easings.h */,
+				138004161FD2C8E000560A11 /* ShapePaths */,
 				13D49B111F85D06600336C9B /* HarmonicMotion */,
 				13D49ADD1F859E1400336C9B /* PostProcessing */,
 				136E8F641F849DC3002FB971 /* shaders */,
@@ -866,15 +899,18 @@
 				13D49B221F85D8C900336C9B /* ofxAlgebraic.cpp in Sources */,
 				13D49AE91F859E1400336C9B /* ReactionDiffusion.cpp in Sources */,
 				13D49B201F85D8C900336C9B /* Algebraic.cpp in Sources */,
+				138004231FD2C8E000560A11 /* Ngon.cpp in Sources */,
 				00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
+				138004251FD2C8E000560A11 /* Wave.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				13D49AE81F859E1400336C9B /* PostProcessing.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				13D49AE71F859E1400336C9B /* PingPong.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
+				138004211FD2C8E000560A11 /* BaseShape.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				13D49AE61F859E1400336C9B /* AlphaTrails.cpp in Sources */,
@@ -882,10 +918,12 @@
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
+				138004241FD2C8E000560A11 /* TranslationPaths.cpp in Sources */,
 				13D49B1F1F85D8C900336C9B /* README.md in Sources */,
 				1C36947250DCB09A8A375C0C /* ofxXmlPoco.cpp in Sources */,
 				13D49B141F85D06600336C9B /* HarmonicMotion.cpp in Sources */,
 				9BC5C4F9070AB623ACFB4BE5 /* ofxUbo.cpp in Sources */,
+				138004221FD2C8E000560A11 /* Grid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
