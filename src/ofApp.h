@@ -87,21 +87,15 @@ class ofApp : public ofBaseApp{
     bool toggle_backface_cull;
     
     // GEOMETERY SHADER
+    float geom_max_height;
+    int geom_num_copies;
     LfoControl geom;
 
     LfoControl geom_effect;
-//    int geom_effect_lfo_type;
-//    float geom_effect_lfo_offset;
-//    float geom_effect_lfo_speed;
-//    float geom_effect_lfo_amp;
-//    float geom_effect_mix;
+
     
     // FRAGMENT SHADER
     LfoControl xray;
-//    int xray_lfo_type;
-//    float xray_lfo_offset;
-//    float xray_lfo_speed;
-//    float xray_lfo_amp;
-//    float xray_mix;
+
 
 };

@@ -58,13 +58,13 @@ uniform sampler2D tex_unit_0; 		// 2d texture
 
 
 
-uniform ShaderParams {
-    float scale_speed;
-    float rot_speed;
-    float transducer_speed[INSTANCES_PER_SHM];
-    int active_chair[INSTANCES_PER_SHM];
-    vec2 instance_pos_grid[INSTANCES_PER_SHM];
-}params;
+//uniform ShaderParams {
+//    float scale_speed;
+//    float rot_speed;
+//    float transducer_speed[INSTANCES_PER_SHM];
+//    int active_chair[INSTANCES_PER_SHM];
+//    vec2 instance_pos_grid[INSTANCES_PER_SHM];
+//}params;
 
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -101,6 +101,7 @@ void main()
     
     mat4 perInstanceModelMatrix;
     
+    /*
     // Arrange the objects in a grid
     //    float shm_instance_idx = mod(gl_InstanceID, INSTANCES_PER_SHM);
     int shm_instance_idx = gl_InstanceID % INSTANCES_PER_SHM;
@@ -115,16 +116,16 @@ void main()
     int tile_length = 16;
     float grid_offset = 10.0;
     float distance_offset = sin(time*0.02)*grid_offset;
-
+*/
     vec4 translation;
-    translation.x = params.instance_pos_grid[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
-    translation.y = params.instance_pos_grid[gl_InstanceID].y;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
-    translation.z = abs(sin(gl_InstanceID+time))*4.0;// z_res * distance_offset * 100.;
+    translation.x = 0;//params.instance_pos_grid[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
+    translation.y = 0;//params.instance_pos_grid[gl_InstanceID].y;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
+    translation.z = 0;//abs(sin(gl_InstanceID+time))*4.0;// z_res * distance_offset * 100.;
     translation.w =	1;	// needs to remain 1.
 
     
     // nice! now, let's move everything apart a little.
-    translation.xyz *= 300;
+    translation.xyz *= 30;
     
     // store the height as a vertex attribute.
     vertex.height = translation.z;

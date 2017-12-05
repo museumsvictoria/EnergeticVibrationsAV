@@ -11,6 +11,6 @@
 
 const int TILE_LENGTH = 8; ///< how many boxes in each x and z direction
 const int NUM_ROWS = 4;
-const int NUM_INSTANCES = 512; ///< total number of boxes
+const int NUM_INSTANCES = 1; ///< total number of boxes
 
 #endif /* Constants_h */

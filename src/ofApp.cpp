@@ -21,6 +21,9 @@ void ofApp::init(){
     toggle_backface_cull = false;
     
     //Geometry shader
+    geom_max_height = 0.0;
+    geom_num_copies = 5;
+    
     geom.lfo_type1 = (int)ofRandom(33);
     geom.lfo_offset = 0.58;
     geom.lfo_speed = 0.02;
@@ -108,8 +111,9 @@ void ofApp::update(){
   
     float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
     float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
-    float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,250,10);
-    //mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
+    float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,250,150);
+    mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
+
 //    mCam1.truck(val);
 //   mCam1.boom(val);
 //    mCam1.dolly(val);
@@ -181,11 +185,14 @@ void ofApp::drawGui(ofEventArgs & args){
     
     if (ofxImGui::BeginWindow("Layer Assignments", mainSettings, false))
     {
+
+        
         // Basic columns
         if (ofxImGui::BeginTree("Geometry", mainSettings)){
             ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
             ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
-            ImGui::SliderFloat("Explode Scale",&explode_amount,0.0,20.0);
+            ImGui::SliderInt("Num Copies",&geom_num_copies,1,5);
+            ImGui::SliderFloat("Max Height",&geom_max_height,0.0,10.0);
 
             if(ImGui::SmallButton("Random Primitive")){
                 primitives.randomise_objects();
@@ -343,10 +350,14 @@ void ofApp::draw(){
         mShd1->setUniform1f("time", ofGetElapsedTimef());
         mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
         mShd1->setUniform1f("explode_amount", explode_amount);
-        mShd1->setUniformBuffer("ShaderParams", params);
+        //mShd1->setUniformBuffer("ShaderParams", params);
         // draw lots of boxes
         
         //---- Geometry shader pass
+        mShd1->setUniform1i("active_idx", primitives.get_index());
+        mShd1->setUniform1i("geom_num_copies", geom_num_copies);
+        mShd1->setUniform1f("geom_max_height", geom_max_height);
+
         mShd1->setUniform1i("geom_lfo_type", geom.lfo_type1);
         mShd1->setUniform1f("geom_lfo_offset", geom.lfo_offset);
         mShd1->setUniform1f("geom_lfo_speed", geom.lfo_speed);

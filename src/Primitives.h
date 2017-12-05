@@ -22,6 +22,8 @@ public:
     void randomise_objects();
     void randomise_mesh_resolution();
     
+    int get_index();
+    
     OptimisedBox optimisedBox;
     ofSpherePrimitive sphere;
     ofIcoSpherePrimitive icoSphere;

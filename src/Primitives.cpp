@@ -18,6 +18,7 @@ void Primitives::setup(){
     cylinder.set(1.0,2.0,4,4);
     box.set(5.0,5.0,5.0);
     
+    
     idle_idx = 4;
     active_idx = 4;
     
@@ -43,6 +44,10 @@ void Primitives::init(){
     primitives.push_back(box);
     primitives.push_back(optimisedBox.getOptimisedBox());
     
+    for(auto &p: primitives){
+        p.enableNormals();
+    }
+
     idle_primitive_mesh = primitives[idle_idx].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
     active_primitive_mesh = primitives[active_idx].getMesh();
 }
@@ -51,7 +56,6 @@ void Primitives::init(){
 //--------------------------------------------------------------
 void Primitives::draw_idle_mesh(){
     idle_primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
-
 }
 
 //--------------------------------------------------------------
@@ -77,4 +81,9 @@ void Primitives::randomise_objects(){
     active_idx = random;
     idle_primitive_mesh = primitives[idle_idx].getMesh();
     active_primitive_mesh = primitives[active_idx].getMesh();
+}
+
+//--------------------------------------------------------------
+int Primitives::get_index(){
+    return idle_idx;
 }
