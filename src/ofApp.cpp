@@ -16,7 +16,7 @@ void ofApp::init(){
     params.rot_speed = 0.3;
     explode_amount = 0.0;
     
-    toggle_post_processing = true;
+    toggle_post_processing = false;
     toggle_blending = false;
     toggle_backface_cull = false;
     
@@ -54,6 +54,8 @@ void ofApp::setup(){
 
     isShaderDirty = true; // initialise dirty shader
     
+    ndi.setup();
+
     //Post Processing
     post.setup();
     
@@ -73,9 +75,8 @@ void ofApp::setup(){
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
-
-
     init();
+    
 }
 
 //--------------------------------------------------------------
@@ -321,6 +322,10 @@ void ofApp::draw(){
         isShaderDirty = false;
     }
     
+    // Wrap all the drawing inside the NDI FBO
+    ndi.ndiFbo.begin();
+    ofClear(0,0,0,0);
+    
     // begin scene to post process
     if(toggle_post_processing){
         post.dof_begin();
@@ -405,7 +410,10 @@ void ofApp::draw(){
         ofSetColor(255,50);
         post.depthOfField.getFbo().draw(0, 0);
     }
-    
+
+    ndi.ndiFbo.end();
+    ndi.draw();
+    ndi.send();
 }
 
 //--------------------------------------------------------------

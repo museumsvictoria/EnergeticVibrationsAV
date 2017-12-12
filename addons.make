@@ -1,5 +1,6 @@
 ofxDOF
 ofxImGui
+ofxNDI
 ofxOsc
 ofxPlaymodes
 ofxPoco

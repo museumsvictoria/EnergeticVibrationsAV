@@ -10,6 +10,7 @@
 #include "MaterialTextures.h"
 #include "Easings.h"
 #include "TranslationPaths.h"
+#include "NDISender.h"
 
 
 
@@ -68,6 +69,8 @@ class ofApp : public ofBaseApp{
         bool isShaderDirty;
 
         PostProcessing post;
+    
+        NDISender ndi;
     
         ///------------- GUI
         ofxImGui::Gui gui;
