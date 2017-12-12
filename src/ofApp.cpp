@@ -22,7 +22,7 @@ void ofApp::init(){
     
     //Geometry shader
     geom_max_height = 0.0;
-    geom_num_copies = 5;
+    geom_num_copies = 1;
     
     geom.lfo_type1 = (int)ofRandom(33);
     geom.lfo_offset = 0.58;
@@ -63,6 +63,7 @@ void ofApp::setup(){
     // therefore, we will use a vbo
     primitives.setup();
     
+    toggle_camera_automation = false;
     cam_near_clip = 1.0;
     cam_far_clip = 1000.0;
     
@@ -96,24 +97,25 @@ void ofApp::setupGui(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
-    if(ofGetFrameNum() % 200 == 0){
-        cam_tweens.randomise_distance();
-        cam_tweens.trigger();
-        vector<float> speeds;
-        for(int i = 0; i < cam_tweens.size(); i++){
-            speeds.push_back(ofRandom(1,3));
+    if(toggle_camera_automation){
+        if(ofGetFrameNum() % 200 == 0){
+            cam_tweens.randomise_distance();
+            cam_tweens.trigger();
+            vector<float> speeds;
+            for(int i = 0; i < cam_tweens.size(); i++){
+                speeds.push_back(ofRandom(1,3));
+            }
+            cam_tweens.set_duration(speeds);
+            for(int i = 0; i < cam_tween_types.size(); i++){
+                cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
+            }
         }
-        cam_tweens.set_duration(speeds);
-        for(int i = 0; i < cam_tween_types.size(); i++){
-            cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
-        }
+      
+        float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
+        float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
+        float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,250,150);
+        mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
     }
-  
-    float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
-    float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
-    float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,250,150);
-    mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
-
 //    mCam1.truck(val);
 //   mCam1.boom(val);
 //    mCam1.dolly(val);
@@ -132,6 +134,7 @@ void ofApp::update(){
     paths.update();
     paths.set_grid_path(params.instance_pos_grid);
 
+    
  /*
     if(ofGetFrameNum() % 100 == 0){
         geom.lfo_type1 = (int)ofRandom(34);
@@ -191,7 +194,7 @@ void ofApp::drawGui(ofEventArgs & args){
         if (ofxImGui::BeginTree("Geometry", mainSettings)){
             ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
             ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
-            ImGui::SliderInt("Num Copies",&geom_num_copies,1,5);
+            ImGui::SliderInt("Num Copies",&geom_num_copies,1,15);
             ImGui::SliderFloat("Max Height",&geom_max_height,0.0,10.0);
 
             if(ImGui::SmallButton("Random Primitive")){
@@ -201,6 +204,8 @@ void ofApp::drawGui(ofEventArgs & args){
             if(ImGui::SmallButton("Random Mesh Res")){
                 primitives.randomise_mesh_resolution();
             }
+            ImGui::Checkbox("Automate Cam", &toggle_camera_automation);
+
             
             ofxImGui::EndTree(mainSettings);
         }
@@ -400,6 +405,7 @@ void ofApp::draw(){
         ofSetColor(255,50);
         post.depthOfField.getFbo().draw(0, 0);
     }
+    
 }
 
 //--------------------------------------------------------------

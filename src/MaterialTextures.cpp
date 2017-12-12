@@ -20,7 +20,7 @@ void MaterialTextures::setup(){
     //ofLoadImage(mTex1, "elevation2.png");
     ofLoadImage(tex, "images/Gilmore1.jpg");
     
-    ofLoadImage(tex, "/Users/joshuabatty/Pictures/gifs/automatagraphics/tripped3.gif");
+    //ofLoadImage(tex, "/Users/joshuabatty/Pictures/gifs/automatagraphics/tripped3.gif");
     vid.load(get_random_path());
     vid.play();
     
@@ -62,7 +62,7 @@ string MaterialTextures::get_random_path(){
 //-------------------------------------
 ofTexture& MaterialTextures::getTexture(){
     vid.update();
-    tex = vid.getTexture();
+    //tex = vid.getTexture();
 
     /*
     ofDisableArbTex(); 	///< we need normalised image coordinates

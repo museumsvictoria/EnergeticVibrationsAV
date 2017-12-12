@@ -10,7 +10,7 @@
 #pragma include "Util/easing_lfo.glsl"
 
 layout(triangles) in;
-layout(triangle_strip, max_vertices=15) out;
+layout(triangle_strip, max_vertices=45) out; //15) out;
 
 //uniform float normal_length;
 //uniform float time;

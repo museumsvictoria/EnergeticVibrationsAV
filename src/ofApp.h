@@ -78,6 +78,7 @@ class ofApp : public ofBaseApp{
         float explode_amount;
     
         // Camera
+        bool toggle_camera_automation;
         float cam_near_clip;
         float cam_far_clip;
     

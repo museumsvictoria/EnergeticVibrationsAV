@@ -18,6 +18,7 @@
 		138004241FD2C8E000560A11 /* TranslationPaths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1380041D1FD2C8E000560A11 /* TranslationPaths.cpp */; };
 		138004251FD2C8E000560A11 /* Wave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1380041F1FD2C8E000560A11 /* Wave.cpp */; };
 		13B3C7061FD0F94300B46EF0 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */; };
+		13CE325C1FDA3B7D005C9A66 /* Lights.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13CE325A1FDA3B7D005C9A66 /* Lights.cpp */; };
 		13D49AE61F859E1400336C9B /* AlphaTrails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */; };
 		13D49AE71F859E1400336C9B /* PingPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE01F859E1400336C9B /* PingPong.cpp */; };
 		13D49AE81F859E1400336C9B /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 13D49AE21F859E1400336C9B /* PostProcessing.cpp */; };
@@ -119,6 +120,8 @@
 		138004201FD2C8E000560A11 /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wave.h; sourceTree = "<group>"; };
 		13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialTextures.cpp; sourceTree = "<group>"; };
 		13B3C7051FD0F94300B46EF0 /* MaterialTextures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialTextures.h; sourceTree = "<group>"; };
+		13CE325A1FDA3B7D005C9A66 /* Lights.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lights.cpp; sourceTree = "<group>"; };
+		13CE325B1FDA3B7D005C9A66 /* Lights.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lights.h; sourceTree = "<group>"; };
 		13D49ADE1F859E1400336C9B /* AlphaTrails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaTrails.cpp; sourceTree = "<group>"; };
 		13D49ADF1F859E1400336C9B /* AlphaTrails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaTrails.h; sourceTree = "<group>"; };
 		13D49AE01F859E1400336C9B /* PingPong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PingPong.cpp; sourceTree = "<group>"; };
@@ -723,6 +726,8 @@
 				13D49B0E1F85C71900336C9B /* GuiTheme.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				13CE325A1FDA3B7D005C9A66 /* Lights.cpp */,
+				13CE325B1FDA3B7D005C9A66 /* Lights.h */,
 				13B3C7041FD0F94300B46EF0 /* MaterialTextures.cpp */,
 				13B3C7051FD0F94300B46EF0 /* MaterialTextures.h */,
 				B304D05DA43149641F8DAE21 /* Constants.h */,
@@ -891,6 +896,7 @@
 				27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */,
 				13B3C7061FD0F94300B46EF0 /* MaterialTextures.cpp in Sources */,
 				462C212713EFFA5383B35DAB /* EngineGLFW.cpp in Sources */,
+				13CE325C1FDA3B7D005C9A66 /* Lights.cpp in Sources */,
 				000315A9FA4E2F9A09533E05 /* EngineOpenGLES.cpp in Sources */,
 				016BB55A143AD429330F07DB /* Gui.cpp in Sources */,
 				A0F2BFB15B92B4C6EB9527DE /* Helpers.cpp in Sources */,
