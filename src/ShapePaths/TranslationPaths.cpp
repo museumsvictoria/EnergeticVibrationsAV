@@ -39,6 +39,15 @@ void TranslationPaths::set_wave_path(glm::vec2 instance_wave_grid[]){
 }
 
 //--------------------------------------------------------------
+void TranslationPaths::set_model_path(glm::vec2 instance_model_grid[]){
+    for(int i = 0; i < model.get_path().size(); i++){
+        instance_model_grid[i].x = model.get_path()[i].x;
+        instance_model_grid[i].y = model.get_path()[i].y;
+    }
+}
+
+
+//--------------------------------------------------------------
 void TranslationPaths::update(){
     wave.updateShape();
 }

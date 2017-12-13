@@ -46,6 +46,7 @@ void ofApp::init(){
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.transducer_speed[i] = 0.0;
         params.active_chair[i] = 0;
+        params.instance_model_grid[i] = glm::vec2(0.0,0.0);
     }
 }
 
@@ -133,7 +134,7 @@ void ofApp::update(){
     }
     
     paths.update();
-    paths.set_grid_path(params.instance_pos_grid);
+    paths.set_model_path(params.instance_model_grid);
 
     
  /*

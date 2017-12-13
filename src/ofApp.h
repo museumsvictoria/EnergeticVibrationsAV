@@ -19,7 +19,7 @@ struct ShaderParams {
     float rot_speed;
     float transducer_speed[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
-    glm::vec2 instance_pos_grid[NUM_INSTANCES];
+    glm::vec2 instance_model_grid[NUM_INSTANCES];
 };
 
 struct LfoControl {

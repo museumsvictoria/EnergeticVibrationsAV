@@ -13,6 +13,7 @@
 #include "Wave.h"
 #include "Ngon.h"
 #include "Grid.h"
+#include "AssimpModelVertices.h"
 
 class TranslationPaths{
 public:
@@ -25,11 +26,13 @@ public:
     void set_grid_path(glm::vec2 instance_pos_grid[]);
     void set_ngon_path(glm::vec2 instance_ngon_grid[]);
     void set_wave_path(glm::vec2 instance_wave_grid[]);
+    void set_model_path(glm::vec2 instance_model_grid[]);
+    
     
     Grid grid;
     Ngon ngon;
     Wave wave;
-
+    AssimpModelVertices model;
     
 private:
     

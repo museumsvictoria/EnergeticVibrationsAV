@@ -1,4 +1,7 @@
+ofxAlgebraic
+ofxAssimpModelLoader
 ofxDOF
+ofxEasing
 ofxImGui
 ofxNDI
 ofxOsc
