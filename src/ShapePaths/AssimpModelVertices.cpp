@@ -12,7 +12,7 @@
 AssimpModelVertices::AssimpModelVertices(){
     
     // load the first model
-    model.loadModel("CaptureScene.obj");
+    model.loadModel("models/CaptureScene.obj");
     
     
     //you can create as many rotations as you want
@@ -27,9 +27,10 @@ AssimpModelVertices::AssimpModelVertices(){
     shape.clear();
     for(int i = 0; i < model.getMeshCount(); i++){
         ofVec3f c = model.getMesh(i).getCentroid();
-        
+        // Re position the vertices so that the model fits nicely on the screen
+        c.y -= 600.0;
+        c.z -= 4300.0;
         shape.addVertex(c);
-        cout << "model centroids = " << c << endl;
     }
     shape.close();
 }

@@ -12,8 +12,8 @@
 
 //--------------------------------------------------------------
 void ofApp::init(){
-    params.scale_speed = 1.0;
-    params.rot_speed = 0.3;
+    //params.scale_speed = 1.0;
+    //params.rot_speed = 0.3;
     explode_amount = 0.0;
     
     toggle_post_processing = false;
@@ -44,9 +44,9 @@ void ofApp::init(){
 
     
     for(int i = 0; i < NUM_INSTANCES; i++){
-        params.transducer_speed[i] = 0.0;
-        params.active_chair[i] = 0;
-        params.instance_model_grid[i] = glm::vec2(0.0,0.0);
+        //params.transducer_speed[i] = 0.0;
+        //params.active_chair[i] = 0;
+        params.instance_model_grid[i] = glm::vec3(0.0,0.0,0.0);
     }
 }
 
@@ -194,8 +194,8 @@ void ofApp::drawGui(ofEventArgs & args){
         
         // Basic columns
         if (ofxImGui::BeginTree("Geometry", mainSettings)){
-            ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
-            ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
+            //ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
+            //ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
             ImGui::SliderInt("Num Copies",&geom_num_copies,1,15);
             ImGui::SliderFloat("Max Height",&geom_max_height,0.0,10.0);
 
@@ -361,7 +361,7 @@ void ofApp::draw(){
         mShd1->setUniform1f("time", ofGetElapsedTimef());
         mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
         mShd1->setUniform1f("explode_amount", explode_amount);
-        //mShd1->setUniformBuffer("ShaderParams", params);
+        mShd1->setUniformBuffer("ShaderParams", params);
         // draw lots of boxes
         
         //---- Geometry shader pass
@@ -467,8 +467,8 @@ void ofApp::keyReleased(int key){
                     active = 0;
                     speed = 0.0;
                 }
-                params.active_chair[i] = active;
-                params.transducer_speed[i] = speed;
+                //params.active_chair[i] = active;
+                //params.transducer_speed[i] = speed;
             }
             break;
         case 'p':

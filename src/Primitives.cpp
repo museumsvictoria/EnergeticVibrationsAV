@@ -16,7 +16,7 @@ void Primitives::setup(){
     sphere.set(1.0, 4);
     cone.set(1.0, 2.0, 4, 4);
     cylinder.set(1.0,2.0,4,4);
-    box.set(5.0,5.0,5.0);
+    box.set(1.0,1.0,1.0);
     
     
     idle_idx = 4;

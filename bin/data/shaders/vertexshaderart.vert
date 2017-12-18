@@ -31,8 +31,7 @@
 #pragma include <of_default_vertex_in_attributes.glsl>
 #pragma include <noise.glsl>
 
-#define INSTANCES_PER_SHM 32
-#define SHM_PER_BLOCK 8
+#define NUM_INSTANCES 36
 #define TWO_PI 6.2831853072
 #define PI 3.14159265359
 #define HALF_PI 1.57079632679
@@ -57,6 +56,9 @@ uniform int is_active;
 uniform sampler2D tex_unit_0; 		// 2d texture
 
 
+uniform ShaderParams {
+    vec3 instance_pos_model[NUM_INSTANCES];
+}params;
 
 //uniform ShaderParams {
 //    float scale_speed;
@@ -85,9 +87,6 @@ float remap( float value, float inMin, float inMax, float outMin, float outMax )
     return ( (value - inMin) / ( inMax - inMin ) * ( outMax - outMin ) ) + outMin;
 }
 
-
-#define INSTANCES_PER_SHM 32
-#define SHM_PER_BLOCK 8
 
 void main()
 {
@@ -118,14 +117,14 @@ void main()
     float distance_offset = sin(time*0.02)*grid_offset;
 */
     vec4 translation;
-    translation.x = 0;//params.instance_pos_grid[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
-    translation.y = 0;//params.instance_pos_grid[gl_InstanceID].y;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
-    translation.z = 0;//abs(sin(gl_InstanceID+time))*4.0;// z_res * distance_offset * 100.;
+    translation.x = params.instance_pos_model[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
+    translation.y = params.instance_pos_model[gl_InstanceID].y;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
+    translation.z = params.instance_pos_model[gl_InstanceID].z;//abs(sin(gl_InstanceID+time))*4.0;// z_res * distance_offset * 100.;
     translation.w =	1;	// needs to remain 1.
 
     
     // nice! now, let's move everything apart a little.
-    translation.xyz *= 30;
+    translation.xyz *= .12;
     
     // store the height as a vertex attribute.
     vertex.height = translation.z;
@@ -135,7 +134,7 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float scale = 20.0;
+    float scale = abs(sin(gl_InstanceID+time*0.6))*20.0;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(scale,0,0,0);
     scaleMatrix[1] = vec4(0,scale,0,0); // we use translation value here
