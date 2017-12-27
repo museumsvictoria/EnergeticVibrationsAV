@@ -17,14 +17,6 @@ struct ShaderParams {
     glm::vec3 instance_model_grid[NUM_INSTANCES];
 };
 
-//struct ShaderParams {
-//    float test;
-//    //float scale_speed;
-//    //float rot_speed;
-//    //float transducer_speed[NUM_INSTANCES];
-//    //int active_chair[NUM_INSTANCES];
-//    //glm::vec2 instance_model_grid[NUM_INSTANCES];
-//};
 
 struct LfoControl {
     int lfo_type1;

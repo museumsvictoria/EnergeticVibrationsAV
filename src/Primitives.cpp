@@ -17,21 +17,13 @@ void Primitives::setup(){
     cone.set(1.0, 2.0, 4, 4);
     cylinder.set(1.0,2.0,4,4);
     box.set(1.0,1.0,1.0);
+    plane.set(1.0,2.0,4,4);
     
-    
-    idle_idx = 4;
-    active_idx = 4;
+    idle_idx = 6;
+    active_idx = 6;
     
     init();
-    
-//    for(int i = 0; i < NUM_INSTANCES * X_RES * Y_RES * Z_RES; i++){
-//        int gl_InstanceID = i;
-//        float idx = gl_InstanceID % 32;
-//        float z_idx = (int)floor(ofMap(gl_InstanceID,0,NUM_INSTANCES*Z_RES,0.0,Z_RES)) % Z_RES;
-//        float x_idx = (int)floor(ofMap(gl_InstanceID,0,NUM_INSTANCES*X_RES*Z_RES,0.0,X_RES)) % X_RES;
-//        float y_idx = (int)floor(ofMap(gl_InstanceID,0,NUM_INSTANCES*Y_RES*X_RES*Z_RES,0.0,Y_RES)) % Y_RES;
-//        //cout << "gl_InstanceID = " << gl_InstanceID << " -- Z = " << z_idx << " -- X = " << x_idx << " -- Y = " << y_idx << endl;
-//    }
+
 }
 
 //--------------------------------------------------------------
@@ -43,6 +35,7 @@ void Primitives::init(){
     primitives.push_back(cylinder);
     primitives.push_back(box);
     primitives.push_back(optimisedBox.getOptimisedBox());
+    primitives.push_back(plane);
     
     for(auto &p: primitives){
         p.enableNormals();

@@ -30,6 +30,7 @@ public:
     ofCylinderPrimitive cylinder;
     ofConePrimitive cone;
     ofBoxPrimitive box;
+    ofPlanePrimitive plane;
     
     ofVboMesh idle_primitive_mesh;
     ofVboMesh active_primitive_mesh;

@@ -15,6 +15,7 @@
 		0A79D694B777A5B94D0A825E /* avLooperRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0832E17F940D1E0C5C8813F4 /* avLooperRenderer.cpp */; };
 		10DB7EE17D7BD769255AECD2 /* ofxAlgebraic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53FDB2E6E4F4724B0CECEB46 /* ofxAlgebraic.cpp */; };
 		115A05A16D252A48090235F7 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C1840DF957360A3FCF4B8C0 /* MaterialTextures.cpp */; };
+		1347A8BD1FE757FC004A3FA7 /* ShaderParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */; };
 		14346B2C67AA1C3DEA21C8B4 /* BaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC3DDB42BBB6FE3607323E8 /* BaseShape.cpp */; };
 		14BA77449C8274D358E57B9E /* easing_terms_of_use.html in Sources */ = {isa = PBXBuildFile; fileRef = EE97FD89802D8956D62D9B27 /* easing_terms_of_use.html */; };
 		16C868B9D26902F1D56CDEE2 /* ofxNDIutils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FCAA55F503F0B680861CB9B /* ofxNDIutils.cpp */; };
@@ -174,6 +175,8 @@
 		1347A8B51FE1FE84004A3FA7 /* vertexshaderart.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.frag; sourceTree = "<group>"; };
 		1347A8B61FE1FE84004A3FA7 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
 		1347A8B71FE1FE84004A3FA7 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
+		1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderParams.cpp; sourceTree = "<group>"; };
+		1347A8BC1FE757FC004A3FA7 /* ShaderParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderParams.h; sourceTree = "<group>"; };
 		1363887EAC7E471CB783184B /* ofxNDIdialog.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxNDIdialog.h; path = ../../../addons/ofxNDI/src/ofxNDIdialog.h; sourceTree = SOURCE_ROOT; };
 		16D8E1844A44453A0C287E72 /* ssl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ssl.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ssl.h; sourceTree = SOURCE_ROOT; };
 		17006150745E007FA32014F5 /* modes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = modes.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/modes.h; sourceTree = SOURCE_ROOT; };
@@ -1263,6 +1266,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */,
+				1347A8BC1FE757FC004A3FA7 /* ShaderParams.h */,
 				1347A8991FE1FE84004A3FA7 /* shaders */,
 				B304D05DA43149641F8DAE21 /* Constants.h */,
 				A7FD9AD7B5163D706023CC7C /* Easings.cpp */,
@@ -1465,6 +1470,7 @@
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				5255135C98E8CBE8F640E33C /* Easings.cpp in Sources */,
 				36798892B4B35569B31D0AE9 /* HarmonicMotion.cpp in Sources */,
+				1347A8BD1FE757FC004A3FA7 /* ShaderParams.cpp in Sources */,
 				ADFBA2C7351D4D54BF63EA07 /* Lights.cpp in Sources */,
 				115A05A16D252A48090235F7 /* MaterialTextures.cpp in Sources */,
 				6EE205198F73088133A036C8 /* NDISender.cpp in Sources */,

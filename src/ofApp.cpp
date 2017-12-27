@@ -226,15 +226,6 @@ void ofApp::drawGui(ofEventArgs & args){
 
             ofxImGui::EndTree(mainSettings);
         }
-
-        if (ofxImGui::BeginTree("Camera", mainSettings)){
-
-            ImGui::SliderFloat("Near Clip",&cam_near_clip,0.0,1000.0);
-            ImGui::SliderFloat("Far Clip",&cam_far_clip,0.0,1000.0);
-   
-            
-            ofxImGui::EndTree(mainSettings);
-        }
         
         if (ofxImGui::BeginTree("Fragment Shader", mainSettings)){
 
@@ -281,6 +272,12 @@ void ofApp::drawGui(ofEventArgs & args){
             ImGui::Checkbox("Post Processing", &toggle_post_processing);
             ImGui::Checkbox("GL Blending Add", &toggle_blending);
             ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
+            ofxImGui::EndTree(mainSettings);
+        }
+        
+        if (ofxImGui::BeginTree("Camera", mainSettings)){
+            ImGui::SliderFloat("Near Clip",&cam_near_clip,0.0,1000.0);
+            ImGui::SliderFloat("Far Clip",&cam_far_clip,0.0,1000.0);
             ofxImGui::EndTree(mainSettings);
         }
     }
