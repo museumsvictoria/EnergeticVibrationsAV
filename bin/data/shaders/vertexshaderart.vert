@@ -31,7 +31,7 @@
 #pragma include <of_default_vertex_in_attributes.glsl>
 #pragma include <noise.glsl>
 
-#define NUM_INSTANCES 36
+#define NUM_INSTANCES 18
 #define TWO_PI 6.2831853072
 #define PI 3.14159265359
 #define HALF_PI 1.57079632679
@@ -57,7 +57,7 @@ uniform sampler2D tex_unit_0; 		// 2d texture
 
 
 uniform ShaderParams {
-    vec3 instance_pos_model[NUM_INSTANCES];
+    vec3 instance_pos[NUM_INSTANCES];
 }params;
 
 //uniform ShaderParams {
@@ -117,9 +117,9 @@ void main()
     float distance_offset = sin(time*0.02)*grid_offset;
 */
     vec4 translation;
-    translation.x = params.instance_pos_model[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
-    translation.y = params.instance_pos_model[gl_InstanceID].y;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
-    translation.z = params.instance_pos_model[gl_InstanceID].z;//abs(sin(gl_InstanceID+time))*4.0;// z_res * distance_offset * 100.;
+    translation.x = params.instance_pos[gl_InstanceID].x;//0.5 - (tile_length/2) + gl_InstanceID % tile_length;	// translate x
+    translation.y = params.instance_pos[gl_InstanceID].y;//1.75 - (tile_length/2) + gl_InstanceID / tile_length * 1.5; 	// translate z
+    translation.z = params.instance_pos[gl_InstanceID].z;//abs(sin(gl_InstanceID+time))*4.0;// z_res * distance_offset * 100.;
     translation.w =	1;	// needs to remain 1.
 
     
@@ -141,7 +141,7 @@ void main()
     scaleMatrix[2] = vec4(0,0,scale,0);
     scaleMatrix[3] = vec4(0,0,0,1);
     
-    perInstanceModelMatrix *= rotationMatrix(vec3(1,1,0), time*0.2);
+    perInstanceModelMatrix *= rotationMatrix(vec3(1,1,0), gl_InstanceID+time*0.40 * (scale*0.001));
     // ---------------------------
     
     // We move the box, before we even apply all the other matrices.

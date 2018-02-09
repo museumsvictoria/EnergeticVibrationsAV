@@ -12,7 +12,7 @@
 AssimpModelVertices::AssimpModelVertices(){
     
     // load the first model
-    model.loadModel("models/CaptureScene.obj");
+    model.loadModel("models/WallShape_v2.obj");
     
     
     //you can create as many rotations as you want

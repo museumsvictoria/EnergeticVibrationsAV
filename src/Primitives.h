@@ -11,11 +11,14 @@
 #include "ofMain.h"
 #include "Constants.h"
 #include "OptimisedBox.h"
+#include "ofxAssimpModelLoader.h"
 
 class Primitives{
 public:
     void setup();
     void init();
+    void load_model(string path);
+    
     void draw_idle_mesh();
     void draw_active_mesh();
     
@@ -31,7 +34,8 @@ public:
     ofConePrimitive cone;
     ofBoxPrimitive box;
     ofPlanePrimitive plane;
-    
+    ofxAssimpModelLoader model;
+
     ofVboMesh idle_primitive_mesh;
     ofVboMesh active_primitive_mesh;
     

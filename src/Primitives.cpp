@@ -27,6 +27,20 @@ void Primitives::setup(){
 }
 
 //--------------------------------------------------------------
+void Primitives::load_model(string path){
+    model.loadModel(path);
+    //you can create as many rotations as you want
+    //choose which axis you want it to effect
+    //you can update these rotations later on
+    // these rotation set the model so it is oriented correctly
+    model.setRotation(0, 90, 1, 0, 0);
+    model.setRotation(0, 90, 0, 1, 0);
+    model.setScale(0.9, 0.9, 0.9);
+    model.setPosition(ofGetWidth()/2, ofGetHeight()/2, 0);
+}
+
+
+//--------------------------------------------------------------
 void Primitives::init(){
     primitives.clear();
     primitives.push_back(icoSphere);
@@ -43,6 +57,7 @@ void Primitives::init(){
 
     idle_primitive_mesh = primitives[idle_idx].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
     active_primitive_mesh = primitives[active_idx].getMesh();
+    
 }
 
 

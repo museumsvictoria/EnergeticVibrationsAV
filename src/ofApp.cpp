@@ -64,6 +64,7 @@ void ofApp::setup(){
     
     // step 2: we will want to draw our geometry as instances
     // therefore, we will use a vbo
+    //primitives.load_model("/Users/joshuabatty/Documents/MindBuffer/Gigs/Rainbow\ Mainstage\ 2018/Assets/LED.obj");
     primitives.setup();
     
     toggle_camera_automation = false;
