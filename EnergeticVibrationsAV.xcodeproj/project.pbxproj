@@ -15,6 +15,8 @@
 		0A79D694B777A5B94D0A825E /* avLooperRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0832E17F940D1E0C5C8813F4 /* avLooperRenderer.cpp */; };
 		10DB7EE17D7BD769255AECD2 /* ofxAlgebraic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53FDB2E6E4F4724B0CECEB46 /* ofxAlgebraic.cpp */; };
 		115A05A16D252A48090235F7 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C1840DF957360A3FCF4B8C0 /* MaterialTextures.cpp */; };
+		130CDEED202D856C00C96758 /* ReceiverOSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130CDEEB202D856C00C96758 /* ReceiverOSC.cpp */; };
+		130CDEF1202DBC1B00C96758 /* IdleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130CDEEF202DBC1B00C96758 /* IdleMesh.cpp */; };
 		1347A8BD1FE757FC004A3FA7 /* ShaderParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */; };
 		14346B2C67AA1C3DEA21C8B4 /* BaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC3DDB42BBB6FE3607323E8 /* BaseShape.cpp */; };
 		14BA77449C8274D358E57B9E /* easing_terms_of_use.html in Sources */ = {isa = PBXBuildFile; fileRef = EE97FD89802D8956D62D9B27 /* easing_terms_of_use.html */; };
@@ -147,6 +149,12 @@
 		1285CEE20560049A7AD370A2 /* HarmonicMotion.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = HarmonicMotion.h; path = src/HarmonicMotion/HarmonicMotion.h; sourceTree = SOURCE_ROOT; };
 		1295C8629847BF3F6438C6DA /* JenGaussian.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = JenGaussian.cpp; path = ofxAlgebraic/src/JenGaussian.cpp; sourceTree = SOURCE_ROOT; };
 		12EBC5773B81D5E37E068E24 /* imgui_internal.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imgui_internal.h; path = ../../../addons/ofxImGui/libs/imgui/src/imgui_internal.h; sourceTree = SOURCE_ROOT; };
+		130CDEEB202D856C00C96758 /* ReceiverOSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReceiverOSC.cpp; sourceTree = "<group>"; };
+		130CDEEC202D856C00C96758 /* ReceiverOSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiverOSC.h; sourceTree = "<group>"; };
+		130CDEEF202DBC1B00C96758 /* IdleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IdleMesh.cpp; sourceTree = "<group>"; };
+		130CDEF0202DBC1B00C96758 /* IdleMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdleMesh.h; sourceTree = "<group>"; };
+		130CDEF2202DC44200C96758 /* idle_mesh.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = idle_mesh.frag; sourceTree = "<group>"; };
+		130CDEF3202DC44200C96758 /* idle_mesh.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = idle_mesh.vert; sourceTree = "<group>"; };
 		1347A89A1FE1FE84004A3FA7 /* AlphaTrail_BufA.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_BufA.frag; sourceTree = "<group>"; };
 		1347A89B1FE1FE84004A3FA7 /* AlphaTrail_Image.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_Image.frag; sourceTree = "<group>"; };
 		1347A89C1FE1FE84004A3FA7 /* HUD_FX.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = HUD_FX.frag; sourceTree = "<group>"; };
@@ -560,6 +568,8 @@
 				1347A8B01FE1FE84004A3FA7 /* vertexshaderart.frag */,
 				1347A8B11FE1FE84004A3FA7 /* vertexshaderart.geom */,
 				1347A8B21FE1FE84004A3FA7 /* vertexshaderart.vert */,
+				130CDEF2202DC44200C96758 /* idle_mesh.frag */,
+				130CDEF3202DC44200C96758 /* idle_mesh.vert */,
 				1347A8B31FE1FE84004A3FA7 /* waveforms.glsl */,
 				1347A8B41FE1FE84004A3FA7 /* Working Backup */,
 			);
@@ -1281,10 +1291,14 @@
 				1EE1A26D283C6FB67A76B32E /* NDISender.cpp */,
 				2DB86146933AF7F0E6CE2BE7 /* NDISender.h */,
 				0A8320B91250ED2BADA15054 /* OptimisedBox.h */,
+				130CDEEF202DBC1B00C96758 /* IdleMesh.cpp */,
+				130CDEF0202DBC1B00C96758 /* IdleMesh.h */,
 				B9E050B977F19B9DE79165A7 /* PostProcessing */,
 				CD5FCD25E1E21DDF2D52DA12 /* Primitives.cpp */,
 				1039CBA50BD184DFAE4A6ACF /* Primitives.h */,
 				0696D60066ECC1987CD844CA /* ShapePaths */,
+				130CDEEB202D856C00C96758 /* ReceiverOSC.cpp */,
+				130CDEEC202D856C00C96758 /* ReceiverOSC.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1496,6 +1510,7 @@
 				14BA77449C8274D358E57B9E /* easing_terms_of_use.html in Sources */,
 				DBBE189ECD171A97DCF46C6A /* BaseEngine.cpp in Sources */,
 				27CF6B6E279F8EE58C9D4B90 /* BaseTheme.cpp in Sources */,
+				130CDEF1202DBC1B00C96758 /* IdleMesh.cpp in Sources */,
 				462C212713EFFA5383B35DAB /* EngineGLFW.cpp in Sources */,
 				000315A9FA4E2F9A09533E05 /* EngineOpenGLES.cpp in Sources */,
 				016BB55A143AD429330F07DB /* Gui.cpp in Sources */,
@@ -1503,6 +1518,7 @@
 				5C2607C471F8D48C0036C56E /* imgui.cpp in Sources */,
 				E984796BE84AA4315636B6E7 /* imgui_demo.cpp in Sources */,
 				00413C35AAE31B483D7538AB /* imgui_draw.cpp in Sources */,
+				130CDEED202D856C00C96758 /* ReceiverOSC.cpp in Sources */,
 				EF551CEC52CC6ECBAA566E1E /* ofxNDIdialog.cpp in Sources */,
 				777B4142F0B037BB7E78BC8A /* ofxNDIreceiver.cpp in Sources */,
 				E6B21206F73594F90A2897B6 /* ofxNDIsender.cpp in Sources */,

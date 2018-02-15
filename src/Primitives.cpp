@@ -17,10 +17,9 @@ void Primitives::setup(){
     cone.set(1.0, 2.0, 4, 4);
     cylinder.set(1.0,2.0,4,4);
     box.set(1.0,1.0,1.0);
-    plane.set(1.0,2.0,4,4);
     
-    idle_idx = 6;
-    active_idx = 6;
+    idle_idx = 1;
+    active_idx = 1;
     
     init();
 
@@ -49,7 +48,6 @@ void Primitives::init(){
     primitives.push_back(cylinder);
     primitives.push_back(box);
     primitives.push_back(optimisedBox.getOptimisedBox());
-    primitives.push_back(plane);
     
     for(auto &p: primitives){
         p.enableNormals();
@@ -63,11 +61,13 @@ void Primitives::init(){
 
 //--------------------------------------------------------------
 void Primitives::draw_idle_mesh(){
+//    idle_primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
     idle_primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
 }
 
 //--------------------------------------------------------------
 void Primitives::draw_active_mesh(){
+//    active_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
     active_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
 }
 

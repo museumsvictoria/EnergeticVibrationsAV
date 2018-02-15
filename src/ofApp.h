@@ -7,14 +7,17 @@
 #include "GuiTheme.h"
 #include "PostProcessing.h"
 #include "Primitives.h"
+#include "IdleMesh.h"=
 #include "MaterialTextures.h"
 #include "Easings.h"
 #include "TranslationPaths.h"
 #include "NDISender.h"
+#include "ReceiverOSC.h"
 
 
 struct ShaderParams {
     glm::vec3 instance_model_grid[NUM_INSTANCES];
+    int active_chair[NUM_INSTANCES];
 };
 
 
@@ -64,9 +67,13 @@ class ofApp : public ofBaseApp{
         ShaderParams params;
         bool isShaderDirty;
 
+        IdleMesh idle_mesh;
+    
         PostProcessing post;
     
         NDISender ndi;
+    
+        ReceiverOSC osc;
     
         ///------------- GUI
         ofxImGui::Gui gui;

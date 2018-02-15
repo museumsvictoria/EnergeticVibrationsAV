@@ -13,16 +13,24 @@
 class MaterialTextures {
 public:
     void setup();
-    void load_random_texture();
-    string get_random_path();
-    ofTexture& getTexture();
     
-    ofVideoPlayer vid;
+    void load_random_idle_texture();
+    void load_random_active_texture();
+    
+    string get_random_idle_path();
+    string get_random_active_path();
+    
+    ofTexture& getIdleTexture();
+    ofTexture& getActiveTexture();
+    
+    ofVideoPlayer vid_active;
+    ofVideoPlayer vid_idle;
 
 private:
-    ofFbo fbo;
-    ofTexture tex;
+    ofTexture tex_idle;
+    ofTexture tex_active;
     
-    ofDirectory dir;
+    ofDirectory active_dir;
+    ofDirectory idle_dir;
 
 };

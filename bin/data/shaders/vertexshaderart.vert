@@ -58,6 +58,7 @@ uniform sampler2D tex_unit_0; 		// 2d texture
 
 uniform ShaderParams {
     vec3 instance_pos[NUM_INSTANCES];
+    int active_chair[NUM_INSTANCES];
 }params;
 
 //uniform ShaderParams {
@@ -134,14 +135,14 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float scale = abs(sin(gl_InstanceID+time*0.6))*20.0;
+    float scale = abs(sin(gl_InstanceID+time*0.6))*50.0;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(scale,0,0,0);
     scaleMatrix[1] = vec4(0,scale,0,0); // we use translation value here
     scaleMatrix[2] = vec4(0,0,scale,0);
     scaleMatrix[3] = vec4(0,0,0,1);
     
-    perInstanceModelMatrix *= rotationMatrix(vec3(1,1,0), gl_InstanceID+time*0.40 * (scale*0.001));
+    perInstanceModelMatrix *= rotationMatrix(vec3(1,1,0), gl_InstanceID+time*0.04 * (scale*0.001));
     // ---------------------------
     
     // We move the box, before we even apply all the other matrices.
@@ -162,7 +163,12 @@ void main()
     // contribute to the normal matrix. 
     vertex.normal =  mat3(translatedModelView) * normal;
     
-    gl_Position = vertex.position;
+    if(params.active_chair[gl_InstanceID] == 1){
+        gl_Position = vertex.position;
+    } else {
+        vertex.position = vec4(1000.0,1000.0,1000.0,1000.0);
+        gl_Position = vertex.position;
+    }
 }
 
 /*

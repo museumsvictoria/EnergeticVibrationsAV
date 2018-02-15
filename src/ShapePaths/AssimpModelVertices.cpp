@@ -12,7 +12,7 @@
 AssimpModelVertices::AssimpModelVertices(){
     
     // load the first model
-    model.loadModel("models/WallShape_v2.obj");
+    model.loadModel("models/WallShape_v3.obj");
     
     
     //you can create as many rotations as you want
@@ -28,10 +28,11 @@ AssimpModelVertices::AssimpModelVertices(){
     for(int i = 0; i < model.getMeshCount(); i++){
         ofVec3f c = model.getMesh(i).getCentroid();
         // Re position the vertices so that the model fits nicely on the screen
-        c.y -= 600.0;
-        c.z -= 4300.0;
+        //c.y -= 600.0;
+        //c.z -= 4300.0;
         shape.addVertex(c);
     }
     shape.close();
+    
 }
 

@@ -78,11 +78,12 @@ void main() {
         normal *= -1.0; // Flip our normal. oF's normals seem inverted?
     }
     
+    float instance_offset = (vertexOut.instance_ID / 18.0) * PI;
     float primitive_id =gl_PrimitiveIDIn;//  mod(gl_PrimitiveIDIn,2.0) ;
-    float effect_lfo = easing_lfo(geom_effect_lfo_type,((primitive_id*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;
-
     
-    float lfo_scale = easing_lfo(geom_lfo_type,((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*20.0)))*geom_lfo_amp;
+    float effect_lfo = easing_lfo(geom_effect_lfo_type,instance_offset + ((primitive_id*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;
+
+    float lfo_scale = easing_lfo(geom_lfo_type,instance_offset + ((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*20.0)))*geom_lfo_amp;
     
     //------ Pass Through
     for( int z = 0; z < geom_num_copies; z++){
@@ -99,7 +100,7 @@ void main() {
             vec4 tri_height = mix(vertex[i].position, (vertex[i].position-(vec4(vMiddle,1.0))*.01) + vec4(normal.xyz,1.0) * (geom_max_height*z), lfo_scale);
         
            
-            gl_Position = projectionMatrix * mix(tri_height, tri_size,mix(geom_effect_mix,effect_lfo,geom_effect_lfo_amp));
+            gl_Position = projectionMatrix * mix(tri_height, tri_size,mix(geom_effect_mix,effect_lfo,geom_effect_lfo_amp ));
             
            // gl_Position = projectionMatrix * gl_in[i].gl_Position  ;
             EmitVertex();

@@ -126,9 +126,11 @@ void main(){
     vec3 rimLight = vec3(0);
     addRimLighting(N, vec3(0,0,1), rimLight);
 
-    float alpha_fill_lfo = easing_lfo(fill_lfo_type,((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
+    float instance_offset = (vertex.instance_ID / 18.0) * PI;
+
+    float alpha_fill_lfo = easing_lfo(fill_lfo_type,instance_offset + ((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
     
-    float alpha_wireframe_lfo = easing_lfo(wireframe_lfo_type,((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
+    float alpha_wireframe_lfo = easing_lfo(wireframe_lfo_type,instance_offset + ((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
 
     
     if(is_active == 1){

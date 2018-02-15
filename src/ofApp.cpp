@@ -16,13 +16,13 @@ void ofApp::init(){
     //params.rot_speed = 0.3;
     explode_amount = 0.0;
     
-    toggle_post_processing = false;
-    toggle_blending = false;
-    toggle_backface_cull = false;
+    toggle_post_processing = true;
+    toggle_blending = true;
+    toggle_backface_cull = true;
     
     //Geometry shader
-    geom_max_height = 0.0;
-    geom_num_copies = 1;
+    geom_max_height = 4.0;
+    geom_num_copies = 4;
     
     geom.lfo_type1 = (int)ofRandom(33);
     geom.lfo_offset = 0.58;
@@ -67,12 +67,15 @@ void ofApp::setup(){
     //primitives.load_model("/Users/joshuabatty/Documents/MindBuffer/Gigs/Rainbow\ Mainstage\ 2018/Assets/LED.obj");
     primitives.setup();
     
+    idle_mesh.setup(paths.model.model);
+
+    
     toggle_camera_automation = false;
     cam_near_clip = 1.0;
     cam_far_clip = 1000.0;
     
     // we will also need a camera, so we can move around in the scene
-    mCam1.setupPerspective(false, 50, 0.001, 8000);
+    mCam1.setupPerspective(false, 50, 0.001, 0);
     mCam1.setDistance(50); // set default camera distance to 1000
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
@@ -100,6 +103,11 @@ void ofApp::setupGui(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
+    osc.update();
+    for(int i = 0; i < osc.get_chair_states().size(); i++){
+        params.active_chair[i] = osc.get_chair_states()[i];
+    }
+    
     if(toggle_camera_automation){
         if(ofGetFrameNum() % 200 == 0){
             cam_tweens.randomise_distance();
@@ -116,7 +124,7 @@ void ofApp::update(){
       
         float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
         float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
-        float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,250,150);
+        float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,850,150);
         mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
     }
 //    mCam1.truck(val);
@@ -243,12 +251,19 @@ void ofApp::drawGui(ofEventArgs & args){
         }
         
         if (ofxImGui::BeginTree("TEXTURES", mainSettings)){
-            static bool vid_toggle = false;
-            ImGui::Checkbox("Toggle Play", &vid_toggle);
-            if(vid_toggle == true) {
-                textures.vid.setPaused(false);
+            static bool vid_idle_toggle = true;
+            static bool vid_actvie_toggle = true;
+            ImGui::Checkbox("Toggle Ative Play", &vid_actvie_toggle);
+            if(vid_actvie_toggle == true) {
+                textures.vid_active.setPaused(false);
             } else {
-                textures.vid.setPaused(true);
+                textures.vid_active.setPaused(true);
+            }
+            ImGui::Checkbox("Toggle Idle Play", &vid_idle_toggle);
+            if(vid_idle_toggle == true) {
+                textures.vid_idle.setPaused(false);
+            } else {
+                textures.vid_idle.setPaused(true);
             }
             ofxImGui::EndTree(mainSettings);
         }
@@ -332,6 +347,11 @@ void ofApp::draw(){
     
     mCam1.begin();
     
+    // we need to flip the view port if we are doing postprocessing
+    if(toggle_post_processing){
+        ofScale (1,-1,1);
+    }
+
     // alpha blending is enabled by default,
     // let's see if disabling it will help us a little.
     //ofDisableBlendMode();
@@ -350,6 +370,12 @@ void ofApp::draw(){
     glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
     // and enable depth testing.
     ofEnableDepthTest();
+    
+    // Draw our Idle Mesh shader first
+    idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
+    
+    ofTexture tex = textures.getActiveTexture();
+    tex.bind();
     
     if (mShd1) {
         
@@ -378,10 +404,8 @@ void ofApp::draw(){
         mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
         
         primitives.draw_idle_mesh();
-        mShd1->end();
-        
-        mShd1->begin();
-        mShd1->setUniformTexture("tex_unit_0", textures.getTexture(), 0); // first texture unit has index 0, name is not that important!
+
+        mShd1->setUniformTexture("tex_unit_0", textures.getActiveTexture(), 0); // first texture unit has index 0, name is not that important!
         mShd1->setUniform1i("is_active", 1);
         mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
         mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
@@ -392,22 +416,24 @@ void ofApp::draw(){
         primitives.draw_active_mesh();
         mShd1->end();
     }
-    
+    tex.unbind();
+
     ofDisableDepthTest();
     
     if(toggle_backface_cull){
         glDisable(GL_CULL_FACE);
     }
     
-    ofEnableAlphaBlending();
+    //ofEnableAlphaBlending();
 
     mCam1.end();
+    
     
     if(toggle_post_processing){
         post.dof_end();
         post.draw();
-        ofSetColor(255,50);
-        post.depthOfField.getFbo().draw(0, 0);
+        //ofSetColor(255,50);
+        //post.depthOfField.getFbo().draw(0, 0);
     }
 
     ndi.ndiFbo.end();
@@ -425,12 +451,14 @@ void ofApp::keyReleased(int key){
     switch (key) {
         case ' ':
             isShaderDirty = true;
+            idle_mesh.isShaderDirty = true;
             break;
         case 'f':
             ofToggleFullscreen();
             break;
         case 't':
-            textures.load_random_texture();
+            textures.load_random_idle_texture();
+            textures.load_random_active_texture();
             break;
         case 'e':
             geom.lfo_type1 = (int)ofRandom(34);

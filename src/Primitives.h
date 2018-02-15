@@ -33,7 +33,6 @@ public:
     ofCylinderPrimitive cylinder;
     ofConePrimitive cone;
     ofBoxPrimitive box;
-    ofPlanePrimitive plane;
     ofxAssimpModelLoader model;
 
     ofVboMesh idle_primitive_mesh;

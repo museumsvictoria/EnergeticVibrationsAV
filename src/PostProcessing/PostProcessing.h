@@ -12,8 +12,10 @@
 #include "ofxDOF.h"
 #include "ReactionDiffusion.h"
 #include "AlphaTrails.h"
+#include "ofxAssimpModelLoader.h"
+#include "PingPong.h"
 
-class PostProcessing {
+class PostProcessing : public PingPong{
 public:
     void init();
     void setup();
@@ -25,6 +27,11 @@ public:
     ofxDOF depthOfField;
     ReactionDiffusion reaction_diffusion;
     AlphaTrails alpha_trails;
+    
+    ofxAssimpModelLoader masking_model;
+    ofEasyCam cam;
+    
+    ofShader blend_shader;
     
     //----- DOF
     float dof_blur_amount;
