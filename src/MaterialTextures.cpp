@@ -17,6 +17,8 @@ void MaterialTextures::setup(){
     active_dir.listDir("movies/active/");
     active_dir.sort();
     
+    createFullScreenQuad();
+    shader.load("shaders/colour_palette");
     
     // step 1: load our height map image
     
@@ -24,6 +26,9 @@ void MaterialTextures::setup(){
     
     tex_idle.allocate(500, 500, GL_RGBA);
     tex_active.allocate(500, 500, GL_RGBA);
+
+    fbo_idle.allocate(500, 500, GL_RGBA);
+    fbo_active.allocate(500, 500, GL_RGBA);
 
     //ofLoadImage(mTex1, "elevation2.png");
     ofLoadImage(tex_active, "images/Gilmore1.jpg");
@@ -34,7 +39,17 @@ void MaterialTextures::setup(){
     load_random_active_texture();
 
 //    ofEnableArbTex();
+    
+    colours.push_back(glm::vec4(0.255,0.745,0.670,1.0)); // aqua
+    colours.push_back(glm::vec4(0.235,0.596,0.807,1.0)); // blue
+    colours.push_back(glm::vec4(0.545,0.411,0.827,1.0)); // light purple
+    colours.push_back(glm::vec4(0.149,0.133,0.384,1.0)); // dark purple
+    colours.push_back(glm::vec4(0.305,0.658,0.239,1.0)); // green
+    colours.push_back(glm::vec4(0.494,0.098,0.286,1.0)); // mitch magenta
+    colours.push_back(glm::vec4(0.000,0.607,0.490,1.0)); // aqua green
+    colours.push_back(glm::vec4(0.784,0.180,0.152,1.0)); // orange
 
+    random_shuffle(std::begin(colours), std::end(colours));
 }
 
 //-------------------------------------
@@ -62,12 +77,38 @@ string MaterialTextures::get_random_active_path(){
 ofTexture& MaterialTextures::getActiveTexture(){
     ofDisableArbTex();
     vid_active.update();
-    tex_active = vid_active.getTexture();
+    
+    fbo_active.begin();
+    ofClear(0,0,0,0);
+    shader.begin();
+    shader.setUniform3f("iResolution", fbo_active.getWidth(), fbo_active.getHeight(), 0);
+    shader.setUniformTexture("iChannel0", vid_active.getTexture(), 0);
+    for(int i = 0; i < colours.size(); i++){
+        shader.setUniform4f("color_" + ofToString(1+i), colours[i].r, colours[i].g, colours[i].b, colours[i].a);
+    }
+    m_fsQuadVbo.draw();
+    shader.end();
+    fbo_active.end();
+    
+    tex_active = fbo_active.getTexture();
     return tex_active;
 }
 ofTexture& MaterialTextures::getIdleTexture(){
     ofDisableArbTex();
     vid_idle.update();
-    tex_idle = vid_idle.getTexture();
+
+    fbo_idle.begin();
+    ofClear(0,0,0,0);
+    shader.begin();
+    shader.setUniform3f("iResolution", fbo_idle.getWidth(), fbo_idle.getHeight(), 0);
+    shader.setUniformTexture("iChannel0", vid_idle.getTexture(), 0);
+    for(int i = 0; i < colours.size(); i++){
+        shader.setUniform4f("color_" + ofToString(1+i), colours[i].r, colours[i].g, colours[i].b, colours[i].a);
+    }
+    m_fsQuadVbo.draw();
+    shader.end();
+    fbo_idle.end();
+    
+    tex_idle = fbo_idle.getTexture();
     return tex_idle;
 }

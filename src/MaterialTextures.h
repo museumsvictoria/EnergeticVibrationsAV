@@ -9,8 +9,9 @@
 #pragma once 
 
 #include "ofMain.h"
+#include "PingPong.h"
 
-class MaterialTextures {
+class MaterialTextures : public PingPong{
 public:
     void setup();
     
@@ -30,7 +31,13 @@ private:
     ofTexture tex_idle;
     ofTexture tex_active;
     
+    ofFbo fbo_idle;
+    ofFbo fbo_active;
+    
     ofDirectory active_dir;
     ofDirectory idle_dir;
+    
+    ofShader shader;
 
+    vector<glm::vec4> colours;
 };

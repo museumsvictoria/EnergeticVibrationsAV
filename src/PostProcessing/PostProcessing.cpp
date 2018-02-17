@@ -85,49 +85,52 @@ void PostProcessing::dof_end(){
 void PostProcessing::draw(){
     cam.setDistance(3200); // set default camera distance to 1000
     
-    ofFbo fbo;
-    fbo.allocate(ofGetWidth(), ofGetHeight());
+//    ofFbo fbo;
+//    fbo.allocate(ofGetWidth(), ofGetHeight());
+//    
+//    fbo.begin();
+//    ofClear(0,0,0,0);
+//    cam.begin();
+//    ofPushStyle();
+//    ofScale (1,-1,1);
+//    ofSetColor(255,255);
+//    masking_model.getMesh(0).draw();
+//    ofPopStyle();
+//    cam.end();
+//    fbo.end();
+//    
+//    ofEnableBlendMode(OF_BLENDMODE_ADD);
+//    
+//    ofSetColor(255,255);
+////    fbo.draw(0,0);
+//
+//    
+//    if(ofGetKeyPressed('f')){
+//      //  depthOfField.drawFocusAssist(0, 0);
+//    }
+//    else{
+//      //  depthOfField.getFbo().draw(0, 0);
+//    }
+//    
+//    blend_shader.load("shaders/passthrough.vert","shaders/blend_mask.frag");
+//
+//    
+//    depthOfField.getFbo().getTexture().bind();
+//    blend_shader.begin();
+//    
+//    blend_shader.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(), 0);
+//    blend_shader.setUniformTexture("iChannel0", fbo.getTexture(), 0);
+//    blend_shader.setUniformTexture("iChannel1", depthOfField.getFbo().getTexture(), 1);
+//    m_fsQuadVbo.draw();
+//
+//    blend_shader.end();
+//    depthOfField.getFbo().getTexture().unbind();
+//
+////    reaction_diffusion.draw();
+////    alpha_trails.draw();
+//    
+//   // ofDisableBlendMode();
     
-    fbo.begin();
-    ofClear(0,0,0,0);
-    cam.begin();
-    ofPushStyle();
-    ofScale (1,-1,1);
-    ofSetColor(255,255);
-    masking_model.getMesh(0).draw();
-    ofPopStyle();
-    cam.end();
-    fbo.end();
+    depthOfField.getFbo().draw(0, 0);
     
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
-    
-    ofSetColor(255,255);
-//    fbo.draw(0,0);
-
-    
-    if(ofGetKeyPressed('f')){
-      //  depthOfField.drawFocusAssist(0, 0);
-    }
-    else{
-      //  depthOfField.getFbo().draw(0, 0);
-    }
-    
-    blend_shader.load("shaders/passthrough.vert","shaders/blend_mask.frag");
-
-    
-    depthOfField.getFbo().getTexture().bind();
-    blend_shader.begin();
-    
-    blend_shader.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(), 0);
-    blend_shader.setUniformTexture("iChannel0", fbo.getTexture(), 0);
-    blend_shader.setUniformTexture("iChannel1", depthOfField.getFbo().getTexture(), 1);
-    m_fsQuadVbo.draw();
-
-    blend_shader.end();
-    depthOfField.getFbo().getTexture().unbind();
-
-//    reaction_diffusion.draw();
-//    alpha_trails.draw();
-    
-   // ofDisableBlendMode();
 }

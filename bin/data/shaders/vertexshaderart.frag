@@ -30,7 +30,6 @@ const float PI = 3.141592653589793;
 
 uniform mat4 modelViewMatrix;
 uniform int is_active;
-uniform float tick_position;
 uniform float time;
 
 #pragma include "Util/easing_lfo.glsl"
@@ -150,21 +149,9 @@ void main(){
         vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
         fragColor = vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
         
-        //fragColor = vec4(0.0,0.0,1.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
-        
         fragColor = vec4(get_texture(),1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
     }
-    
-    /*
-    if(tick_position == vertex.instance_ID){
-        fragColor = vec4(1.0,0.0,0.0,1.0);
-    }
-*/
-    
-    if(vertex.position.y < -0.3 && vertex.position.y > 0.3){
-        fragColor = vec4(1.0,0.0,0.0,alpha_fill_lfo);
-    }
-    
+
     //fragColor.rgb += vertex.normal * vertex.height;
     
     // fragColor = vec4(vertex.texcoord.x, vertex.texcoord.y, 0 , 1.0);

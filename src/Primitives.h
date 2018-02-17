@@ -19,8 +19,8 @@ public:
     void init();
     void load_model(string path);
     
-    void draw_idle_mesh();
-    void draw_active_mesh();
+    void draw_wireframe_mesh();
+    void draw_filled_mesh();
     
     void randomise_objects();
     void randomise_mesh_resolution();
@@ -35,12 +35,10 @@ public:
     ofBoxPrimitive box;
     ofxAssimpModelLoader model;
 
-    ofVboMesh idle_primitive_mesh;
-    ofVboMesh active_primitive_mesh;
+    ofVboMesh primitive_mesh;
     
     vector<of3dPrimitive> primitives;
     
 private:
-    int idle_idx;
-    int active_idx;
+    int shape_idx;
 };

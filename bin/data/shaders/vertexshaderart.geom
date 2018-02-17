@@ -12,10 +12,8 @@
 layout(triangles) in;
 layout(triangle_strip, max_vertices=45) out; //15) out;
 
-//uniform float normal_length;
-//uniform float time;
+
 uniform float time;
-uniform float explode_amount;
 
 uniform int active_idx;
 uniform float geom_max_height;
@@ -29,7 +27,6 @@ uniform int geom_effect_lfo_type;
 uniform float geom_effect_lfo_offset;
 uniform float geom_effect_lfo_speed;
 uniform float geom_effect_lfo_amp;
-
 
 uniform float geom_effect_mix;
 
@@ -78,7 +75,7 @@ void main() {
         normal *= -1.0; // Flip our normal. oF's normals seem inverted?
     }
     
-    float instance_offset = (vertexOut.instance_ID / 18.0) * PI;
+    float instance_offset = (vertexOut.instance_ID / 21.0) * PI;
     float primitive_id =gl_PrimitiveIDIn;//  mod(gl_PrimitiveIDIn,2.0) ;
     
     float effect_lfo = easing_lfo(geom_effect_lfo_type,instance_offset + ((primitive_id*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;

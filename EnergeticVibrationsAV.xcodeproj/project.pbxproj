@@ -155,6 +155,8 @@
 		130CDEF0202DBC1B00C96758 /* IdleMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdleMesh.h; sourceTree = "<group>"; };
 		130CDEF2202DC44200C96758 /* idle_mesh.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = idle_mesh.frag; sourceTree = "<group>"; };
 		130CDEF3202DC44200C96758 /* idle_mesh.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = idle_mesh.vert; sourceTree = "<group>"; };
+		132B35EE2036865A00D835E2 /* colour_palette.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = colour_palette.frag; sourceTree = "<group>"; };
+		132B35EF2036865A00D835E2 /* colour_palette.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = colour_palette.vert; sourceTree = "<group>"; };
 		1347A89A1FE1FE84004A3FA7 /* AlphaTrail_BufA.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_BufA.frag; sourceTree = "<group>"; };
 		1347A89B1FE1FE84004A3FA7 /* AlphaTrail_Image.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_Image.frag; sourceTree = "<group>"; };
 		1347A89C1FE1FE84004A3FA7 /* HUD_FX.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = HUD_FX.frag; sourceTree = "<group>"; };
@@ -180,9 +182,6 @@
 		1347A8B11FE1FE84004A3FA7 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
 		1347A8B21FE1FE84004A3FA7 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
 		1347A8B31FE1FE84004A3FA7 /* waveforms.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = waveforms.glsl; sourceTree = "<group>"; };
-		1347A8B51FE1FE84004A3FA7 /* vertexshaderart.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.frag; sourceTree = "<group>"; };
-		1347A8B61FE1FE84004A3FA7 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
-		1347A8B71FE1FE84004A3FA7 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
 		1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderParams.cpp; sourceTree = "<group>"; };
 		1347A8BC1FE757FC004A3FA7 /* ShaderParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderParams.h; sourceTree = "<group>"; };
 		1363887EAC7E471CB783184B /* ofxNDIdialog.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxNDIdialog.h; path = ../../../addons/ofxNDI/src/ofxNDIdialog.h; sourceTree = SOURCE_ROOT; };
@@ -550,6 +549,8 @@
 		1347A8991FE1FE84004A3FA7 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				132B35EE2036865A00D835E2 /* colour_palette.frag */,
+				132B35EF2036865A00D835E2 /* colour_palette.vert */,
 				1347A89A1FE1FE84004A3FA7 /* AlphaTrail_BufA.frag */,
 				1347A89B1FE1FE84004A3FA7 /* AlphaTrail_Image.frag */,
 				1347A89C1FE1FE84004A3FA7 /* HUD_FX.frag */,
@@ -571,7 +572,6 @@
 				130CDEF2202DC44200C96758 /* idle_mesh.frag */,
 				130CDEF3202DC44200C96758 /* idle_mesh.vert */,
 				1347A8B31FE1FE84004A3FA7 /* waveforms.glsl */,
-				1347A8B41FE1FE84004A3FA7 /* Working Backup */,
 			);
 			name = shaders;
 			path = bin/data/shaders;
@@ -589,16 +589,6 @@
 				1347A8AF1FE1FE84004A3FA7 /* remap.glsl */,
 			);
 			path = Util;
-			sourceTree = "<group>";
-		};
-		1347A8B41FE1FE84004A3FA7 /* Working Backup */ = {
-			isa = PBXGroup;
-			children = (
-				1347A8B51FE1FE84004A3FA7 /* vertexshaderart.frag */,
-				1347A8B61FE1FE84004A3FA7 /* vertexshaderart.geom */,
-				1347A8B71FE1FE84004A3FA7 /* vertexshaderart.vert */,
-			);
-			path = "Working Backup";
 			sourceTree = "<group>";
 		};
 		13C2436A78CDB4354594CA7D /* include */ = {

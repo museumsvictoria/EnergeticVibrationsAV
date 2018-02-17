@@ -175,10 +175,7 @@ void main(){
     
     
     //fragColor = vec4( vec3(1.-vertex.position.z),1.0);
-    
-    if(vertex.position.z <40.0 || vertex.position.z > 300.1){
-        discard;
-    }
+
 
     //fragColor.rgb += vertex.normal * vertex.height;
     

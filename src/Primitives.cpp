@@ -18,8 +18,7 @@ void Primitives::setup(){
     cylinder.set(1.0,2.0,4,4);
     box.set(1.0,1.0,1.0);
     
-    idle_idx = 1;
-    active_idx = 1;
+    shape_idx = 1;
     
     init();
 
@@ -53,22 +52,19 @@ void Primitives::init(){
         p.enableNormals();
     }
 
-    idle_primitive_mesh = primitives[idle_idx].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
-    active_primitive_mesh = primitives[active_idx].getMesh();
+    primitive_mesh = primitives[shape_idx].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
     
 }
 
 
 //--------------------------------------------------------------
-void Primitives::draw_idle_mesh(){
-//    idle_primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
-    idle_primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
+void Primitives::draw_filled_mesh(){
+    primitive_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
 }
 
 //--------------------------------------------------------------
-void Primitives::draw_active_mesh(){
-//    active_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
-    active_primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+void Primitives::draw_wireframe_mesh(){
+    primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
 }
 
 //--------------------------------------------------------------
@@ -85,13 +81,11 @@ void Primitives::randomise_mesh_resolution(){
 //--------------------------------------------------------------
 void Primitives::randomise_objects(){
     int random = (int)ofRandom(primitives.size());
-    idle_idx = random;
-    active_idx = random;
-    idle_primitive_mesh = primitives[idle_idx].getMesh();
-    active_primitive_mesh = primitives[active_idx].getMesh();
+    shape_idx = random;
+    primitive_mesh = primitives[shape_idx].getMesh();
 }
 
 //--------------------------------------------------------------
 int Primitives::get_index(){
-    return idle_idx;
+    return shape_idx;
 }

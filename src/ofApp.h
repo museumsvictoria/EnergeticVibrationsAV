@@ -18,6 +18,8 @@
 struct ShaderParams {
     glm::vec3 instance_model_grid[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
+    float object_size[NUM_INSTANCES];
+    float vibration_hz[NUM_INSTANCES];
 };
 
 

@@ -16,13 +16,13 @@ void ofApp::init(){
     //params.rot_speed = 0.3;
     explode_amount = 0.0;
     
-    toggle_post_processing = true;
+    toggle_post_processing = false;
     toggle_blending = true;
     toggle_backface_cull = true;
     
     //Geometry shader
     geom_max_height = 4.0;
-    geom_num_copies = 4;
+    geom_num_copies = 1;
     
     geom.lfo_type1 = (int)ofRandom(33);
     geom.lfo_offset = 0.58;
@@ -47,6 +47,12 @@ void ofApp::init(){
         //params.transducer_speed[i] = 0.0;
         //params.active_chair[i] = 0;
         params.instance_model_grid[i] = glm::vec3(0.0,0.0,0.0);
+        
+        if(i % 7 == 0) params.object_size[i] = 70.0; // large seat
+        else if((i % 7) < 4) params.object_size[i] = 40.0; // middle size seats
+        else params.object_size[i] = 15.0; // small seats
+        
+        params.vibration_hz[i] = 0.0;
     }
 }
 
@@ -55,7 +61,7 @@ void ofApp::setup(){
 
     isShaderDirty = true; // initialise dirty shader
     
-    ndi.setup();
+   // ndi.setup();
 
     //Post Processing
     post.setup();
@@ -106,6 +112,7 @@ void ofApp::update(){
     osc.update();
     for(int i = 0; i < osc.get_chair_states().size(); i++){
         params.active_chair[i] = osc.get_chair_states()[i];
+        params.vibration_hz[i] = osc.get_vibration_speeds()[i];
     }
     
     if(toggle_camera_automation){
@@ -337,8 +344,8 @@ void ofApp::draw(){
     }
     
     // Wrap all the drawing inside the NDI FBO
-    ndi.ndiFbo.begin();
-    ofClear(0,0,0,0);
+    //ndi.ndiFbo.begin();
+    //ofClear(0,0,0,0);
     
     // begin scene to post process
     if(toggle_post_processing){
@@ -359,6 +366,9 @@ void ofApp::draw(){
         ofEnableBlendMode(OF_BLENDMODE_ADD);
     }
     
+    // Draw our Idle Mesh shader first
+    //idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
+    
     // also, let's get rid of the back faces.
     if(toggle_backface_cull){
         glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
@@ -371,8 +381,6 @@ void ofApp::draw(){
     // and enable depth testing.
     ofEnableDepthTest();
     
-    // Draw our Idle Mesh shader first
-    idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
     
     ofTexture tex = textures.getActiveTexture();
     tex.bind();
@@ -380,41 +388,42 @@ void ofApp::draw(){
     if (mShd1) {
         
         mShd1->begin();
-        mShd1->setUniform1i("is_active", 0);
-        mShd1->setUniform1f("tick_position", (int)(ofGetElapsedTimef() * 4.4) % NUM_INSTANCES);
-        mShd1->setUniform1f("time", ofGetElapsedTimef());
-        mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
-        mShd1->setUniform1f("explode_amount", explode_amount);
-        mShd1->setUniformBuffer("ShaderParams", params);
-        // draw lots of boxes
-        
-        //---- Geometry shader pass
-        mShd1->setUniform1i("active_idx", primitives.get_index());
-        mShd1->setUniform1i("geom_num_copies", geom_num_copies);
-        mShd1->setUniform1f("geom_max_height", geom_max_height);
+        for(int i = 0; i < 2; i++){
+            
+            mShd1->setUniform1i("is_active", i);
+            mShd1->setUniform1f("time", ofGetElapsedTimef());
+            mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
+            mShd1->setUniformBuffer("ShaderParams", params);
+            
+            //---- Geometry shader pass
+            mShd1->setUniform1i("active_idx", primitives.get_index());
+            mShd1->setUniform1i("geom_num_copies", geom_num_copies);
+            mShd1->setUniform1f("geom_max_height", geom_max_height);
 
-        mShd1->setUniform1i("geom_lfo_type", geom.lfo_type1);
-        mShd1->setUniform1f("geom_lfo_offset", geom.lfo_offset);
-        mShd1->setUniform1f("geom_lfo_speed", geom.lfo_speed);
-        mShd1->setUniform1f("geom_lfo_amp", geom.lfo_amp);
-        mShd1->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
-        mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
-        mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
-        mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
-        mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
-        
-        primitives.draw_idle_mesh();
+            mShd1->setUniform1i("geom_lfo_type", geom.lfo_type1);
+            mShd1->setUniform1f("geom_lfo_offset", geom.lfo_offset);
+            mShd1->setUniform1f("geom_lfo_speed", geom.lfo_speed);
+            mShd1->setUniform1f("geom_lfo_amp", geom.lfo_amp);
+            mShd1->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
+            mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
+            mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
+            mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
+            mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
+            
+            if(i ==0) primitives.draw_filled_mesh();
+            else primitives.draw_wireframe_mesh();
 
-        mShd1->setUniformTexture("tex_unit_0", textures.getActiveTexture(), 0); // first texture unit has index 0, name is not that important!
-        mShd1->setUniform1i("is_active", 1);
-        mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
-        mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
-        mShd1->setUniform1f("xray_lfo_offset", xray.lfo_offset);
-        mShd1->setUniform1f("xray_lfo_speed", xray.lfo_speed);
-        mShd1->setUniform1f("xray_lfo_amp", xray.lfo_amp);
-        mShd1->setUniform1f("xray_mix", xray.mix);
-        primitives.draw_active_mesh();
-        mShd1->end();
+            mShd1->setUniformTexture("tex_unit_0", tex, 0); // first texture unit has index 0, name is not that important!
+            mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
+            mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
+            mShd1->setUniform1f("xray_lfo_offset", xray.lfo_offset);
+            mShd1->setUniform1f("xray_lfo_speed", xray.lfo_speed);
+            mShd1->setUniform1f("xray_lfo_amp", xray.lfo_amp);
+            mShd1->setUniform1f("xray_mix", xray.mix);
+            
+        }
+            mShd1->end();
+        
     }
     tex.unbind();
 
@@ -427,8 +436,8 @@ void ofApp::draw(){
     //ofEnableAlphaBlending();
 
     mCam1.end();
-    
-    
+
+
     if(toggle_post_processing){
         post.dof_end();
         post.draw();
@@ -436,9 +445,15 @@ void ofApp::draw(){
         //post.depthOfField.getFbo().draw(0, 0);
     }
 
-    ndi.ndiFbo.end();
-    ndi.draw();
-    ndi.send();
+    mCam1.begin();
+    // Draw our Idle Mesh shader first
+    idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
+    mCam1.end();
+    
+    //ndi.ndiFbo.end();
+    //ndi.draw();
+    //ndi.send();
+    
 }
 
 //--------------------------------------------------------------

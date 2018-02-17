@@ -31,7 +31,7 @@
 #pragma include <of_default_vertex_in_attributes.glsl>
 #pragma include <noise.glsl>
 
-#define NUM_INSTANCES 18
+#define NUM_INSTANCES 21
 #define TWO_PI 6.2831853072
 #define PI 3.14159265359
 #define HALF_PI 1.57079632679
@@ -52,13 +52,14 @@ out mat4 perInstanceModelViewMatrix;
 out mat4 vertexTransformMatrix;
 
 uniform float time;
-uniform int is_active;
 uniform sampler2D tex_unit_0; 		// 2d texture
 
 
 uniform ShaderParams {
     vec3 instance_pos[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
+    float object_size[NUM_INSTANCES];
+    float vibration_hz[NUM_INSTANCES];
 }params;
 
 //uniform ShaderParams {
@@ -135,14 +136,20 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float scale = abs(sin(gl_InstanceID+time*0.6))*50.0;
+    float vib_hz = sin(2.*PI*time*params.vibration_hz[gl_InstanceID])*3.;
+    float max_size = params.object_size[gl_InstanceID];
+    float scale = remap(abs(sin(gl_InstanceID+time*0.2)),0.0,1.0,max_size*0.3,max_size) + vib_hz;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(scale,0,0,0);
     scaleMatrix[1] = vec4(0,scale,0,0); // we use translation value here
     scaleMatrix[2] = vec4(0,0,scale,0);
     scaleMatrix[3] = vec4(0,0,0,1);
     
-    perInstanceModelMatrix *= rotationMatrix(vec3(1,1,0), gl_InstanceID+time*0.04 * (scale*0.001));
+    vec3 instance_rotation = vec3(abs(sin(gl_InstanceID+(time*0.4))),
+                                  abs(cos(gl_InstanceID+(time*0.2))),
+                                  abs(sin(gl_InstanceID+(time*0.5))));
+    perInstanceModelMatrix *= rotationMatrix(vec3(instance_rotation), gl_InstanceID+time*(params.vibration_hz[gl_InstanceID]*0.15));
+//    perInstanceModelMatrix *= rotationMatrix(vec3(1,1,0), gl_InstanceID+time*0.04 * (scale*0.001));
     // ---------------------------
     
     // We move the box, before we even apply all the other matrices.
@@ -166,7 +173,7 @@ void main()
     if(params.active_chair[gl_InstanceID] == 1){
         gl_Position = vertex.position;
     } else {
-        vertex.position = vec4(1000.0,1000.0,1000.0,1000.0);
+        vertex.position = vec4(-10000.0);
         gl_Position = vertex.position;
     }
 }
