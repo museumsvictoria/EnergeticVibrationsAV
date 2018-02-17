@@ -15,9 +15,12 @@ class AlphaTrails : public PingPong{
 public:
     void setup();
     void set_source_texture(ofFbo& tex);
+    void update();
     void draw();
     void runSimulation();
     void set_delay_amount(float _delay);
+    
+    ofFbo& getFbo();
     
     ofShader shader_bufA;
     ofShader shader_image;

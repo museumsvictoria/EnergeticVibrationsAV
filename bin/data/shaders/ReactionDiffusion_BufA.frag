@@ -16,7 +16,7 @@ uniform float     iSampleRate;
 uniform vec2      uTexelSize;
 
 uniform float intensity;
-
+uniform float bleed_amount;
 // inputs
 in vec2 vTexCoord;
 
@@ -120,7 +120,7 @@ void main( void )
     float newReactDiff = tx(uv).x + (noise.z - 0.5)*0.0025 - (0.002 + (0.1-(intensity*0.1)));
     
     // Reaction-diffusion.
-    newReactDiff += dot(tx(uv + (noise.xy-0.5)*pw).xy, vec2(1, -1))*0.145;
+    newReactDiff += dot(tx(uv + (noise.xy-0.5)*pw).xy, vec2(1, -1))*(0.145 + (bleed_amount*0.1));
     
     
     // Storing the reaction diffusion value in the X channel, and avgReactDiff (the blurred pixel value)

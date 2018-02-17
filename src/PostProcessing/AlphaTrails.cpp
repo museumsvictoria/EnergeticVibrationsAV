@@ -19,7 +19,7 @@ void AlphaTrails::setup(){
     shader_image.load("shaders/passthrough.vert","shaders/AlphaTrail_Image.frag");
     
     shader_image.begin();
-    shader_image.setUniform1i( "iChannel0", 4);
+    shader_image.setUniform1i( "iChannel0", 5);
     shader_image.end();
     
     createFullScreenQuad();
@@ -72,7 +72,7 @@ void AlphaTrails::set_delay_amount(float _delay){
 }
 
 //--------------------------------------------------------------
-void AlphaTrails::draw(){
+void AlphaTrails::update(){
     // clear to green as grayScott runs in red and green channels
     ofClear( 0, 255, 0, 255 );
     ofDisableDepthTest();
@@ -91,6 +91,7 @@ void AlphaTrails::draw(){
         shader_image.begin();
         shader_image.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
         shader_image.setUniform1f("iTime", ofGetElapsedTimef());
+        shader_image.setUniform1f("delay", delay);
         shader_image.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
         m_fsQuadVbo.draw();
         shader_image.end();
@@ -99,9 +100,17 @@ void AlphaTrails::draw(){
     m_renderFbo.end();
     
     glDisable( GL_CULL_FACE );
-    
+}
+
+//--------------------------------------------------------------
+void AlphaTrails::draw(){
+
     /// Draw To Screen
     ////////////////////
     ofSetColor(ofColor::white);
     m_renderFbo.draw(0,0,ofGetWidth(),ofGetHeight());
+}
+
+ofFbo& AlphaTrails::getFbo(){
+    return m_renderFbo;
 }

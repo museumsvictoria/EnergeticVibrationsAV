@@ -18,11 +18,17 @@ void PostProcessing::init(){
 //--------------------------------------------------------------
 void PostProcessing::setup(){
     init();
-    dof_blur_amount = 0.5;
-    dof_focal_range = 50.0;
-    dof_focal_distance = 105.0;
     
-    trail_delay = 0.5;
+    toggle_dof = false;
+    toggle_reaction_diffusion = true;
+    toggle_feedback = false;
+    toggle_down_sampling = false;
+    
+    dof_blur_amount = 0.45;
+    dof_focal_range = 200.0;
+    dof_focal_distance = 200.0;
+    
+    trail_delay = 0.05;
     
     reaction_diffusion.setup();
     //alpha_trails.setup();
@@ -48,6 +54,7 @@ void PostProcessing::setup(){
 
 //--------------------------------------------------------------
 void PostProcessing::update(){
+    
     /// SET DOF PARAMS
     ////////////////////
     
@@ -61,15 +68,17 @@ void PostProcessing::update(){
     // how much of the scene is in focus, smaller number is a narrower focal distance
     depthOfField.setFocalRange(dof_focal_range);
     
+    /// PASS IN TEXTURE TO ALPHA TRAILS
+    ////////////////////
+    alpha_trails.set_delay_amount(trail_delay);
+    //alpha_trails.set_source_texture(depthOfField.getFbo());
+    //alpha_trails.update();
     
     /// PASS IN TEXTURE TO REACTION DUFFUSION
     ////////////////////
     reaction_diffusion.set_source_texture(depthOfField.getFbo());
     
-    /// PASS IN TEXTURE TO ALPHA TRAILS
-    ////////////////////
-    alpha_trails.set_delay_amount(trail_delay);
-    alpha_trails.set_source_texture(depthOfField.getFbo());
+
 }
 
 //--------------------------------------------------------------
@@ -131,6 +140,12 @@ void PostProcessing::draw(){
 //    
 //   // ofDisableBlendMode();
     
-    depthOfField.getFbo().draw(0, 0);
+    //depthOfField.getFbo().draw(0, 0);
     
+    if(toggle_reaction_diffusion){
+        reaction_diffusion.draw();
+    } else {
+        alpha_trails.draw();
+    }
+
 }

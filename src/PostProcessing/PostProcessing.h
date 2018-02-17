@@ -40,4 +40,9 @@ public:
     
     //----- TRAILS
     float trail_delay;
+    
+    bool toggle_dof;
+    bool toggle_reaction_diffusion;
+    bool toggle_feedback;
+    bool toggle_down_sampling;
 };

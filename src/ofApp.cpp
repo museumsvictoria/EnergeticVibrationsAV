@@ -16,7 +16,7 @@ void ofApp::init(){
     //params.rot_speed = 0.3;
     explode_amount = 0.0;
     
-    toggle_post_processing = false;
+    toggle_post_processing = true;
     toggle_blending = true;
     toggle_backface_cull = true;
     
@@ -48,9 +48,9 @@ void ofApp::init(){
         //params.active_chair[i] = 0;
         params.instance_model_grid[i] = glm::vec3(0.0,0.0,0.0);
         
-        if(i % 7 == 0) params.object_size[i] = 70.0; // large seat
+        if(i % 7 == 0) params.object_size[i] = 74.0; // large seat
         else if((i % 7) < 4) params.object_size[i] = 40.0; // middle size seats
-        else params.object_size[i] = 15.0; // small seats
+        else params.object_size[i] = 18.0; // small seats
         
         params.vibration_hz[i] = 0.0;
     }
@@ -82,7 +82,7 @@ void ofApp::setup(){
     
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 50, 0.001, 0);
-    mCam1.setDistance(50); // set default camera distance to 1000
+    mCam1.setDistance(600); // set default camera distance to 1000
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
@@ -259,7 +259,7 @@ void ofApp::drawGui(ofEventArgs & args){
         
         if (ofxImGui::BeginTree("TEXTURES", mainSettings)){
             static bool vid_idle_toggle = true;
-            static bool vid_actvie_toggle = true;
+            static bool vid_actvie_toggle = false;
             ImGui::Checkbox("Toggle Ative Play", &vid_actvie_toggle);
             if(vid_actvie_toggle == true) {
                 textures.vid_active.setPaused(false);
@@ -285,6 +285,7 @@ void ofApp::drawGui(ofEventArgs & args){
         }
         if (ofxImGui::BeginTree("REACTION DIFFUSION", mainSettings)){
             ImGui::SliderFloat("Intensity",&post.reaction_diffusion.intensity,0.0,1.0);
+            ImGui::SliderFloat("BleedAmount",&post.reaction_diffusion.bleed_amount,0.0,1.0);
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("ALPHA TRAILS", mainSettings)){

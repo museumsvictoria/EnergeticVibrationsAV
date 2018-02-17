@@ -22,4 +22,5 @@ public:
     ofShader reaction_shader_image;
     
     float intensity;
+    float bleed_amount;
 };

@@ -12,6 +12,8 @@ uniform sampler2D iChannel1;          // input channel. XX = 2D/Cube
 uniform vec4      iDate;                 // (year, month, day, time in seconds)
 uniform float     iSampleRate;
 
+uniform float     delay;
+
 // inputs
 in vec2 vTexCoord;
 
@@ -27,7 +29,8 @@ void main( void )
     uv.y *= -1.;
     uv.y += 1.0;
     
+    float intensity = 1.5 + (delay*2.5);
     // Done.
-    outputColor = texture(iChannel0, uv);
+    outputColor = texture(iChannel0, uv) * intensity;
 }
 
