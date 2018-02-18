@@ -11,7 +11,7 @@
 //-----------------------------------------------
 ReceiverOSC::ReceiverOSC(){
     for(int i = 0; i < NUM_CHAIRS; i++){
-        chair_states.push_back(0);
+        chair_states.push_back(1);
         vibration_hz.push_back(0.0);
     }
     

@@ -1,16 +1,16 @@
 //
-//  AlphaTrails.cpp
+//  Feedback.cpp
 //  EnergeticVibrationsAV
 //
-//  Created by Joshua Batty on 4/10/17.
+//  Created by Joshua Batty on 17/2/18.
 //
 //
 
-#include "AlphaTrails.h"
+#include "Feedback.h"
 
 
 //--------------------------------------------------------------
-void AlphaTrails::init_fbos(){
+void Feedback::init_fbos(){
     
     /// Shader FBOs
     ///-------------------------
@@ -33,15 +33,15 @@ void AlphaTrails::init_fbos(){
     
     // setup FBOs
     m_fbos[ 0 ].begin();
-    ofClear( 255, 0, 0, 255 );
+    ofClear( 0, 0, 0, 255 );
     m_fbos[ 0 ].end();
     
     m_fbos[ 1 ].begin();
-    ofClear( 255, 0, 0, 255 );
+    ofClear( 0, 0, 0, 255 );
     m_fbos[ 1 ].end();
     
-    m_fbos[ 0 ].getTexture().bind( 5 );
-    m_fbos[ 1 ].getTexture().bind( 6 );
+    m_fbos[ 0 ].getTexture().bind( 7 );
+    m_fbos[ 1 ].getTexture().bind( 8 );
     //------------------------------
     
     /// Final Render FBO
@@ -64,24 +64,36 @@ void AlphaTrails::init_fbos(){
 }
 
 //--------------------------------------------------------------
-void AlphaTrails::setup(){
+void Feedback::setup(){
     // Use GL_TEXTURE_2D Textures (normalized texture coordinates 0..1)
     //ofDisableArbTex();
     
-    shader_bufA.load("shaders/passthrough.vert","shaders/AlphaTrail_BufA.frag");
-    shader_image.load("shaders/passthrough.vert","shaders/AlphaTrail_Image.frag");
+    shader_bufA.load("shaders/passthrough.vert","shaders/Feedback_BufA.frag");
+    shader_image.load("shaders/passthrough.vert","shaders/Feedback_Image.frag");
     
     shader_image.begin();
-    shader_image.setUniform1i( "iChannel0", 5);
+    shader_image.setUniform1i( "iChannel0", 7);
     shader_image.end();
     
     createFullScreenQuad();
     init_fbos();
     
-    delay = 0.05;
+    strength = 0.8;
+    zoom = -0.3;
+    x_mult = 11.50;
+    y_mult = 10.0;
+    
+    x_amp = 1.0;
+    y_amp = 1.0;
+    
+    x_speed = 0.25;
+    y_speed = 0.4;
+    
+    rotate_speed = 0.2;
+    rotate_amp = 0.92;
 }
 //--------------------------------------------------------------
-void AlphaTrails::set_source_texture(ofFbo& tex){
+void Feedback::set_source_texture(ofFbo& tex){
     
     m_src_fbo.begin();
     tex.draw(0,0,ofGetWidth(),ofGetHeight());
@@ -89,7 +101,7 @@ void AlphaTrails::set_source_texture(ofFbo& tex){
 }
 
 //--------------------------------------------------------------
-void AlphaTrails::runSimulation()
+void Feedback::runSimulation()
 {
     /// Draw GrayScott
     ////////////////////
@@ -101,10 +113,19 @@ void AlphaTrails::runSimulation()
     
     shader_bufA.begin();
     shader_bufA.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
-    shader_bufA.setUniform1f("delay", delay);
     shader_bufA.setUniform1f("iTime", ofGetElapsedTimef());
     shader_bufA.setUniform1i("iFrame", ofGetFrameNum());
-
+    shader_bufA.setUniform1f("strength",strength);
+    shader_bufA.setUniform1f("zoom", zoom);
+    shader_bufA.setUniform1f("x_mult", x_mult);
+    shader_bufA.setUniform1f("y_mult", y_mult);
+    shader_bufA.setUniform1f("x_amp", x_amp);
+    shader_bufA.setUniform1f("y_amp", y_amp);
+    shader_bufA.setUniform1f("x_speed", x_speed);
+    shader_bufA.setUniform1f("y_speed", y_speed);
+    shader_bufA.setUniform1f("rotate_speed", rotate_speed);
+    shader_bufA.setUniform1f("rotate_amp", rotate_amp);
+    
     shader_bufA.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
     
     int fboIndex = 0;
@@ -114,7 +135,8 @@ void AlphaTrails::runSimulation()
         shader_bufA.setUniformTexture( "iChannel0", m_fbos[ 1 - fboIndex ].getTexture(), 2 );
         
         m_fbos[ fboIndex ].begin();
-        //ofClear( 255, 0, 0, 255 );
+//        ofClear( 255, 0, 0, 255 ); // origianl
+        ofClear(0,0,0,255);
         m_fsQuadVbo.draw();
         m_fbos[ fboIndex ].end();
     }
@@ -122,14 +144,10 @@ void AlphaTrails::runSimulation()
 }
 
 //--------------------------------------------------------------
-void AlphaTrails::set_delay_amount(float _delay){
-    delay = _delay;
-}
-
-//--------------------------------------------------------------
-void AlphaTrails::update(){
+void Feedback::update(){
+    
     // clear to green as grayScott runs in red and green channels
-    ofClear( 0, 255, 0, 255 );
+    //ofClear( 0, 255, 0, 255 ); //put me back in
     ofDisableDepthTest();
     
     int numSimulations = 1;
@@ -142,11 +160,11 @@ void AlphaTrails::update(){
     ////////////////
     m_renderFbo.begin();
     {
-        ofClear(255,0,0,255);
+        //ofClear(255,0,0,255); //put me back in
+        ofClear(0,0,0,255);
         shader_image.begin();
         shader_image.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
         shader_image.setUniform1f("iTime", ofGetElapsedTimef());
-        shader_image.setUniform1f("delay", delay);
         shader_image.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
         m_fsQuadVbo.draw();
         shader_image.end();
@@ -158,14 +176,14 @@ void AlphaTrails::update(){
 }
 
 //--------------------------------------------------------------
-void AlphaTrails::draw(){
-
+void Feedback::draw(){
+    
     /// Draw To Screen
     ////////////////////
     ofSetColor(ofColor::white);
     m_renderFbo.draw(0,0,ofGetWidth(),ofGetHeight());
 }
 
-ofFbo& AlphaTrails::getFbo(){
+ofFbo& Feedback::getFbo(){
     return m_renderFbo;
 }

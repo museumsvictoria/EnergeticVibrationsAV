@@ -14,13 +14,18 @@ class ReactionDiffusion : public PingPong{
     
 public:
     void setup();
+    void init_fbos();
     void set_source_texture(ofFbo& tex);
     void draw();
+    void update();
     void runSimulation();
+
+    ofFbo& getFbo();
 
     ofShader reaction_shader_bufA;
     ofShader reaction_shader_image;
     
     float intensity;
     float bleed_amount;
+    float dry_wet;
 };

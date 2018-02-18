@@ -36,6 +36,7 @@ in VertexAttrib {
     vec3 normal;
     vec2 texcoord;
     float height;
+    float scale;
     float instance_ID;
 } vertex[];
 
@@ -80,7 +81,7 @@ void main() {
     
     float effect_lfo = easing_lfo(geom_effect_lfo_type,instance_offset + ((primitive_id*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;
 
-    float lfo_scale = easing_lfo(geom_lfo_type,instance_offset + ((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*20.0)))*geom_lfo_amp;
+    float lfo_scale = easing_lfo(geom_lfo_type,instance_offset + ((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*20.0)))*(geom_lfo_amp*(remap(vertex[0].scale,0.0,80.0,0.0,1.0)));
     
     //------ Pass Through
     for( int z = 0; z < geom_num_copies; z++){

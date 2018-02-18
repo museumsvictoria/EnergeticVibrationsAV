@@ -8,6 +8,59 @@
 
 #include "ReactionDiffusion.h"
 
+//--------------------------------------------------------------
+void ReactionDiffusion::init_fbos(){
+    
+    /// Shader FBOs
+    ///-------------------------
+    ofFbo::Settings fboSettings;
+    fboSettings.width = ofGetWidth();
+    fboSettings.height = ofGetHeight();
+    fboSettings.internalformat = GL_RGBA32F;
+    fboSettings.numSamples = 2;
+    fboSettings.useDepth = false;
+    fboSettings.useStencil = false;
+    fboSettings.textureTarget = GL_TEXTURE_2D;
+    fboSettings.minFilter = GL_LINEAR;
+    fboSettings.maxFilter = GL_LINEAR;
+    fboSettings.wrapModeHorizontal = GL_CLAMP_TO_EDGE;
+    fboSettings.wrapModeVertical = GL_CLAMP_TO_EDGE;
+    
+    // create our FBOs
+    m_fbos[ 0 ].allocate( fboSettings );
+    m_fbos[ 1 ].allocate( fboSettings );
+    
+    // setup FBOs
+    m_fbos[ 0 ].begin();
+    ofClear( 255, 0, 0, 255 );
+    m_fbos[ 0 ].end();
+    
+    m_fbos[ 1 ].begin();
+    ofClear( 255, 0, 0, 255 );
+    m_fbos[ 1 ].end();
+    
+    m_fbos[ 0 ].getTexture().bind( 3 );
+    m_fbos[ 1 ].getTexture().bind( 4 );
+    //------------------------------
+    
+    /// Final Render FBO
+    ///-------------------------
+    ofFbo::Settings renderFboSettings;
+    renderFboSettings.width = ofGetWidth();
+    renderFboSettings.height = ofGetHeight();
+    renderFboSettings.internalformat = GL_RGBA;
+    renderFboSettings.numSamples = 1;
+    renderFboSettings.useDepth = false;
+    renderFboSettings.useStencil = false;
+    renderFboSettings.textureTarget = GL_TEXTURE_2D;
+    renderFboSettings.minFilter = GL_LINEAR;
+    renderFboSettings.maxFilter = GL_LINEAR;
+    renderFboSettings.wrapModeHorizontal = GL_CLAMP_TO_EDGE;
+    renderFboSettings.wrapModeVertical = GL_CLAMP_TO_EDGE;
+    
+    m_renderFbo.allocate( renderFboSettings );
+    m_src_fbo.allocate( renderFboSettings );
+}
 
 //--------------------------------------------------------------
 void ReactionDiffusion::setup(){
@@ -15,6 +68,7 @@ void ReactionDiffusion::setup(){
     //ofDisableArbTex();
     intensity = 1.0;
     bleed_amount = 0.0;
+    dry_wet = 0.0;
     
     reaction_shader_bufA.load("shaders/passthrough.vert","shaders/ReactionDiffusion_BufA.frag");
     reaction_shader_image.load("shaders/passthrough.vert","shaders/ReactionDiffusion_Image.frag");
@@ -70,7 +124,7 @@ void ReactionDiffusion::runSimulation()
 
 
 //--------------------------------------------------------------
-void ReactionDiffusion::draw(){
+void ReactionDiffusion::update(){
     // clear to green as grayScott runs in red and green channels
     ofClear( 0, 255, 0, 255 );
     ofDisableDepthTest();
@@ -90,6 +144,8 @@ void ReactionDiffusion::draw(){
         reaction_shader_image.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
         reaction_shader_image.setUniform1f("iTime", ofGetElapsedTimef());
         reaction_shader_image.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
+        reaction_shader_image.setUniform1f("dry_wet", dry_wet);
+
         m_fsQuadVbo.draw();
         reaction_shader_image.end();
         
@@ -97,9 +153,17 @@ void ReactionDiffusion::draw(){
     m_renderFbo.end();
     
     glDisable( GL_CULL_FACE );
+}
+
+//--------------------------------------------------------------
+void ReactionDiffusion::draw(){
     
     /// Draw To Screen
     ////////////////////
     ofSetColor(ofColor::white);
     m_renderFbo.draw(0,0,ofGetWidth(),ofGetHeight());
+}
+
+ofFbo& ReactionDiffusion::getFbo(){
+    return m_renderFbo;
 }

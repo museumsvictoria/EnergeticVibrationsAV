@@ -1,8 +1,8 @@
 //
-//  AlphaTrails.hpp
+//  Feedback.hpp
 //  EnergeticVibrationsAV
 //
-//  Created by Joshua Batty on 4/10/17.
+//  Created by Joshua Batty on 17/2/18.
 //
 //
 
@@ -10,7 +10,7 @@
 #include "ofMain.h"
 #include "PingPong.h"
 
-class AlphaTrails : public PingPong{
+class Feedback : public PingPong{
     
 public:
     void setup();
@@ -19,12 +19,24 @@ public:
     void update();
     void draw();
     void runSimulation();
-    void set_delay_amount(float _delay);
     
     ofFbo& getFbo();
     
     ofShader shader_bufA;
     ofShader shader_image;
     
-    float delay;
+//private:
+    float strength;
+    float zoom;
+    float x_mult;
+    float y_mult;
+    
+    float x_amp;
+    float y_amp;
+    
+    float x_speed;
+    float y_speed;
+    
+    float rotate_speed;
+    float rotate_amp;
 };

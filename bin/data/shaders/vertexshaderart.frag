@@ -144,7 +144,7 @@ void main(){
 
         //fragColor.rgb += clamp(glowAmt*0.4,0.,1.)*vec3(.3,.5,.7);
         //fragColor.rgb *= vec3(0.3,0.5,1.0);
-        fragColor = vec4(pow(get_texture(),vec3(2.0)),mix(xray_mix,alpha_wireframe_lfo,xray_lfo_amp));
+        fragColor = vec4(pow(get_texture(),vec3(.5)),mix(xray_mix,alpha_wireframe_lfo,xray_lfo_amp));
     } else {
         vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
         fragColor = vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));

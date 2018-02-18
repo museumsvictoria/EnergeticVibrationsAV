@@ -284,12 +284,26 @@ void ofApp::drawGui(ofEventArgs & args){
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("REACTION DIFFUSION", mainSettings)){
+            ImGui::SliderFloat("dry_wet",&post.reaction_diffusion.dry_wet,0.0,1.0);
             ImGui::SliderFloat("Intensity",&post.reaction_diffusion.intensity,0.0,1.0);
             ImGui::SliderFloat("BleedAmount",&post.reaction_diffusion.bleed_amount,0.0,1.0);
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("ALPHA TRAILS", mainSettings)){
-            ImGui::SliderFloat("Delay Amount",&post.trail_delay,0.0,0.99);
+            ImGui::SliderFloat("Delay Amount",&post.alpha_trails.delay,0.0,0.99);
+            ofxImGui::EndTree(mainSettings);
+        }
+        if (ofxImGui::BeginTree("FEEDBACK", mainSettings)){
+            ImGui::SliderFloat("strength",&post.feedback.strength,0.0,1.0);
+            ImGui::SliderFloat("zoom",&post.feedback.zoom,-1.0,1.0);
+            ImGui::SliderFloat("x_mult",&post.feedback.x_mult,1.0,32.0);
+            ImGui::SliderFloat("y_mult",&post.feedback.y_mult,1.0,32.0);
+            ImGui::SliderFloat("x_amp",&post.feedback.x_amp,0.0,1.0);
+            ImGui::SliderFloat("y_amp",&post.feedback.y_amp,0.0,1.0);
+            ImGui::SliderFloat("x_speed",&post.feedback.x_speed,0.0,1.0);
+            ImGui::SliderFloat("y_speed",&post.feedback.y_speed,0.0,1.0);
+            ImGui::SliderFloat("rotate_amp",&post.feedback.rotate_amp,0.0,1.0);
+            ImGui::SliderFloat("rotate_speed",&post.feedback.rotate_speed,0.0,1.0);
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("GL STATE", mainSettings)){

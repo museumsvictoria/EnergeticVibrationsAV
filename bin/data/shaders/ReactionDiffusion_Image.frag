@@ -18,6 +18,7 @@ in vec2 vTexCoord;
 // outputs
 out vec4 outputColor;
 
+uniform float dry_wet;
 /*
 	Reaction Diffusion - 2 Pass
 	---------------------------
@@ -103,7 +104,8 @@ void main( void )
     col *= smoothstep(0., 1., iTime/2.);
     
     // Done.
-    outputColor = vec4(1.0-min(col, 1.), 1.);
+    vec3 final = vec3(1.0-min(col, 1.));
+    outputColor = vec4(mix(orig, final, dry_wet), 1.0 );
 
 }
 

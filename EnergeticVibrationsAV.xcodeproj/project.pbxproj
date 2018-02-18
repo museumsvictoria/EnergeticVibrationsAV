@@ -17,6 +17,7 @@
 		115A05A16D252A48090235F7 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C1840DF957360A3FCF4B8C0 /* MaterialTextures.cpp */; };
 		130CDEED202D856C00C96758 /* ReceiverOSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130CDEEB202D856C00C96758 /* ReceiverOSC.cpp */; };
 		130CDEF1202DBC1B00C96758 /* IdleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130CDEEF202DBC1B00C96758 /* IdleMesh.cpp */; };
+		132B35F5203853E100D835E2 /* Feedback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 132B35F3203853E100D835E2 /* Feedback.cpp */; };
 		1347A8BD1FE757FC004A3FA7 /* ShaderParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */; };
 		14346B2C67AA1C3DEA21C8B4 /* BaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC3DDB42BBB6FE3607323E8 /* BaseShape.cpp */; };
 		14BA77449C8274D358E57B9E /* easing_terms_of_use.html in Sources */ = {isa = PBXBuildFile; fileRef = EE97FD89802D8956D62D9B27 /* easing_terms_of_use.html */; };
@@ -157,6 +158,10 @@
 		130CDEF3202DC44200C96758 /* idle_mesh.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = idle_mesh.vert; sourceTree = "<group>"; };
 		132B35EE2036865A00D835E2 /* colour_palette.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = colour_palette.frag; sourceTree = "<group>"; };
 		132B35EF2036865A00D835E2 /* colour_palette.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = colour_palette.vert; sourceTree = "<group>"; };
+		132B35F3203853E100D835E2 /* Feedback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Feedback.cpp; path = PostProcessing/Feedback.cpp; sourceTree = "<group>"; };
+		132B35F4203853E100D835E2 /* Feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Feedback.h; path = PostProcessing/Feedback.h; sourceTree = "<group>"; };
+		132B35F62038561000D835E2 /* Feedback_BufA.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Feedback_BufA.frag; sourceTree = "<group>"; };
+		132B35F72038561000D835E2 /* Feedback_Image.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Feedback_Image.frag; sourceTree = "<group>"; };
 		1347A89A1FE1FE84004A3FA7 /* AlphaTrail_BufA.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_BufA.frag; sourceTree = "<group>"; };
 		1347A89B1FE1FE84004A3FA7 /* AlphaTrail_Image.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = AlphaTrail_Image.frag; sourceTree = "<group>"; };
 		1347A89C1FE1FE84004A3FA7 /* HUD_FX.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = HUD_FX.frag; sourceTree = "<group>"; };
@@ -551,6 +556,8 @@
 			children = (
 				132B35EE2036865A00D835E2 /* colour_palette.frag */,
 				132B35EF2036865A00D835E2 /* colour_palette.vert */,
+				132B35F62038561000D835E2 /* Feedback_BufA.frag */,
+				132B35F72038561000D835E2 /* Feedback_Image.frag */,
 				1347A89A1FE1FE84004A3FA7 /* AlphaTrail_BufA.frag */,
 				1347A89B1FE1FE84004A3FA7 /* AlphaTrail_Image.frag */,
 				1347A89C1FE1FE84004A3FA7 /* HUD_FX.frag */,
@@ -1083,6 +1090,8 @@
 			children = (
 				D4A1F5CD5412FC9323F572C7 /* AlphaTrails.cpp */,
 				5FDCB89F637A81030D7FB8A1 /* AlphaTrails.h */,
+				132B35F3203853E100D835E2 /* Feedback.cpp */,
+				132B35F4203853E100D835E2 /* Feedback.h */,
 				6172BD34FD9FFB5E7D93A206 /* PingPong.cpp */,
 				17C728DC953EE48E32706F19 /* PingPong.h */,
 				D2B2489680BEA0B0A94A59A6 /* PostProcessing.cpp */,
@@ -1268,6 +1277,7 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */,
 				1347A8BC1FE757FC004A3FA7 /* ShaderParams.h */,
+				B9E050B977F19B9DE79165A7 /* PostProcessing */,
 				1347A8991FE1FE84004A3FA7 /* shaders */,
 				B304D05DA43149641F8DAE21 /* Constants.h */,
 				A7FD9AD7B5163D706023CC7C /* Easings.cpp */,
@@ -1283,7 +1293,6 @@
 				0A8320B91250ED2BADA15054 /* OptimisedBox.h */,
 				130CDEEF202DBC1B00C96758 /* IdleMesh.cpp */,
 				130CDEF0202DBC1B00C96758 /* IdleMesh.h */,
-				B9E050B977F19B9DE79165A7 /* PostProcessing */,
 				CD5FCD25E1E21DDF2D52DA12 /* Primitives.cpp */,
 				1039CBA50BD184DFAE4A6ACF /* Primitives.h */,
 				0696D60066ECC1987CD844CA /* ShapePaths */,
@@ -1531,6 +1540,7 @@
 				BA5FE1946333BDAFCF3928D0 /* AudioBuffer.cpp in Sources */,
 				EEF54F54F1CD2FCF991A4DDC /* AudioBufferSamples.cpp in Sources */,
 				F280E2BC17D392E626F1C6F3 /* AudioBufferSamplesMarker.cpp in Sources */,
+				132B35F5203853E100D835E2 /* Feedback.cpp in Sources */,
 				FD0AF370DC74D25D420AEE82 /* Buffer.cpp in Sources */,
 				62D8CDFC38967E443FC0483E /* VideoBuffer.cpp in Sources */,
 				7BF47F1952D92454DD0E9298 /* VideoFilter.cpp in Sources */,

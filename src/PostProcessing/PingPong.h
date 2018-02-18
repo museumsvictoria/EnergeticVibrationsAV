@@ -13,7 +13,7 @@ class PingPong{
     
 public:    
     //--------------------------------------------------------------
-    void init_fbos();
+    virtual void init_fbos();
     void createFullScreenQuad();
     //--------------------------------------------------------------
     

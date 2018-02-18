@@ -44,6 +44,7 @@ out VertexAttrib {
 	vec3 normal;
 	vec2 texcoord;
     float height;
+    float scale;
     float instance_ID;
 } vertex;
 
@@ -139,6 +140,7 @@ void main()
     float vib_hz = sin(2.*PI*time*params.vibration_hz[gl_InstanceID])*3.;
     float max_size = params.object_size[gl_InstanceID];
     float scale = remap(abs(sin(gl_InstanceID+time*0.2)),0.0,1.0,max_size*0.3,max_size) + vib_hz;
+    vertex.scale = scale;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(scale,0,0,0);
     scaleMatrix[1] = vec4(0,scale,0,0); // we use translation value here

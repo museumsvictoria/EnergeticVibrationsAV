@@ -24,14 +24,14 @@ void PostProcessing::setup(){
     toggle_feedback = false;
     toggle_down_sampling = false;
     
-    dof_blur_amount = 0.45;
+    dof_blur_amount = 0.4;
     dof_focal_range = 200.0;
     dof_focal_distance = 200.0;
     
-    trail_delay = 0.05;
     
     reaction_diffusion.setup();
-    //alpha_trails.setup();
+    alpha_trails.setup();
+    feedback.setup();
     
     createFullScreenQuad();
     blend_shader.load("shaders/passthrough.vert","shaders/blend_mask.frag");
@@ -70,15 +70,18 @@ void PostProcessing::update(){
     
     /// PASS IN TEXTURE TO ALPHA TRAILS
     ////////////////////
-    alpha_trails.set_delay_amount(trail_delay);
-    //alpha_trails.set_source_texture(depthOfField.getFbo());
-    //alpha_trails.update();
+    alpha_trails.set_source_texture(depthOfField.getFbo());
+    alpha_trails.update();
+    
+    /// PASS IN TEXTURE TO FEEDBACK
+    ////////////////////
+    feedback.set_source_texture(alpha_trails.getFbo());
+    feedback.update();
     
     /// PASS IN TEXTURE TO REACTION DUFFUSION
     ////////////////////
-    reaction_diffusion.set_source_texture(depthOfField.getFbo());
-    
-
+    reaction_diffusion.set_source_texture(feedback.getFbo());
+    reaction_diffusion.update();
 }
 
 //--------------------------------------------------------------
@@ -145,7 +148,7 @@ void PostProcessing::draw(){
     if(toggle_reaction_diffusion){
         reaction_diffusion.draw();
     } else {
-        alpha_trails.draw();
+        feedback.draw();
     }
 
 }

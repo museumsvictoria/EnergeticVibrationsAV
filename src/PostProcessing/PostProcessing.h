@@ -12,6 +12,7 @@
 #include "ofxDOF.h"
 #include "ReactionDiffusion.h"
 #include "AlphaTrails.h"
+#include "Feedback.h"
 #include "ofxAssimpModelLoader.h"
 #include "PingPong.h"
 
@@ -27,6 +28,7 @@ public:
     ofxDOF depthOfField;
     ReactionDiffusion reaction_diffusion;
     AlphaTrails alpha_trails;
+    Feedback feedback;
     
     ofxAssimpModelLoader masking_model;
     ofEasyCam cam;
@@ -37,10 +39,7 @@ public:
     float dof_blur_amount;
     float dof_focal_range;
     float dof_focal_distance;
-    
-    //----- TRAILS
-    float trail_delay;
-    
+        
     bool toggle_dof;
     bool toggle_reaction_diffusion;
     bool toggle_feedback;
