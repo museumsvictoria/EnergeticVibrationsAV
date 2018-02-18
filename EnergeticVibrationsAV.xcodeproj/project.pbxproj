@@ -19,6 +19,7 @@
 		130CDEF1202DBC1B00C96758 /* IdleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 130CDEEF202DBC1B00C96758 /* IdleMesh.cpp */; };
 		132B35F5203853E100D835E2 /* Feedback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 132B35F3203853E100D835E2 /* Feedback.cpp */; };
 		1347A8BD1FE757FC004A3FA7 /* ShaderParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */; };
+		137DBCA12039A02C00D6D4D3 /* Downsample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 137DBC9F2039A02C00D6D4D3 /* Downsample.cpp */; };
 		14346B2C67AA1C3DEA21C8B4 /* BaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC3DDB42BBB6FE3607323E8 /* BaseShape.cpp */; };
 		14BA77449C8274D358E57B9E /* easing_terms_of_use.html in Sources */ = {isa = PBXBuildFile; fileRef = EE97FD89802D8956D62D9B27 /* easing_terms_of_use.html */; };
 		16C868B9D26902F1D56CDEE2 /* ofxNDIutils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FCAA55F503F0B680861CB9B /* ofxNDIutils.cpp */; };
@@ -190,6 +191,9 @@
 		1347A8BB1FE757FC004A3FA7 /* ShaderParams.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderParams.cpp; sourceTree = "<group>"; };
 		1347A8BC1FE757FC004A3FA7 /* ShaderParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderParams.h; sourceTree = "<group>"; };
 		1363887EAC7E471CB783184B /* ofxNDIdialog.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxNDIdialog.h; path = ../../../addons/ofxNDI/src/ofxNDIdialog.h; sourceTree = SOURCE_ROOT; };
+		137DBC9F2039A02C00D6D4D3 /* Downsample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Downsample.cpp; path = PostProcessing/Downsample.cpp; sourceTree = "<group>"; };
+		137DBCA02039A02C00D6D4D3 /* Downsample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Downsample.h; path = PostProcessing/Downsample.h; sourceTree = "<group>"; };
+		137DBCA22039A23F00D6D4D3 /* Downsample.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Downsample.frag; sourceTree = "<group>"; };
 		16D8E1844A44453A0C287E72 /* ssl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ssl.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ssl.h; sourceTree = SOURCE_ROOT; };
 		17006150745E007FA32014F5 /* modes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = modes.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/modes.h; sourceTree = SOURCE_ROOT; };
 		17C728DC953EE48E32706F19 /* PingPong.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PingPong.h; path = src/PostProcessing/PingPong.h; sourceTree = SOURCE_ROOT; };
@@ -556,6 +560,7 @@
 			children = (
 				132B35EE2036865A00D835E2 /* colour_palette.frag */,
 				132B35EF2036865A00D835E2 /* colour_palette.vert */,
+				137DBCA22039A23F00D6D4D3 /* Downsample.frag */,
 				132B35F62038561000D835E2 /* Feedback_BufA.frag */,
 				132B35F72038561000D835E2 /* Feedback_Image.frag */,
 				1347A89A1FE1FE84004A3FA7 /* AlphaTrail_BufA.frag */,
@@ -1098,6 +1103,8 @@
 				70FBA4A9C2EDF9236E5B0062 /* PostProcessing.h */,
 				7426D77CC8AB642CE58BF08D /* ReactionDiffusion.cpp */,
 				5EF0C6B7E752CF74D1343F63 /* ReactionDiffusion.h */,
+				137DBC9F2039A02C00D6D4D3 /* Downsample.cpp */,
+				137DBCA02039A02C00D6D4D3 /* Downsample.h */,
 			);
 			name = PostProcessing;
 			sourceTree = "<group>";
@@ -1480,6 +1487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				137DBCA12039A02C00D6D4D3 /* Downsample.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				5255135C98E8CBE8F640E33C /* Easings.cpp in Sources */,
 				36798892B4B35569B31D0AE9 /* HarmonicMotion.cpp in Sources */,

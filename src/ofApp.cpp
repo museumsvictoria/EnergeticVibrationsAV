@@ -228,6 +228,13 @@ void ofApp::drawGui(ofEventArgs & args){
             ofxImGui::EndTree(mainSettings);
         }
         
+        if (ofxImGui::BeginTree("GL STATE", mainSettings)){
+            ImGui::Checkbox("Post Processing", &toggle_post_processing);
+            ImGui::Checkbox("GL Blending Add", &toggle_blending);
+            ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
+            ofxImGui::EndTree(mainSettings);
+        }
+        
         if (ofxImGui::BeginTree("Geometry Shader", mainSettings)){
             ImGui::Combo("Geom LFO", &geom.lfo_type1, items, IM_ARRAYSIZE(items));
             ImGui::SliderFloat("Geom LFO Offset",&geom.lfo_offset,0.0,1.0);
@@ -275,7 +282,6 @@ void ofApp::drawGui(ofEventArgs & args){
             ofxImGui::EndTree(mainSettings);
         }
         
-        
         if (ofxImGui::BeginTree("DOF", mainSettings)){
             ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
             ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,20.0,200.0);
@@ -283,10 +289,8 @@ void ofApp::drawGui(ofEventArgs & args){
             
             ofxImGui::EndTree(mainSettings);
         }
-        if (ofxImGui::BeginTree("REACTION DIFFUSION", mainSettings)){
-            ImGui::SliderFloat("dry_wet",&post.reaction_diffusion.dry_wet,0.0,1.0);
-            ImGui::SliderFloat("Intensity",&post.reaction_diffusion.intensity,0.0,1.0);
-            ImGui::SliderFloat("BleedAmount",&post.reaction_diffusion.bleed_amount,0.0,1.0);
+        if (ofxImGui::BeginTree("PIXELATE", mainSettings)){
+            ImGui::SliderFloat("dry_wet",&post.downsample.dry_wet,0.0,1.0);
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("ALPHA TRAILS", mainSettings)){
@@ -306,10 +310,10 @@ void ofApp::drawGui(ofEventArgs & args){
             ImGui::SliderFloat("rotate_speed",&post.feedback.rotate_speed,0.0,1.0);
             ofxImGui::EndTree(mainSettings);
         }
-        if (ofxImGui::BeginTree("GL STATE", mainSettings)){
-            ImGui::Checkbox("Post Processing", &toggle_post_processing);
-            ImGui::Checkbox("GL Blending Add", &toggle_blending);
-            ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
+        if (ofxImGui::BeginTree("REACTION DIFFUSION", mainSettings)){
+            ImGui::SliderFloat("dry_wet",&post.reaction_diffusion.dry_wet,0.0,1.0);
+            ImGui::SliderFloat("Intensity",&post.reaction_diffusion.intensity,0.0,1.0);
+            ImGui::SliderFloat("BleedAmount",&post.reaction_diffusion.bleed_amount,0.0,1.0);
             ofxImGui::EndTree(mainSettings);
         }
         

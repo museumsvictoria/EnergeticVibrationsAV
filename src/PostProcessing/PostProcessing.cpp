@@ -29,6 +29,7 @@ void PostProcessing::setup(){
     dof_focal_distance = 200.0;
     
     
+    downsample.setup();
     reaction_diffusion.setup();
     alpha_trails.setup();
     feedback.setup();
@@ -68,9 +69,14 @@ void PostProcessing::update(){
     // how much of the scene is in focus, smaller number is a narrower focal distance
     depthOfField.setFocalRange(dof_focal_range);
     
+    /// PASS IN TEXTURE TO PIXELATOR
+    ////////////////////
+    downsample.set_source_texture(depthOfField.getFbo());
+    downsample.update();
+    
     /// PASS IN TEXTURE TO ALPHA TRAILS
     ////////////////////
-    alpha_trails.set_source_texture(depthOfField.getFbo());
+    alpha_trails.set_source_texture(downsample.getFbo());
     alpha_trails.update();
     
     /// PASS IN TEXTURE TO FEEDBACK

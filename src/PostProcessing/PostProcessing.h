@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "ofxDOF.h"
+#include "Downsample.h"
 #include "ReactionDiffusion.h"
 #include "AlphaTrails.h"
 #include "Feedback.h"
@@ -26,6 +27,7 @@ public:
     void draw();
     
     ofxDOF depthOfField;
+    Downsample downsample;
     ReactionDiffusion reaction_diffusion;
     AlphaTrails alpha_trails;
     Feedback feedback;
