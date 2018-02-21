@@ -3,7 +3,6 @@ ofxAssimpModelLoader
 ofxDOF
 ofxEasing
 ofxImGui
-ofxNDI
 ofxOsc
 ofxPlaymodes
 ofxPoco
