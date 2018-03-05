@@ -11,7 +11,7 @@
 #include "MaterialTextures.h"
 #include "Easings.h"
 #include "TranslationPaths.h"
-#include "NDISender.h"
+//#include "NDISender.h"
 #include "ReceiverOSC.h"
 
 
@@ -73,7 +73,7 @@ class ofApp : public ofBaseApp{
     
         PostProcessing post;
     
-        NDISender ndi;
+        //NDISender ndi;
     
         ReceiverOSC osc;
     
