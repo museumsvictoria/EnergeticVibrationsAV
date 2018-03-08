@@ -19,7 +19,6 @@ public:
     void set_source_texture(ofFbo& tex);
     void update();
     void draw();
-    void runSimulation();
     
     ofFbo& getFbo();
 

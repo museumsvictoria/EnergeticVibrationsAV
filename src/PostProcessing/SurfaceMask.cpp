@@ -72,7 +72,6 @@ void SurfaceMask::setup(){
     createFullScreenQuad();
     init_fbos();
     
-//    masking_model.loadModel("models/WallShape.obj");
     masking_model.loadModel("models/ProjectionSurface.obj");
     //you can create as many rotations as you want
     //choose which axis you want it to effect
@@ -84,7 +83,7 @@ void SurfaceMask::setup(){
     masking_model.setPosition(ofGetWidth()/2, ofGetHeight()/2, 0);
     
     cam.setupPerspective(false, 50, 0.001, 0);
-    cam.setDistance(3200); // set default camera distance to 1000
+    cam.setDistance(2710); // set default camera distance to 1000
     //mCam1.boom(5); // move camera up a little
     cam.lookAt(ofVec3f(0)); // look at centre of the world
 }
@@ -98,67 +97,21 @@ void SurfaceMask::set_source_texture(ofFbo& tex){
 }
 
 //--------------------------------------------------------------
-void SurfaceMask::runSimulation()
-{
-    float dist = ofMap(ofGetMouseX(), 0, ofGetWidth(), 2300,2800);
-    cam.setDistance(2710); // set default camera distance to 1000
-    cout << "dist = " << dist << endl;
-    
-    m_fbos[ 0 ].begin();
-    ofClear(0,0,0,0);
-    cam.begin();
-    ofPushStyle();
-    //ofScale (1,-1,1);
-    ofSetColor(255,255);
-    masking_model.getMesh(0).draw();
-    ofPopStyle();
-    cam.end();
-    m_fbos[ 0 ].end();
-
-    
-    
-//    /// Draw GrayScott
-//    ////////////////////
-//    glEnable( GL_CULL_FACE );
-//    glCullFace( GL_BACK );
-//    
-//    ofDisableDepthTest();
-//    ofEnableAlphaBlending();
-//    
-//    shader_bufA.begin();
-//    shader_bufA.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
-//    shader_bufA.setUniform1f("iTime", ofGetElapsedTimef());
-//    shader_bufA.setUniform1i("iFrame", ofGetFrameNum());
-//    
-//    shader_bufA.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
-//    
-//    int fboIndex = 0;
-//    for ( int i = 0; i < 2; ++ i )
-//    {
-//        fboIndex = i % 2;
-//        shader_bufA.setUniformTexture( "iChannel0", m_fbos[ 1 - fboIndex ].getTexture(), 2 );
-//        
-//        m_fbos[ fboIndex ].begin();
-//        //ofClear( 255, 0, 0, 255 );
-//        m_fsQuadVbo.draw();
-//        m_fbos[ fboIndex ].end();
-//    }
-//    shader_bufA.end();
-}
-
-//--------------------------------------------------------------
 void SurfaceMask::update(){
     // clear to green as grayScott runs in red and green channels
     ofClear( 0, 255, 0, 255 );
     ofDisableDepthTest();
     
-    int numSimulations = 1;
-    for ( int i = 0; i < numSimulations; ++i )
-    {
-        runSimulation();
-    }
-    
-    shader_image.load("shaders/passthrough.vert","shaders/blend_mask.frag");
+    cam.setDistance(2710); // set default camera distance to 1000
+    cam.disableMouseInput();
+
+    m_fbos[ 0 ].begin();
+    ofClear(0,0,0,0);
+    cam.begin();
+    ofSetColor(255,255);
+    masking_model.getMesh(0).draw();
+    cam.end();
+    m_fbos[ 0 ].end();
 
     
     /// Final Render
@@ -188,22 +141,7 @@ void SurfaceMask::draw(){
     ////////////////////
     ofSetColor(ofColor::white);
     m_renderFbo.draw(0,0,ofGetWidth(),ofGetHeight());
-    
-    
-//    cam.setDistance(3200); // set default camera distance to 1000
-//    
-//    m_fbos[ 0 ].begin();
-//    ofClear(0,0,0,0);
-//    cam.begin();
-//    ofPushStyle();
-//    //ofScale (1,-1,1);
-//    ofSetColor(255,255);
-//    masking_model.getMesh(0).draw();
-//    ofPopStyle();
-//    cam.end();
-//    m_fbos[ 0 ].end();
-//    
-//    m_fbos[0].draw(0, 0);
+
 }
 
 ofFbo& SurfaceMask::getFbo(){

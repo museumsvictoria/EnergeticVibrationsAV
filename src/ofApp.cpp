@@ -51,8 +51,6 @@ void ofApp::setup(){
 
     isShaderDirty = true; // initialise dirty shader
     
-   // ndi.setup();
-
     //Post Processing
     post.setup();
     
