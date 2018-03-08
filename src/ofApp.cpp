@@ -1,15 +1,5 @@
 #include "ofApp.h"
 
-// Here's the general idea:
-//
-// 1.    Draw a field of instanced boxes, 256 in x, and 256 in y direction
-// 2.    Push boxes up in y direction based on a height value sampled from the texture
-// 2.a   Scale boxes in y direction to create "skyscrapers" based on sampled value
-// 3.    Modulate height map texture sampling to create a "radar scanline" effect
-// 4.    Add some colour effects
-//
-// BONUS POINTS: use the camera live feed as your height map texture.
-
 //--------------------------------------------------------------
 void ofApp::init(){
     //params.scale_speed = 1.0;
@@ -48,9 +38,9 @@ void ofApp::init(){
         //params.active_chair[i] = 0;
         params.instance_model_grid[i] = glm::vec3(0.0,0.0,0.0);
         
-        if(i % 7 == 0) params.object_size[i] = 74.0; // large seat
-        else if((i % 7) < 4) params.object_size[i] = 40.0; // middle size seats
-        else params.object_size[i] = 18.0; // small seats
+        if(i % 7 == 0) params.object_size[i] = 50.0; // large seat
+        else if((i % 7) < 4) params.object_size[i] = 25.0; // middle size seats
+        else params.object_size[i] = 12.5; // small seats
         
         params.vibration_hz[i] = 0.0;
     }
@@ -82,7 +72,7 @@ void ofApp::setup(){
     
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 50, 0.001, 0);
-    mCam1.setDistance(600); // set default camera distance to 1000
+    mCam1.setDistance(330); // set default camera distance to 1000
     //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
@@ -131,7 +121,7 @@ void ofApp::update(){
       
         float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
         float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
-        float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,850,150);
+        float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,450,150);
         mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
     }
 //    mCam1.truck(val);

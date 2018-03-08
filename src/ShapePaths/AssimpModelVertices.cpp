@@ -12,7 +12,7 @@
 AssimpModelVertices::AssimpModelVertices(){
     
     // load the first model
-    model.loadModel("models/WallShape_v7.obj");
+    model.loadModel("models/WallShape_v8.obj");
     
     
     //you can create as many rotations as you want
@@ -21,7 +21,7 @@ AssimpModelVertices::AssimpModelVertices(){
     // these rotation set the model so it is oriented correctly
     model.setRotation(0, 90, 1, 0, 0);
     model.setRotation(0, 90, 0, 1, 0);
-    model.setScale(0.9, 0.9, 0.9);
+    model.setScale(1.0, 1.0, 1.0);
     model.setPosition(ofGetWidth()/2, ofGetHeight()/2, 0);
     
     shape.clear();

@@ -8,12 +8,14 @@ int main( ){
     
     ofGLFWWindowSettings settings;
     settings.setGLVersion(4, 1);
-	settings.setSize(1920, 1080);
-    settings.setPosition(ofVec2f(1920,0));
+    settings.width = 1920;
+    settings.height = 1080;
+    settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-	settings.setSize(410, 1000);
+    settings.width = 410;
+    settings.height = 1000;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;
     // uncomment next line to share main's OpenGL resources with gui

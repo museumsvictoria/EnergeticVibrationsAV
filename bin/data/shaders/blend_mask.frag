@@ -24,13 +24,18 @@ void main( void )
     // The screen coordinates.
     vec2 uv = vTexCoord; // Screen coordinates. Range: [0, 1]
     
-    //uv.y *= -1.;
-    //uv.y += 1.0;
+    uv.y *= -1.;
+    uv.y += 1.0;
     
     vec4 tex1 = texture(iChannel0,uv);
-    vec4 tex2 = texture(iChannel1,uv) * 19.;
+    vec4 tex2 = texture(iChannel1,uv);
     
-    tex1 *= 22.0;
-    outputColor =  tex1 * tex2;
+    if(tex1.rgb == vec3(0.0)){
+        discard;
+    } else {
+        outputColor = tex2;
+    }
+    
+    //outputColor =  mix(tex1 , tex2 , 0.5);
 }
 

@@ -14,7 +14,7 @@
 #include "ReactionDiffusion.h"
 #include "AlphaTrails.h"
 #include "Feedback.h"
-#include "ofxAssimpModelLoader.h"
+#include "SurfaceMask.h"
 #include "PingPong.h"
 
 class PostProcessing : public PingPong{
@@ -31,11 +31,7 @@ public:
     ReactionDiffusion reaction_diffusion;
     AlphaTrails alpha_trails;
     Feedback feedback;
-    
-    ofxAssimpModelLoader masking_model;
-    ofEasyCam cam;
-    
-    ofShader blend_shader;
+    SurfaceMask surface_mask;
     
     //----- DOF
     float dof_blur_amount;

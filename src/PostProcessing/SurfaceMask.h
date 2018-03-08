@@ -1,16 +1,17 @@
 //
-//  Downsample.h
+//  SurfaceMask.h
 //  EnergeticVibrationsAV
 //
-//  Created by Joshua Batty on 18/2/18.
+//  Created by Joshua Batty on 8/3/18.
 //
 //
 
 #pragma once
 #include "ofMain.h"
 #include "PingPong.h"
+#include "ofxAssimpModelLoader.h"
 
-class Downsample : public PingPong{
+class SurfaceMask : public PingPong{
     
 public:
     void setup();
@@ -18,10 +19,12 @@ public:
     void set_source_texture(ofFbo& tex);
     void update();
     void draw();
+    void runSimulation();
     
     ofFbo& getFbo();
-    
-    ofShader shader;
-    
-    float dry_wet;
+
+    ofShader shader_image;
+    ofxAssimpModelLoader masking_model;
+    ofEasyCam cam;    
+
 };

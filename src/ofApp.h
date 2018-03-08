@@ -7,11 +7,10 @@
 #include "GuiTheme.h"
 #include "PostProcessing.h"
 #include "Primitives.h"
-#include "IdleMesh.h"=
+#include "IdleMesh.h"
 #include "MaterialTextures.h"
 #include "Easings.h"
 #include "TranslationPaths.h"
-//#include "NDISender.h"
 #include "ReceiverOSC.h"
 
 
@@ -72,9 +71,7 @@ class ofApp : public ofBaseApp{
         IdleMesh idle_mesh;
     
         PostProcessing post;
-    
-        //NDISender ndi;
-    
+        
         ReceiverOSC osc;
     
         ///------------- GUI

@@ -20,7 +20,10 @@ public:
         const char * font = "data/fonts/Ruda-Bold.ttf";
         ImFontConfig font_config; font_config.OversampleH = 1; font_config.OversampleV = 1; font_config.PixelSnapH = 1;
         // load Lucinda SansRegular Unicode font - file name L_10646.TTF
-        io->Fonts->AddFontFromFileTTF(font, 16.0f, NULL, io->Fonts->GetGlyphRangesDefault());
+        //io->Fonts->AddFontFromFileTTF(font, 16.0f, NULL, io->Fonts->GetGlyphRangesDefault());
+        
+        io->Fonts->AddFontFromFileTTF(&ofToDataPath("fonts/Ruda-Bold.ttf")[0], 16.0f, NULL, io->Fonts->GetGlyphRangesDefault());
+
         unsigned char * pixels;
         int width, height;
         io->Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
