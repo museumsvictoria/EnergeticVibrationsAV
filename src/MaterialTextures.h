@@ -31,7 +31,6 @@ private:
     ofTexture tex_idle;
     ofTexture tex_active;
     
-    ofFbo fbo_idle;
     ofFbo fbo_active;
     
     ofDirectory active_dir;

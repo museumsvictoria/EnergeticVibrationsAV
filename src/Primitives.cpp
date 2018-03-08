@@ -14,14 +14,13 @@ void Primitives::setup(){
     
     icoSphere.set(1.0,1.0);
     sphere.set(1.0, 4);
-    cone.set(1.0, 2.0, 4, 4);
-    cylinder.set(1.0,2.0,4,4);
+    cone.set(0.5, 1.0, 4, 4);
+    cylinder.set(0.5,1.0,4,4);
     box.set(1.0,1.0,1.0);
     
     shape_idx = 1;
     
     init();
-
 }
 
 //--------------------------------------------------------------
@@ -52,8 +51,8 @@ void Primitives::init(){
         p.enableNormals();
     }
 
-    primitive_mesh = primitives[shape_idx].getMesh();// ofBoxPrimitive(1, 1, 1).getMesh();
-    
+    primitive_mesh = primitives[shape_idx].getMesh();
+    idle_mesh = primitives[primitives.size()-1].getMesh(); // Obtimised Box
 }
 
 
@@ -65,6 +64,16 @@ void Primitives::draw_filled_mesh(){
 //--------------------------------------------------------------
 void Primitives::draw_wireframe_mesh(){
     primitive_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
+}
+
+//--------------------------------------------------------------
+void Primitives::draw_idle_filled_box(){
+    idle_mesh.drawInstanced(OF_MESH_FILL, NUM_INSTANCES);
+}
+
+//--------------------------------------------------------------
+void Primitives::draw_idle_wireframe_box(){
+    idle_mesh.drawInstanced(OF_MESH_WIREFRAME, NUM_INSTANCES);
 }
 
 //--------------------------------------------------------------

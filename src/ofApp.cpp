@@ -429,7 +429,7 @@ void ofApp::draw(){
             mShd1->setUniform1f("xray_mix", xray.mix);
             
         }
-            mShd1->end();
+        mShd1->end();
         
     }
     tex.unbind();
@@ -452,14 +452,97 @@ void ofApp::draw(){
         //post.depthOfField.getFbo().draw(0, 0);
     }
 
+    //----------------------------------------------------------------
+    //----------------------------------------------------------------
+
     mCam1.begin();
     // Draw our Idle Mesh shader first
-    idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
+    //idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
+    
+    if (ofGetMousePressed()){
+        // dirty shader pattern:
+        shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
+        
+        tmpShader->setGeometryInputType(GL_TRIANGLES);
+        tmpShader->setGeometryOutputType(GL_TRIANGLE_STRIP);
+        tmpShader->setGeometryOutputCount(4);
+        
+        if (tmpShader->load("shaders/idle_mesh.vert", "shaders/idle_mesh.frag", "shaders/idle_mesh.geom")){
+            mShd2 = tmpShader;
+            ofLogNotice() << ofGetTimestampString() << " reloaded Shader.";
+        } else {
+            ofLogError() << "Shader did not load successfully.";
+        }
+        
+        isShaderDirty = false;
+    }
+    
+    // also, let's get rid of the back faces.
+    if(toggle_backface_cull){
+        glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
+        glFrontFace(GL_CCW);
+    }
+    
+    // tell GLSL to use the first vertex for flat shading the whole triangle, instead
+    // of the last one, as would be the default.
+    glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
+    // and enable depth testing.
+    ofEnableDepthTest();
+    
+    tex = textures.getIdleTexture();
+    tex.bind();
+    
+    if (mShd2) {
+        
+        mShd2->begin();
+        for(int i = 0; i < 2; i++){
+            
+            mShd2->setUniform1i("is_active", i);
+            mShd2->setUniform1f("time", ofGetElapsedTimef());
+            mShd2->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
+            mShd2->setUniformBuffer("ShaderParams", params);
+            
+            //---- Geometry shader pass
+            mShd2->setUniform1i("active_idx", primitives.get_index());
+            mShd2->setUniform1i("geom_num_copies", geom_num_copies);
+            mShd2->setUniform1f("geom_max_height", geom_max_height);
+            
+            mShd2->setUniform1i("geom_lfo_type", geom.lfo_type1);
+            mShd2->setUniform1f("geom_lfo_offset", geom.lfo_offset);
+            mShd2->setUniform1f("geom_lfo_speed", geom.lfo_speed);
+            mShd2->setUniform1f("geom_lfo_amp", geom.lfo_amp);
+            mShd2->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
+            mShd2->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
+            mShd2->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
+            mShd2->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
+            mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
+            
+            if(i ==0) primitives.draw_idle_filled_box();
+            else primitives.draw_idle_wireframe_box();
+            
+            mShd2->setUniformTexture("tex_unit_0", tex, 0); // first texture unit has index 0, name is not that important!
+            mShd2->setUniform1i("fill_lfo_type", xray.lfo_type1);
+            mShd2->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
+            mShd2->setUniform1f("xray_lfo_offset", xray.lfo_offset);
+            mShd2->setUniform1f("xray_lfo_speed", xray.lfo_speed);
+            mShd2->setUniform1f("xray_lfo_amp", xray.lfo_amp);
+            mShd2->setUniform1f("xray_mix", xray.mix);
+            
+        }
+        
+        mShd2->end();
+    }
+    
+    tex.unbind();
+
+    ofDisableDepthTest();
+    
+    if(toggle_backface_cull){
+        glDisable(GL_CULL_FACE);
+    }
+    
     mCam1.end();
     
-    //ndi.ndiFbo.end();
-    //ndi.draw();
-    //ndi.send();
     
 }
 

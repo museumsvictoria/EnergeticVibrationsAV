@@ -65,6 +65,7 @@ class ofApp : public ofBaseApp{
         vector<int> cam_tween_types = {0,0,0};
     
         shared_ptr<ofxUboShader> mShd1;
+        shared_ptr<ofxUboShader> mShd2;
         ShaderParams params;
         bool isShaderDirty;
 

@@ -19,6 +19,9 @@ public:
     void init();
     void load_model(string path);
     
+    void draw_idle_wireframe_box();
+    void draw_idle_filled_box();
+    
     void draw_wireframe_mesh();
     void draw_filled_mesh();
     
@@ -36,6 +39,7 @@ public:
     ofxAssimpModelLoader model;
 
     ofVboMesh primitive_mesh;
+    ofVboMesh idle_mesh;
     
     vector<of3dPrimitive> primitives;
     
