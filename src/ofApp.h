@@ -38,11 +38,15 @@ public:
     void draw();
     void keyReleased(int key);
 
+    ///------------- GUI
+    ofxImGui::Gui gui;
+    GuiTheme gui_theme;
     void setupGui();
     void drawGui(ofEventArgs & args);
 
     TranslationPaths paths;
-
+    PostProcessing post;
+    ReceiverOSC osc;
     MaterialTextures textures;
     Primitives primitives;
 
@@ -55,18 +59,6 @@ public:
     ShaderParams params;
     bool isShaderDirty;
 
-    PostProcessing post;
-    
-    ReceiverOSC osc;
-
-    ///------------- GUI
-    ofxImGui::Gui gui;
-    GuiTheme gui_theme;
-
-
-    // Shader Params
-    float explode_amount;
-
     // Camera
     bool toggle_camera_automation;
     float cam_near_clip;
@@ -77,14 +69,25 @@ public:
     bool toggle_blending;
     bool toggle_backface_cull;
     
+    ///------------------ACTIVE
     // GEOMETERY SHADER
-    float geom_max_height;
-    int geom_num_copies;
-    LfoControl geom;
-    LfoControl geom_effect;
+    float active_geom_max_height;
+    int active_geom_num_copies;
+    LfoControl active_geom;
+    LfoControl active_geom_effect;
     
     // FRAGMENT SHADER
-    LfoControl xray;
+    LfoControl active_xray;
+    
+    ///------------------IDLE
+    // GEOMETERY SHADER
+    float idle_geom_max_height;
+    int idle_geom_num_copies;
+    LfoControl idle_geom;
+    LfoControl idle_geom_effect;
+    
+    // FRAGMENT SHADER
+    LfoControl idle_xray;
 
 
 };

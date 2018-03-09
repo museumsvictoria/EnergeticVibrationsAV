@@ -179,9 +179,6 @@
 		13DCF01120511C8F00AFD531 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
 		13DCF01220511C8F00AFD531 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
 		13DCF01320511C8F00AFD531 /* waveforms.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = waveforms.glsl; sourceTree = "<group>"; };
-		13DCF01520511C8F00AFD531 /* vertexshaderart.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.frag; sourceTree = "<group>"; };
-		13DCF01620511C8F00AFD531 /* vertexshaderart.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.geom; sourceTree = "<group>"; };
-		13DCF01720511C8F00AFD531 /* vertexshaderart.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = vertexshaderart.vert; sourceTree = "<group>"; };
 		13DCF0182051390800AFD531 /* Grid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Grid.cpp; path = ShapePaths/Grid.cpp; sourceTree = "<group>"; };
 		13DCF0192051390800AFD531 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Grid.h; path = ShapePaths/Grid.h; sourceTree = "<group>"; };
 		13DCF01A2051390800AFD531 /* Ngon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ngon.cpp; path = ShapePaths/Ngon.cpp; sourceTree = "<group>"; };
@@ -569,7 +566,6 @@
 				13DCF01120511C8F00AFD531 /* vertexshaderart.geom */,
 				13DCF01220511C8F00AFD531 /* vertexshaderart.vert */,
 				13DCF01320511C8F00AFD531 /* waveforms.glsl */,
-				13DCF01420511C8F00AFD531 /* Working Backup */,
 			);
 			name = shaders;
 			path = bin/data/shaders;
@@ -587,16 +583,6 @@
 				13DCF00F20511C8F00AFD531 /* remap.glsl */,
 			);
 			path = Util;
-			sourceTree = "<group>";
-		};
-		13DCF01420511C8F00AFD531 /* Working Backup */ = {
-			isa = PBXGroup;
-			children = (
-				13DCF01520511C8F00AFD531 /* vertexshaderart.frag */,
-				13DCF01620511C8F00AFD531 /* vertexshaderart.geom */,
-				13DCF01720511C8F00AFD531 /* vertexshaderart.vert */,
-			);
-			path = "Working Backup";
 			sourceTree = "<group>";
 		};
 		1672877F42F2C3D9972EBA83 /* utils */ = {
