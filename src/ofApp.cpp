@@ -53,16 +53,8 @@ void ofApp::setup(){
     
     //Post Processing
     post.setup();
-    
     textures.setup();
-    
-    // step 2: we will want to draw our geometry as instances
-    // therefore, we will use a vbo
-    //primitives.load_model("/Users/joshuabatty/Documents/MindBuffer/Gigs/Rainbow\ Mainstage\ 2018/Assets/LED.obj");
     primitives.setup();
-    
-    idle_mesh.setup(paths.model.model);
-
     
     toggle_camera_automation = false;
     cam_near_clip = 1.0;
@@ -71,11 +63,9 @@ void ofApp::setup(){
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 50, 0.001, 0);
     mCam1.setDistance(330); // set default camera distance to 1000
-    //mCam1.boom(5); // move camera up a little
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
     init();
-    
 }
 
 //--------------------------------------------------------------
@@ -90,7 +80,6 @@ void ofApp::setupGui(){
     
     //load theme
     gui_theme.init_theme();
-
 }
 
 //--------------------------------------------------------------
@@ -116,18 +105,12 @@ void ofApp::update(){
                 cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
             }
         }
-      
+        
         float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
         float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
         float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,450,150);
         mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
     }
-//    mCam1.truck(val);
-//   mCam1.boom(val);
-//    mCam1.dolly(val);
-//    mCam1.tilt(val);
-//    mCam1.pan(val);
-//    mCam1.roll(val);
 
     mCam1.setNearClip(cam_near_clip);
     mCam1.setFarClip(cam_far_clip);
@@ -140,6 +123,34 @@ void ofApp::update(){
     paths.update();
     paths.set_model_path(params.instance_model_grid);
 
+    
+    if (isShaderDirty){
+        // dirty shader pattern:
+        shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
+        tmpShader->setGeometryInputType(GL_TRIANGLES);
+        tmpShader->setGeometryOutputType(GL_TRIANGLE_STRIP);
+        tmpShader->setGeometryOutputCount(4);
+        
+        if (tmpShader->load("shaders/vertexshaderart.vert", "shaders/vertexshaderart.frag", "shaders/vertexshaderart.geom")){
+            mShd1 = tmpShader;
+            ofLogNotice() << ofGetTimestampString() << " reloaded Shader.";
+        } else {
+            ofLogError() << "Shader did not load successfully.";
+        }
+        
+        shared_ptr<ofxUboShader> tmpShader2 = shared_ptr<ofxUboShader>(new ofxUboShader);
+        tmpShader2->setGeometryInputType(GL_TRIANGLES);
+        tmpShader2->setGeometryOutputType(GL_TRIANGLE_STRIP);
+        tmpShader2->setGeometryOutputCount(4);
+        
+        if (tmpShader2->load("shaders/idle_mesh.vert", "shaders/idle_mesh.frag", "shaders/vertexshaderart.geom")){
+            mShd2 = tmpShader2;
+            ofLogNotice() << ofGetTimestampString() << " reloaded Shader.";
+        } else {
+            ofLogError() << "Shader did not load successfully.";
+        }
+        isShaderDirty = false;
+    }
     
  /*
     if(ofGetFrameNum() % 100 == 0){
@@ -183,26 +194,246 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
+void ofApp::draw(){
+    ofBackground(0.65); // pro app gray =)
+    ofSetColor(ofColor::white);
+
+    //----------------------------------------------------------------
+    //----------------- ACTIVE MESH MODE DRAWING
+    
+    // begin scene to post process
+    if(toggle_post_processing){
+        post.dof_begin();
+    }
+    
+    mCam1.begin();
+    
+    // we need to flip the view port if we are doing postprocessing
+    if(toggle_post_processing){
+        ofScale (1,-1,1);
+    }
+
+    // alpha blending is enabled by default,
+    // let's see if disabling it will help us a little.
+    //ofDisableBlendMode();
+    if(toggle_blending){
+        ofEnableBlendMode(OF_BLENDMODE_ADD);
+    }
+    
+    // also, let's get rid of the back faces.
+    if(toggle_backface_cull){
+        glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
+        glFrontFace(GL_CCW);
+    }
+    
+    // tell GLSL to use the first vertex for flat shading the whole triangle, instead
+    // of the last one, as would be the default.
+    glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
+    // and enable depth testing.
+    ofEnableDepthTest();
+    
+    ofTexture tex = textures.getActiveTexture();
+    tex.bind();
+    
+    if (mShd1) {
+        
+        mShd1->begin();
+        for(int i = 0; i < 2; i++){
+            
+            mShd1->setUniform1i("is_active", i); // this is used in the frag shader
+            mShd1->setUniform1f("time", ofGetElapsedTimef());
+            mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
+            mShd1->setUniformBuffer("ShaderParams", params);
+            
+            //---- Geometry shader pass
+            mShd1->setUniform1i("active_idx", primitives.get_index());
+            mShd1->setUniform1i("geom_num_copies", geom_num_copies);
+            mShd1->setUniform1f("geom_max_height", geom_max_height);
+
+            mShd1->setUniform1i("geom_lfo_type", geom.lfo_type1);
+            mShd1->setUniform1f("geom_lfo_offset", geom.lfo_offset);
+            mShd1->setUniform1f("geom_lfo_speed", geom.lfo_speed);
+            mShd1->setUniform1f("geom_lfo_amp", geom.lfo_amp);
+            mShd1->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
+            mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
+            mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
+            mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
+            mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
+            
+            if(i ==0) primitives.draw_filled_mesh();
+            else primitives.draw_wireframe_mesh();
+
+            mShd1->setUniformTexture("tex_unit_0", tex, 0); // first texture unit has index 0, name is not that important!
+            mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
+            mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
+            mShd1->setUniform1f("xray_lfo_offset", xray.lfo_offset);
+            mShd1->setUniform1f("xray_lfo_speed", xray.lfo_speed);
+            mShd1->setUniform1f("xray_lfo_amp", xray.lfo_amp);
+            mShd1->setUniform1f("xray_mix", xray.mix);
+        }
+        mShd1->end();
+    }
+    tex.unbind();
+
+    ofDisableDepthTest();
+    
+    if(toggle_backface_cull){
+        glDisable(GL_CULL_FACE);
+    }
+    mCam1.end();
+
+    //----------------------------------------------------------------
+    //-----------------  DRAW POST PROCESSING
+    if(toggle_post_processing){
+        post.dof_end();
+        post.draw();
+    }
+
+    //----------------------------------------------------------------
+    //----------------- IDLE MESH MODE DRAWING
+    mCam1.begin();
+    
+    // also, let's get rid of the back faces.
+    if(toggle_backface_cull){
+        glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
+        glFrontFace(GL_CCW);
+    }
+    
+    // tell GLSL to use the first vertex for flat shading the whole triangle, instead
+    // of the last one, as would be the default.
+    glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
+    // and enable depth testing.
+    ofEnableDepthTest();
+    
+    tex = textures.getIdleTexture();
+    tex.bind();
+    
+    if (mShd2) {
+        mShd2->begin();
+        for(int i = 0; i < 2; i++){
+            
+            mShd2->setUniform1i("is_active", i);
+            mShd2->setUniform1f("time", ofGetElapsedTimef());
+            mShd2->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
+            mShd2->setUniformBuffer("ShaderParams", params);
+            
+            //---- Geometry shader pass
+            mShd2->setUniform1i("active_idx", primitives.get_index());
+            mShd2->setUniform1i("geom_num_copies", geom_num_copies);
+            mShd2->setUniform1f("geom_max_height", geom_max_height);
+            
+            mShd2->setUniform1i("geom_lfo_type", geom.lfo_type1);
+            mShd2->setUniform1f("geom_lfo_offset", geom.lfo_offset);
+            mShd2->setUniform1f("geom_lfo_speed", geom.lfo_speed);
+            mShd2->setUniform1f("geom_lfo_amp", geom.lfo_amp);
+            mShd2->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
+            mShd2->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
+            mShd2->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
+            mShd2->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
+            mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
+            
+            if(i ==0) primitives.draw_idle_filled_box();
+            else primitives.draw_idle_wireframe_box();
+            
+            mShd2->setUniformTexture("tex_unit_0", tex, 0); // first texture unit has index 0, name is not that important!
+            mShd2->setUniform1i("fill_lfo_type", xray.lfo_type1);
+            mShd2->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
+            mShd2->setUniform1f("xray_lfo_offset", xray.lfo_offset);
+            mShd2->setUniform1f("xray_lfo_speed", xray.lfo_speed);
+            mShd2->setUniform1f("xray_lfo_amp", xray.lfo_amp);
+            mShd2->setUniform1f("xray_mix", xray.mix);
+        }
+        mShd2->end();
+    }
+    tex.unbind();
+    ofDisableDepthTest();
+    
+    if(toggle_backface_cull){
+        glDisable(GL_CULL_FACE);
+    }
+    mCam1.end();
+}
+
+
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
+
+    switch (key) {
+        case ' ':
+            isShaderDirty = true;
+            break;
+        case 'f':
+            ofToggleFullscreen();
+            break;
+        case 't':
+            textures.load_random_idle_texture();
+            textures.load_random_active_texture();
+            break;
+        case 'e':
+            geom.lfo_type1 = (int)ofRandom(34);
+            geom_effect.lfo_type1 = (int)ofRandom(34);
+            xray.lfo_type1 = (int)ofRandom(34);
+            xray.lfo_type2 = (int)ofRandom(34);
+            break;
+        case 'g':
+            geom.lfo_offset = ofRandomuf();
+            geom.lfo_speed = ofRandomuf();
+            geom.lfo_amp = ofRandomuf();
+            geom_effect.mix = ofRandomuf();
+            geom_effect.lfo_offset = ofRandomuf();
+            geom_effect.lfo_speed = ofRandomuf();
+            geom_effect.lfo_amp = ofRandomuf();
+            
+            //Fragment Shader
+            xray.mix = ofRandomuf();
+            xray.lfo_offset = ofRandomuf();
+            xray.lfo_speed = ofRandomuf();
+            xray.lfo_amp = ofRandomuf();
+            break;
+        case 'p':
+            primitives.randomise_objects();
+            break;
+        case 'm':
+            primitives.randomise_mesh_resolution();
+            break;
+        case 'z':
+        {
+            cam_tweens.randomise_distance();
+            cam_tweens.trigger();
+            vector<float> speeds;
+            for(int i = 0; i < cam_tweens.size(); i++){
+                speeds.push_back(ofRandom(1,3));
+            }
+            cam_tweens.set_duration(speeds);
+            for(int i = 0; i < cam_tween_types.size(); i++){
+                cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+//--------------------------------------------------------------
 void ofApp::drawGui(ofEventArgs & args){
     this->gui.begin();
-
+    
     auto mainSettings = ofxImGui::Settings();
     mainSettings.windowPos = ofVec2f(0, 0);
-
-    #define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
+    
+#define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
     const char* items[] = { "Sine", "Triangle", "Saw", "Pulse", "Noise", "Exponential In", "Exponential Out", "Exponential In Out", "Sine In", "Sine Out", "Sine In Out", "Qintic In", "Qintic Out", "Qintic In Out", "Quartic In", "Quartic Out", "Quartic In Out", "Quadratic In", "Quadratic Out", "Quadratic In Out", "Cubic In", "Cubic Out", "Cubic In Out", "Elastic In", "Elastic Out", "Elastic In Out", "Circular In", "Circular Out", "Circular In Out", "Bounce In", "Bounce Out", "Bounce In Out", "Back In", "Back Out", "Back In Out" };
     
     if (ofxImGui::BeginWindow("Layer Assignments", mainSettings, false))
     {
-
-        
         // Basic columns
         if (ofxImGui::BeginTree("Geometry", mainSettings)){
             //ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
             //ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
             ImGui::SliderInt("Num Copies",&geom_num_copies,1,15);
             ImGui::SliderFloat("Max Height",&geom_max_height,0.0,10.0);
-
+            
             if(ImGui::SmallButton("Random Primitive")){
                 primitives.randomise_objects();
             }
@@ -211,7 +442,7 @@ void ofApp::drawGui(ofEventArgs & args){
                 primitives.randomise_mesh_resolution();
             }
             ImGui::Checkbox("Automate Cam", &toggle_camera_automation);
-
+            
             
             ofxImGui::EndTree(mainSettings);
         }
@@ -234,12 +465,12 @@ void ofApp::drawGui(ofEventArgs & args){
             ImGui::SliderFloat("Geom Efct Speed",&geom_effect.lfo_speed,0.0,1.0);
             ImGui::SliderFloat("Geom Efct Amp",&geom_effect.lfo_amp,0.0,1.0);
             ImGui::SliderFloat("Geom Efct Mix",&geom_effect.mix,0.0,1.0);
-
+            
             ofxImGui::EndTree(mainSettings);
         }
         
         if (ofxImGui::BeginTree("Fragment Shader", mainSettings)){
-
+            
             ImGui::Combo("Fill LFO", &xray.lfo_type1, items, IM_ARRAYSIZE(items));
             ImGui::Combo("Wireframe LFO", &xray.lfo_type2, items, IM_ARRAYSIZE(items));
             
@@ -312,362 +543,6 @@ void ofApp::drawGui(ofEventArgs & args){
         }
     }
     ofxImGui::EndWindow(mainSettings);
-    
     this->gui.end();
 }
 
-
-//--------------------------------------------------------------
-void ofApp::draw(){
-    ofBackground(0.65); // pro app gray =)
-    ofSetColor(ofColor::white);
- 
-    // let's do something slightly more funky with this.
-    
-    // let's optimise this:
-    
-    // we're going to use a flat shaded box, with only 8 vertices per box.
-    // That's going to reduce the amount of geometry (and vertex calculations) massively.
-    
-    // We're going to use a shader which scales the boxes,
-    // so we can get something like a skyline.
-    
-    if (isShaderDirty){
-        // dirty shader pattern:
-        shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
-        
-        tmpShader->setGeometryInputType(GL_TRIANGLES);
-        tmpShader->setGeometryOutputType(GL_TRIANGLE_STRIP);
-        tmpShader->setGeometryOutputCount(4);
-
-        if (tmpShader->load("shaders/vertexshaderart.vert", "shaders/vertexshaderart.frag", "shaders/vertexshaderart.geom")){
-            mShd1 = tmpShader;
-            ofLogNotice() << ofGetTimestampString() << " reloaded Shader.";
-        } else {
-            ofLogError() << "Shader did not load successfully.";
-        }
-        
-        isShaderDirty = false;
-    }
-    
-    // Wrap all the drawing inside the NDI FBO
-    //ndi.ndiFbo.begin();
-    //ofClear(0,0,0,0);
-    
-    // begin scene to post process
-    if(toggle_post_processing){
-        post.dof_begin();
-    }
-    
-    mCam1.begin();
-    
-    // we need to flip the view port if we are doing postprocessing
-    if(toggle_post_processing){
-        ofScale (1,-1,1);
-    }
-
-    // alpha blending is enabled by default,
-    // let's see if disabling it will help us a little.
-    //ofDisableBlendMode();
-    if(toggle_blending){
-        ofEnableBlendMode(OF_BLENDMODE_ADD);
-    }
-    
-    // Draw our Idle Mesh shader first
-    //idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
-    
-    // also, let's get rid of the back faces.
-    if(toggle_backface_cull){
-        glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
-        glFrontFace(GL_CCW);
-    }
-    
-    // tell GLSL to use the first vertex for flat shading the whole triangle, instead
-    // of the last one, as would be the default.
-    glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
-    // and enable depth testing.
-    ofEnableDepthTest();
-    
-    
-    ofTexture tex = textures.getActiveTexture();
-    tex.bind();
-    
-    if (mShd1) {
-        
-        mShd1->begin();
-        for(int i = 0; i < 2; i++){
-            
-            mShd1->setUniform1i("is_active", i);
-            mShd1->setUniform1f("time", ofGetElapsedTimef());
-            mShd1->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
-            mShd1->setUniformBuffer("ShaderParams", params);
-            
-            //---- Geometry shader pass
-            mShd1->setUniform1i("active_idx", primitives.get_index());
-            mShd1->setUniform1i("geom_num_copies", geom_num_copies);
-            mShd1->setUniform1f("geom_max_height", geom_max_height);
-
-            mShd1->setUniform1i("geom_lfo_type", geom.lfo_type1);
-            mShd1->setUniform1f("geom_lfo_offset", geom.lfo_offset);
-            mShd1->setUniform1f("geom_lfo_speed", geom.lfo_speed);
-            mShd1->setUniform1f("geom_lfo_amp", geom.lfo_amp);
-            mShd1->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
-            mShd1->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
-            mShd1->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
-            mShd1->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
-            mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
-            
-            if(i ==0) primitives.draw_filled_mesh();
-            else primitives.draw_wireframe_mesh();
-
-            mShd1->setUniformTexture("tex_unit_0", tex, 0); // first texture unit has index 0, name is not that important!
-            mShd1->setUniform1i("fill_lfo_type", xray.lfo_type1);
-            mShd1->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
-            mShd1->setUniform1f("xray_lfo_offset", xray.lfo_offset);
-            mShd1->setUniform1f("xray_lfo_speed", xray.lfo_speed);
-            mShd1->setUniform1f("xray_lfo_amp", xray.lfo_amp);
-            mShd1->setUniform1f("xray_mix", xray.mix);
-            
-        }
-        mShd1->end();
-        
-    }
-    tex.unbind();
-
-    ofDisableDepthTest();
-    
-    if(toggle_backface_cull){
-        glDisable(GL_CULL_FACE);
-    }
-    
-    //ofEnableAlphaBlending();
-
-    mCam1.end();
-
-
-    if(toggle_post_processing){
-        post.dof_end();
-        post.draw();
-        //ofSetColor(255,50);
-        //post.depthOfField.getFbo().draw(0, 0);
-    }
-
-    //----------------------------------------------------------------
-    //----------------------------------------------------------------
-
-    mCam1.begin();
-    // Draw our Idle Mesh shader first
-    //idle_mesh.draw(textures.getIdleTexture(), osc.get_chair_states());
-    
-    if (ofGetMousePressed()){
-        // dirty shader pattern:
-        shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
-        
-        tmpShader->setGeometryInputType(GL_TRIANGLES);
-        tmpShader->setGeometryOutputType(GL_TRIANGLE_STRIP);
-        tmpShader->setGeometryOutputCount(4);
-        
-        if (tmpShader->load("shaders/idle_mesh.vert", "shaders/idle_mesh.frag", "shaders/idle_mesh.geom")){
-            mShd2 = tmpShader;
-            ofLogNotice() << ofGetTimestampString() << " reloaded Shader.";
-        } else {
-            ofLogError() << "Shader did not load successfully.";
-        }
-        
-        isShaderDirty = false;
-    }
-    
-    // also, let's get rid of the back faces.
-    if(toggle_backface_cull){
-        glEnable(GL_CULL_FACE); // wohooo! 200% performance boost.
-        glFrontFace(GL_CCW);
-    }
-    
-    // tell GLSL to use the first vertex for flat shading the whole triangle, instead
-    // of the last one, as would be the default.
-    glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
-    // and enable depth testing.
-    ofEnableDepthTest();
-    
-    tex = textures.getIdleTexture();
-    tex.bind();
-    
-    if (mShd2) {
-        
-        mShd2->begin();
-        for(int i = 0; i < 2; i++){
-            
-            mShd2->setUniform1i("is_active", i);
-            mShd2->setUniform1f("time", ofGetElapsedTimef());
-            mShd2->setUniform1f("alpha", abs(sin(ofGetElapsedTimef())*255));
-            mShd2->setUniformBuffer("ShaderParams", params);
-            
-            //---- Geometry shader pass
-            mShd2->setUniform1i("active_idx", primitives.get_index());
-            mShd2->setUniform1i("geom_num_copies", geom_num_copies);
-            mShd2->setUniform1f("geom_max_height", geom_max_height);
-            
-            mShd2->setUniform1i("geom_lfo_type", geom.lfo_type1);
-            mShd2->setUniform1f("geom_lfo_offset", geom.lfo_offset);
-            mShd2->setUniform1f("geom_lfo_speed", geom.lfo_speed);
-            mShd2->setUniform1f("geom_lfo_amp", geom.lfo_amp);
-            mShd2->setUniform1i("geom_effect_lfo_type", geom_effect.lfo_type1);
-            mShd2->setUniform1f("geom_effect_lfo_offset", geom_effect.lfo_offset);
-            mShd2->setUniform1f("geom_effect_lfo_speed", geom_effect.lfo_speed);
-            mShd2->setUniform1f("geom_effect_lfo_amp", geom_effect.lfo_amp);
-            mShd1->setUniform1f("geom_effect_mix", geom_effect.mix);
-            
-            if(i ==0) primitives.draw_idle_filled_box();
-            else primitives.draw_idle_wireframe_box();
-            
-            mShd2->setUniformTexture("tex_unit_0", tex, 0); // first texture unit has index 0, name is not that important!
-            mShd2->setUniform1i("fill_lfo_type", xray.lfo_type1);
-            mShd2->setUniform1i("wireframe_lfo_type", xray.lfo_type2);
-            mShd2->setUniform1f("xray_lfo_offset", xray.lfo_offset);
-            mShd2->setUniform1f("xray_lfo_speed", xray.lfo_speed);
-            mShd2->setUniform1f("xray_lfo_amp", xray.lfo_amp);
-            mShd2->setUniform1f("xray_mix", xray.mix);
-            
-        }
-        
-        mShd2->end();
-    }
-    
-    tex.unbind();
-
-    ofDisableDepthTest();
-    
-    if(toggle_backface_cull){
-        glDisable(GL_CULL_FACE);
-    }
-    
-    mCam1.end();
-    
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-    switch (key) {
-        case ' ':
-            isShaderDirty = true;
-            idle_mesh.isShaderDirty = true;
-            break;
-        case 'f':
-            ofToggleFullscreen();
-            break;
-        case 't':
-            textures.load_random_idle_texture();
-            textures.load_random_active_texture();
-            break;
-        case 'e':
-            geom.lfo_type1 = (int)ofRandom(34);
-            geom_effect.lfo_type1 = (int)ofRandom(34);
-            xray.lfo_type1 = (int)ofRandom(34);
-            xray.lfo_type2 = (int)ofRandom(34);
-            break;
-        case 'g':
-            geom.lfo_offset = ofRandomuf();
-            geom.lfo_speed = ofRandomuf();
-            geom.lfo_amp = ofRandomuf();
-            geom_effect.mix = ofRandomuf();
-            geom_effect.lfo_offset = ofRandomuf();
-            geom_effect.lfo_speed = ofRandomuf();
-            geom_effect.lfo_amp = ofRandomuf();
-            
-            //Fragment Shader
-            xray.mix = ofRandomuf();
-            xray.lfo_offset = ofRandomuf();
-            xray.lfo_speed = ofRandomuf();
-            xray.lfo_amp = ofRandomuf();
-            break;
-        case 'r':
-            for(int i = 0; i < NUM_INSTANCES; i++){
-                int active;
-                float speed;
-                if(ofRandomuf() < 0.1) {
-                    active = 1;
-                    speed = ofRandom(20.0);
-                }
-                else {
-                    active = 0;
-                    speed = 0.0;
-                }
-                //params.active_chair[i] = active;
-                //params.transducer_speed[i] = speed;
-            }
-            break;
-        case 'p':
-            primitives.randomise_objects();
-            break;
-        case 'm':
-            primitives.randomise_mesh_resolution();
-            break;
-        case 'z':
-        {
-            cam_tweens.randomise_distance();
-            cam_tweens.trigger();
-            vector<float> speeds;
-            for(int i = 0; i < cam_tweens.size(); i++){
-                speeds.push_back(ofRandom(1,3));
-            }
-            cam_tweens.set_duration(speeds);
-            for(int i = 0; i < cam_tween_types.size(); i++){
-                cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
-            }
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-    post.init();
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
-}

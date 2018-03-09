@@ -12,7 +12,6 @@
 		016BB55A143AD429330F07DB /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0E2047B4D03D5151730B52B /* Gui.cpp */; };
 		04DE0099DFD26E11BE513443 /* VideoRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D132772CCFC167993055B75F /* VideoRenderer.cpp */; };
 		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
-		0A364F0DE3B2D8ADD896CDCF /* IdleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF43E0D0805685ECFDE75E /* IdleMesh.cpp */; };
 		0A79D694B777A5B94D0A825E /* avLooperRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0832E17F940D1E0C5C8813F4 /* avLooperRenderer.cpp */; };
 		10DB7EE17D7BD769255AECD2 /* ofxAlgebraic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53FDB2E6E4F4724B0CECEB46 /* ofxAlgebraic.cpp */; };
 		115A05A16D252A48090235F7 /* MaterialTextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C1840DF957360A3FCF4B8C0 /* MaterialTextures.cpp */; };
@@ -189,7 +188,6 @@
 		13DCF01B2051390800AFD531 /* Ngon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ngon.h; path = ShapePaths/Ngon.h; sourceTree = "<group>"; };
 		13DCF01C2051390800AFD531 /* Wave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Wave.cpp; path = ShapePaths/Wave.cpp; sourceTree = "<group>"; };
 		13DCF01D2051390800AFD531 /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wave.h; path = ShapePaths/Wave.h; sourceTree = "<group>"; };
-		13DCF0212051560500AFD531 /* idle_mesh.geom */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = idle_mesh.geom; sourceTree = "<group>"; };
 		16D8E1844A44453A0C287E72 /* ssl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ssl.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ssl.h; sourceTree = SOURCE_ROOT; };
 		17006150745E007FA32014F5 /* modes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = modes.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/modes.h; sourceTree = SOURCE_ROOT; };
 		17C728DC953EE48E32706F19 /* PingPong.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PingPong.h; path = src/PostProcessing/PingPong.h; sourceTree = SOURCE_ROOT; };
@@ -263,7 +261,6 @@
 		56DAF0A34EFCF5E2A5E60386 /* rand.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = rand.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/rand.h; sourceTree = SOURCE_ROOT; };
 		5749F2535EC575188CD8B7EA /* md5.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = md5.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/md5.h; sourceTree = SOURCE_ROOT; };
 		586A4F5ADB50571EE58F9CE0 /* VideoFilter.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = VideoFilter.cpp; path = ../../../addons/ofxPlaymodes/src/filters/VideoFilter.cpp; sourceTree = SOURCE_ROOT; };
-		5AAF43E0D0805685ECFDE75E /* IdleMesh.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IdleMesh.cpp; path = src/IdleMesh.cpp; sourceTree = SOURCE_ROOT; };
 		5C5EA3276A2195CFD9CC42CB /* AudioSource.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = AudioSource.cpp; path = ../../../addons/ofxPlaymodes/src/pipeline/audio/AudioSource.cpp; sourceTree = SOURCE_ROOT; };
 		5C79B312C0FD717596DC13CE /* VideoBuffer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = VideoBuffer.h; path = ../../../addons/ofxPlaymodes/src/buffers/VideoBuffer.h; sourceTree = SOURCE_ROOT; };
 		5CAABABC5D465FF3E4FDBAA0 /* ssl2.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ssl2.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ssl2.h; sourceTree = SOURCE_ROOT; };
@@ -328,7 +325,6 @@
 		98B916CABFC10AC9836EB352 /* cast.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = cast.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/cast.h; sourceTree = SOURCE_ROOT; };
 		98F2C3A267D06D866BCC6B4D /* AudioBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = AudioBuffer.cpp; path = ../../../addons/ofxPlaymodes/src/buffers/AudioBuffer.cpp; sourceTree = SOURCE_ROOT; };
 		9A00A37CC5D4BF1FD1883438 /* pem2.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = pem2.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/pem2.h; sourceTree = SOURCE_ROOT; };
-		9A1ED14A6A6EA5333DDB07B0 /* IdleMesh.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = IdleMesh.h; path = src/IdleMesh.h; sourceTree = SOURCE_ROOT; };
 		9A30157E369DF55CE0BC670B /* ReceiverOSC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ReceiverOSC.h; path = src/ReceiverOSC.h; sourceTree = SOURCE_ROOT; };
 		9BB067477C7EE3796C61E1D9 /* Algebraic.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Algebraic.h; path = ofxAlgebraic/src/Algebraic.h; sourceTree = SOURCE_ROOT; };
 		9BD24C7C1FE56E6ADD52C42D /* ui_compat.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ui_compat.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/ui_compat.h; sourceTree = SOURCE_ROOT; };
@@ -557,7 +553,6 @@
 				13DCEFFA20511C8F00AFD531 /* HUD_FX.frag */,
 				13DCEFFB20511C8F00AFD531 /* HUD_FX.vert */,
 				13DCEFFC20511C8F00AFD531 /* idle_mesh.frag */,
-				13DCF0212051560500AFD531 /* idle_mesh.geom */,
 				13DCEFFD20511C8F00AFD531 /* idle_mesh.vert */,
 				13DCEFFE20511C8F00AFD531 /* instanced-1.vert */,
 				13DCEFFF20511C8F00AFD531 /* instanced-2.frag */,
@@ -1206,8 +1201,6 @@
 				F402A9166B8FCC8A7117589F /* Easings.h */,
 				01AD039688D0812913EDAA1F /* GuiTheme.h */,
 				32CFD4614F5F8EE50A549E69 /* HarmonicMotion */,
-				5AAF43E0D0805685ECFDE75E /* IdleMesh.cpp */,
-				9A1ED14A6A6EA5333DDB07B0 /* IdleMesh.h */,
 				45858BC21D396ED266B2333D /* Lights.cpp */,
 				F47F42625EB721A54C0CDAB6 /* Lights.h */,
 				8C1840DF957360A3FCF4B8C0 /* MaterialTextures.cpp */,
@@ -1415,7 +1408,6 @@
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				5255135C98E8CBE8F640E33C /* Easings.cpp in Sources */,
 				36798892B4B35569B31D0AE9 /* HarmonicMotion.cpp in Sources */,
-				0A364F0DE3B2D8ADD896CDCF /* IdleMesh.cpp in Sources */,
 				ADFBA2C7351D4D54BF63EA07 /* Lights.cpp in Sources */,
 				115A05A16D252A48090235F7 /* MaterialTextures.cpp in Sources */,
 				26E483557F9AA5CFAD7F0492 /* AlphaTrails.cpp in Sources */,

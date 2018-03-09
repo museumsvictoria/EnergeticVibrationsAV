@@ -7,7 +7,6 @@
 #include "GuiTheme.h"
 #include "PostProcessing.h"
 #include "Primitives.h"
-#include "IdleMesh.h"
 #include "MaterialTextures.h"
 #include "Easings.h"
 #include "TranslationPaths.h"
@@ -32,63 +31,48 @@ struct LfoControl {
 };
 
 class ofApp : public ofBaseApp{
+public:
+    void init();
+    void setup();
+    void update();
+    void draw();
+    void keyReleased(int key);
 
-        
-	public:
-        void init();
-		void setup();
-		void update();
-		void draw();
-    
-        void setupGui();
-        void drawGui(ofEventArgs & args);
+    void setupGui();
+    void drawGui(ofEventArgs & args);
 
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-    
-        TranslationPaths paths;
+    TranslationPaths paths;
 
-        MaterialTextures textures;
-        Primitives primitives;
-    
-        ofEasyCam mCam1;
-        Easings cam_tweens;
-        vector<int> cam_tween_types = {0,0,0};
-    
-        shared_ptr<ofxUboShader> mShd1;
-        shared_ptr<ofxUboShader> mShd2;
-        ShaderParams params;
-        bool isShaderDirty;
+    MaterialTextures textures;
+    Primitives primitives;
 
-        IdleMesh idle_mesh;
+    ofEasyCam mCam1;
+    Easings cam_tweens;
+    vector<int> cam_tween_types = {0,0,0};
+
+    shared_ptr<ofxUboShader> mShd1;
+    shared_ptr<ofxUboShader> mShd2;
+    ShaderParams params;
+    bool isShaderDirty;
+
+    PostProcessing post;
     
-        PostProcessing post;
-        
-        ReceiverOSC osc;
-    
-        ///------------- GUI
-        ofxImGui::Gui gui;
-        GuiTheme gui_theme;
-    
-    
-        // Shader Params
-        float explode_amount;
-    
-        // Camera
-        bool toggle_camera_automation;
-        float cam_near_clip;
-        float cam_far_clip;
-    
-        // OPEN GL STATE
+    ReceiverOSC osc;
+
+    ///------------- GUI
+    ofxImGui::Gui gui;
+    GuiTheme gui_theme;
+
+
+    // Shader Params
+    float explode_amount;
+
+    // Camera
+    bool toggle_camera_automation;
+    float cam_near_clip;
+    float cam_far_clip;
+
+    // OPEN GL STATE
     bool toggle_post_processing;
     bool toggle_blending;
     bool toggle_backface_cull;
@@ -97,9 +81,7 @@ class ofApp : public ofBaseApp{
     float geom_max_height;
     int geom_num_copies;
     LfoControl geom;
-
     LfoControl geom_effect;
-
     
     // FRAGMENT SHADER
     LfoControl xray;
