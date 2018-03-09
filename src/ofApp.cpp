@@ -15,21 +15,21 @@ void ofApp::init(){
     active_geom_num_copies = idle_geom_num_copies = 1;
     
     active_geom.lfo_type1 = idle_geom.lfo_type1 = (int)ofRandom(33);
-    active_geom.lfo_offset = idle_geom.lfo_offset = 0.58;
-    active_geom.lfo_speed =  idle_geom.lfo_speed = 0.02;
+    active_geom.lfo_offset = idle_geom.lfo_offset = 0.68;
+    active_geom.lfo_speed =  idle_geom.lfo_speed = 0.24;
     active_geom.lfo_amp = idle_geom.lfo_amp = 1.0;
     active_geom_effect.lfo_type1 = idle_geom_effect.lfo_type1 = (int)ofRandom(33);
-    active_geom_effect.mix = idle_geom_effect.mix = 0.0;
+    active_geom_effect.mix = idle_geom_effect.mix = 1.0;
     active_geom_effect.lfo_offset = idle_geom_effect.lfo_offset = 0.2;
-    active_geom_effect.lfo_speed = idle_geom_effect.lfo_speed = 0.1;
-    active_geom_effect.lfo_amp = idle_geom_effect.lfo_amp = 1.0;
+    active_geom_effect.lfo_speed = idle_geom_effect.lfo_speed = 0.33;
+    active_geom_effect.lfo_amp = idle_geom_effect.lfo_amp = 0.0;
     
     //Fragment Shader
     active_xray.lfo_type1 = idle_xray.lfo_type1 = (int)ofRandom(33);
     active_xray.lfo_type2 = idle_xray.lfo_type2 = (int)ofRandom(33);
-    active_xray.mix = idle_xray.mix = 1.0;
-    active_xray.lfo_offset = idle_xray.lfo_offset = 0.0;
-    active_xray.lfo_speed = idle_xray.lfo_speed = 0.5;
+    active_xray.mix = idle_xray.mix = 0.4;
+    active_xray.lfo_offset = idle_xray.lfo_offset = 0.6;
+    active_xray.lfo_speed = idle_xray.lfo_speed = 0.28;
     active_xray.lfo_amp = idle_xray.lfo_amp = 1.0;
 
     
@@ -62,6 +62,14 @@ void ofApp::setup(){
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     
     init();
+    
+    for(int i = 0; i < 11; i++){
+        seeds.push_back(ofRandom(100000));
+        speeds.push_back(ofRandom(0.5));
+        
+        dev_seeds.push_back(ofRandom(200000));
+        dev_speeds.push_back(ofRandom(0.15));
+    }
 }
 
 //--------------------------------------------------------------
@@ -171,22 +179,26 @@ void ofApp::update(){
         
         primitives.randomise_mesh_resolution();
     }
-   
-    float speed = ofGetElapsedTimef() * 0.01;
-    geom.lfo_offset = ofNoise(speed);
-    geom.lfo_speed = ofNoise(speed+1);
-    geom.lfo_amp = ofNoise(speed+2);
-    geom_effect.mix = ofNoise(speed+3);
-    geom_effect.lfo_offset = ofNoise(speed+4);
-    geom_effect.lfo_speed = ofNoise(speed+5);
-    geom_effect.lfo_amp = ofNoise(speed+6);
+       */
+    
+
+    
+    float t = ofGetElapsedTimef();
+    /*
+    active_geom.lfo_offset = (ofSignedNoise((t * dev_speeds[0]) + dev_seeds[0])*0.5) + ofNoise((t * speeds[0]) + seeds[0]);
+    active_geom.lfo_speed = (ofSignedNoise((t * dev_speeds[1]) + dev_seeds[1])*0.5) + ofNoise((t * speeds[1]) + seeds[1]);
+    //active_geom.lfo_amp = (ofSignedNoise((t * dev_speeds[2]) + dev_seeds[2])*0.5) + ofNoise((t * speeds[2]) + seeds[2]);
+    active_geom_effect.mix = (ofSignedNoise((t * dev_speeds[3]) + dev_seeds[3])*0.5) + ofNoise((t * speeds[3]) + seeds[3]);
+    active_geom_effect.lfo_offset = (ofSignedNoise((t * dev_speeds[4]) + dev_seeds[4])*0.5) + ofNoise((t * speeds[4]) + seeds[4]);
+    active_geom_effect.lfo_speed = (ofSignedNoise((t * dev_speeds[5]) + dev_seeds[5])*0.5) + ofNoise((t * speeds[5]) + seeds[5]);
+    //active_geom_effect.lfo_amp = (ofSignedNoise((t * dev_speeds[6]) + dev_seeds[6])*0.5) + ofNoise((t * speeds[6]) + seeds[6]);
     
     //Fragment Shader
-    xray.mix = ofNoise(speed+7);
-    xray.lfo_offset = ofNoise(speed+8);
-    xray.lfo_speed = ofNoise(speed+10);
-    xray.lfo_amp = ofNoise(speed+11);
-    */
+    active_xray.mix = (ofSignedNoise((t * dev_speeds[7]) + dev_seeds[7])*0.5) + ofNoise((t * speeds[7]) + seeds[7]);
+    active_xray.lfo_offset = (ofSignedNoise((t * dev_speeds[8]) + dev_seeds[8])*0.5) + ofNoise((t * speeds[8]) + seeds[8]);
+    active_xray.lfo_speed = (ofSignedNoise((t * dev_speeds[9]) + dev_seeds[9])*0.5) + ofNoise((t * speeds[9]) + seeds[9]);
+    //active_xray.lfo_amp = (ofSignedNoise((t * dev_speeds[10]) + dev_seeds[10])*0.5) + ofNoise((t * speeds[10]) + seeds[10]);
+     */
 }
 
 //--------------------------------------------------------------
@@ -344,6 +356,45 @@ void ofApp::draw(){
     mCam1.end();
 }
 
+//--------------------------------------------------------------
+void ofApp::randomise_params_idle(){
+    idle_geom.lfo_offset = ofRandomuf();
+    idle_geom.lfo_speed = ofRandomuf();
+    idle_geom.lfo_amp = ofRandomuf();
+    idle_geom_effect.mix = ofRandomuf();
+    idle_geom_effect.lfo_offset = ofRandomuf();
+    idle_geom_effect.lfo_speed = ofRandomuf();
+    idle_geom_effect.lfo_amp = ofRandomuf();
+    idle_xray.mix = ofRandomuf();
+    idle_xray.lfo_offset = ofRandomuf();
+    idle_xray.lfo_speed = ofRandomuf();
+    idle_xray.lfo_amp = ofRandomuf();
+}
+void ofApp::randomise_params_active(){
+    active_geom.lfo_offset = ofRandomuf();
+    active_geom.lfo_speed = ofRandomuf();
+    active_geom.lfo_amp = ofRandomuf();
+    active_geom_effect.mix = ofRandomuf();
+    active_geom_effect.lfo_offset = ofRandomuf();
+    active_geom_effect.lfo_speed = ofRandomuf();
+    active_geom_effect.lfo_amp = ofRandomuf();
+    active_xray.mix = ofRandomuf();
+    active_xray.lfo_offset = ofRandomuf();
+    active_xray.lfo_speed = ofRandomuf();
+    active_xray.lfo_amp = ofRandomuf();
+}
+void ofApp::randomise_lfos_idle(){
+    idle_geom.lfo_type1 = (int)ofRandom(34);
+    idle_geom_effect.lfo_type1 = (int)ofRandom(34);
+    idle_xray.lfo_type1 = (int)ofRandom(34);
+    idle_xray.lfo_type2 = (int)ofRandom(34);
+}
+void ofApp::randomise_lfos_active(){
+    active_geom.lfo_type1 = (int)ofRandom(34);
+    active_geom_effect.lfo_type1 = (int)ofRandom(34);
+    active_xray.lfo_type1 = (int)ofRandom(34);
+    active_xray.lfo_type2 = (int)ofRandom(34);
+}
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
@@ -360,42 +411,16 @@ void ofApp::keyReleased(int key){
             textures.load_random_active_texture();
             break;
         case 'e':
-            active_geom.lfo_type1 = (int)ofRandom(34);
-            active_geom_effect.lfo_type1 = (int)ofRandom(34);
-            active_xray.lfo_type1 = (int)ofRandom(34);
-            active_xray.lfo_type2 = (int)ofRandom(34);
+            randomise_lfos_active();
             break;
         case 'E':
-            idle_geom.lfo_type1 = (int)ofRandom(34);
-            idle_geom_effect.lfo_type1 = (int)ofRandom(34);
-            idle_xray.lfo_type1 = (int)ofRandom(34);
-            idle_xray.lfo_type2 = (int)ofRandom(34);
+            randomise_lfos_idle();
             break;
         case 'g':
-            active_geom.lfo_offset = ofRandomuf();
-            active_geom.lfo_speed = ofRandomuf();
-            active_geom.lfo_amp = ofRandomuf();
-            active_geom_effect.mix = ofRandomuf();
-            active_geom_effect.lfo_offset = ofRandomuf();
-            active_geom_effect.lfo_speed = ofRandomuf();
-            active_geom_effect.lfo_amp = ofRandomuf();            
-            active_xray.mix = ofRandomuf();
-            active_xray.lfo_offset = ofRandomuf();
-            active_xray.lfo_speed = ofRandomuf();
-            active_xray.lfo_amp = ofRandomuf();
+            randomise_params_active();
             break;
         case 'G':
-            idle_geom.lfo_offset = ofRandomuf();
-            idle_geom.lfo_speed = ofRandomuf();
-            idle_geom.lfo_amp = ofRandomuf();
-            idle_geom_effect.mix = ofRandomuf();
-            idle_geom_effect.lfo_offset = ofRandomuf();
-            idle_geom_effect.lfo_speed = ofRandomuf();
-            idle_geom_effect.lfo_amp = ofRandomuf();
-            idle_xray.mix = ofRandomuf();
-            idle_xray.lfo_offset = ofRandomuf();
-            idle_xray.lfo_speed = ofRandomuf();
-            idle_xray.lfo_amp = ofRandomuf();
+            randomise_params_idle();
             break;
         case 'p':
             primitives.randomise_objects();

@@ -37,7 +37,21 @@ public:
     void update();
     void draw();
     void keyReleased(int key);
+    
+    void randomise_params_active();
+    void randomise_params_idle();
+    
+    void randomise_lfos_active();
+    void randomise_lfos_idle();
 
+    // param
+    vector<float> seeds;
+    vector<float> speeds;
+    
+    // deviation
+    vector<float> dev_seeds;
+    vector<float> dev_speeds;
+    
     ///------------- GUI
     ofxImGui::Gui gui;
     GuiTheme gui_theme;

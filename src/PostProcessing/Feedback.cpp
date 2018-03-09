@@ -78,7 +78,7 @@ void Feedback::setup(){
     createFullScreenQuad();
     init_fbos();
     
-    strength = 0.8;
+    strength = 0.05;
     zoom = -0.3;
     x_mult = 11.50;
     y_mult = 10.0;

@@ -24,7 +24,7 @@ void PostProcessing::setup(){
     toggle_feedback = false;
     toggle_down_sampling = false;
     
-    dof_blur_amount = 0.4;
+    dof_blur_amount = 0.05;
     dof_focal_range = 200.0;
     dof_focal_distance = 200.0;
     

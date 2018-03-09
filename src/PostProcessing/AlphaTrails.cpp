@@ -78,7 +78,7 @@ void AlphaTrails::setup(){
     createFullScreenQuad();
     init_fbos();
     
-    delay = 0.05;
+    delay = 0.0;
 }
 //--------------------------------------------------------------
 void AlphaTrails::set_source_texture(ofFbo& tex){

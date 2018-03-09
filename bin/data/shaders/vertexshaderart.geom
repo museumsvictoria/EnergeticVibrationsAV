@@ -81,7 +81,7 @@ void main() {
     
     float effect_lfo = easing_lfo(geom_effect_lfo_type,instance_offset + ((primitive_id*(geom_effect_lfo_offset*0.02))+time*(geom_effect_lfo_speed*10.0)))*geom_effect_lfo_amp;
 
-    float lfo_scale = easing_lfo(geom_lfo_type,instance_offset + ((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*20.0)))*(geom_lfo_amp*(remap(vertex[0].scale,0.0,80.0,0.0,1.0)));
+    float lfo_scale = easing_lfo(geom_lfo_type,instance_offset + ((primitive_id*(geom_lfo_offset*0.1))+time*(geom_lfo_speed*10.0)))*(geom_lfo_amp*(remap(vertex[0].scale,0.0,80.0,0.0,1.0)));
     
     //------ Pass Through
     for( int z = 0; z < geom_num_copies; z++){
@@ -92,9 +92,7 @@ void main() {
             // You can see built-in variable gl_in here, notice adding normal multiplied by bender value
             vec3 vMiddle = (gl_in[0].gl_Position.xyz+gl_in[1].gl_Position.xyz+gl_in[2].gl_Position.xyz)/3.0;
 
-            vec4 tri_size = mix(vertex[i].position, vec4(vMiddle,1.0) , fract(lfo_scale*((1+z)*(1.0/geom_num_copies))));
-
-
+            vec4 tri_size = mix(vertex[i].position, vec4(vMiddle,1.0) , fract(lfo_scale*((1+z)*(2.0/geom_num_copies))));
             vec4 tri_height = mix(vertex[i].position, (vertex[i].position-(vec4(vMiddle,1.0))*.01) + vec4(normal.xyz,1.0) * (geom_max_height*z), lfo_scale);
         
            
