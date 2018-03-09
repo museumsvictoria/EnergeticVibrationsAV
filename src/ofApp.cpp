@@ -427,12 +427,88 @@ void ofApp::drawGui(ofEventArgs & args){
     
     if (ofxImGui::BeginWindow("Layer Assignments", mainSettings, false))
     {
-        // Basic columns
-        if (ofxImGui::BeginTree("Geometry", mainSettings)){
-            //ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
-            //ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
+        if (ofxImGui::BeginTree("Active Shader", mainSettings)){
             ImGui::SliderInt("Num Copies",&geom_num_copies,1,15);
             ImGui::SliderFloat("Max Height",&geom_max_height,0.0,10.0);
+            //ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
+            //ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
+            
+            ImGui::Combo("Geom LFO", &geom.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Geom LFO Offset",&geom.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Speed",&geom.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Amp",&geom.lfo_amp,0.0,1.0);
+
+            ImGui::Combo("Efct LFO", &geom_effect.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Geom Efct Offset",&geom_effect.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Speed",&geom_effect.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Amp",&geom_effect.lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Mix",&geom_effect.mix,0.0,1.0);
+            
+            ImGui::Combo("Fill LFO", &xray.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::Combo("Wireframe LFO", &xray.lfo_type2, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Xray Offset",&xray.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Xray Speed",&xray.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Xray Amp",&xray.lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Xray Mix",&xray.mix,0.0,1.0);
+            ofxImGui::EndTree(mainSettings);
+        }
+        
+        if (ofxImGui::BeginTree("Idle Shader", mainSettings)){
+            ImGui::SliderInt("Num Copies",&geom_num_copies,1,15);
+            ImGui::SliderFloat("Max Height",&geom_max_height,0.0,10.0);
+            //ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
+            //ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
+            
+            ImGui::Combo("Geom LFO", &geom.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Geom LFO Offset",&geom.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Speed",&geom.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom LFO Amp",&geom.lfo_amp,0.0,1.0);
+            
+            ImGui::Combo("Efct LFO", &geom_effect.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Geom Efct Offset",&geom_effect.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Speed",&geom_effect.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Amp",&geom_effect.lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Geom Efct Mix",&geom_effect.mix,0.0,1.0);
+            
+            ImGui::Combo("Fill LFO", &xray.lfo_type1, items, IM_ARRAYSIZE(items));
+            ImGui::Combo("Wireframe LFO", &xray.lfo_type2, items, IM_ARRAYSIZE(items));
+            ImGui::SliderFloat("Xray Offset",&xray.lfo_offset,0.0,1.0);
+            ImGui::SliderFloat("Xray Speed",&xray.lfo_speed,0.0,1.0);
+            ImGui::SliderFloat("Xray Amp",&xray.lfo_amp,0.0,1.0);
+            ImGui::SliderFloat("Xray Mix",&xray.mix,0.0,1.0);
+            ofxImGui::EndTree(mainSettings);
+        }
+
+    }
+    ofxImGui::EndWindow(mainSettings);
+    
+    //-------------- POST PROCESSING WINDOW
+    mainSettings.windowPos = ofVec2f(440, 0);
+    if (ofxImGui::BeginWindow("Post Processing", mainSettings, false)) {
+        if (ofxImGui::BeginTree("GL STATE", mainSettings)){
+            ImGui::Checkbox("Post Processing", &toggle_post_processing);
+            
+            static bool vid_actvie_toggle = false;
+            ImGui::SameLine();
+            ImGui::Checkbox("Toggle Active Play", &vid_actvie_toggle);
+            if(vid_actvie_toggle == true) {
+                textures.vid_active.setPaused(false);
+            } else {
+                textures.vid_active.setPaused(true);
+            }
+            ImGui::Checkbox("GL Blending Add", &toggle_blending);
+            
+            static bool vid_idle_toggle = true;
+            ImGui::SameLine();
+            ImGui::Checkbox("Toggle Idle Play", &vid_idle_toggle);
+            if(vid_idle_toggle == true) {
+                textures.vid_idle.setPaused(false);
+            } else {
+                textures.vid_idle.setPaused(true);
+            }
+            ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
+            ImGui::SameLine();
+            ImGui::Checkbox("Automate Cam", &toggle_camera_automation);
             
             if(ImGui::SmallButton("Random Primitive")){
                 primitives.randomise_objects();
@@ -441,71 +517,12 @@ void ofApp::drawGui(ofEventArgs & args){
             if(ImGui::SmallButton("Random Mesh Res")){
                 primitives.randomise_mesh_resolution();
             }
-            ImGui::Checkbox("Automate Cam", &toggle_camera_automation);
-            
-            
             ofxImGui::EndTree(mainSettings);
         }
-        
-        if (ofxImGui::BeginTree("GL STATE", mainSettings)){
-            ImGui::Checkbox("Post Processing", &toggle_post_processing);
-            ImGui::Checkbox("GL Blending Add", &toggle_blending);
-            ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
-            ofxImGui::EndTree(mainSettings);
-        }
-        
-        if (ofxImGui::BeginTree("Geometry Shader", mainSettings)){
-            ImGui::Combo("Geom LFO", &geom.lfo_type1, items, IM_ARRAYSIZE(items));
-            ImGui::SliderFloat("Geom LFO Offset",&geom.lfo_offset,0.0,1.0);
-            ImGui::SliderFloat("Geom LFO Speed",&geom.lfo_speed,0.0,1.0);
-            ImGui::SliderFloat("Geom LFO Amp",&geom.lfo_amp,0.0,1.0);
-            ImGui::Separator();
-            ImGui::Combo("Efct LFO", &geom_effect.lfo_type1, items, IM_ARRAYSIZE(items));
-            ImGui::SliderFloat("Geom Efct Offset",&geom_effect.lfo_offset,0.0,1.0);
-            ImGui::SliderFloat("Geom Efct Speed",&geom_effect.lfo_speed,0.0,1.0);
-            ImGui::SliderFloat("Geom Efct Amp",&geom_effect.lfo_amp,0.0,1.0);
-            ImGui::SliderFloat("Geom Efct Mix",&geom_effect.mix,0.0,1.0);
-            
-            ofxImGui::EndTree(mainSettings);
-        }
-        
-        if (ofxImGui::BeginTree("Fragment Shader", mainSettings)){
-            
-            ImGui::Combo("Fill LFO", &xray.lfo_type1, items, IM_ARRAYSIZE(items));
-            ImGui::Combo("Wireframe LFO", &xray.lfo_type2, items, IM_ARRAYSIZE(items));
-            
-            ImGui::SliderFloat("Xray Offset",&xray.lfo_offset,0.0,1.0);
-            ImGui::SliderFloat("Xray Speed",&xray.lfo_speed,0.0,1.0);
-            ImGui::SliderFloat("Xray Amp",&xray.lfo_amp,0.0,1.0);
-            ImGui::SliderFloat("Xray Mix",&xray.mix,0.0,1.0);
-            ImGui::Separator();
-            
-            ofxImGui::EndTree(mainSettings);
-        }
-        
-        if (ofxImGui::BeginTree("TEXTURES", mainSettings)){
-            static bool vid_idle_toggle = true;
-            static bool vid_actvie_toggle = false;
-            ImGui::Checkbox("Toggle Ative Play", &vid_actvie_toggle);
-            if(vid_actvie_toggle == true) {
-                textures.vid_active.setPaused(false);
-            } else {
-                textures.vid_active.setPaused(true);
-            }
-            ImGui::Checkbox("Toggle Idle Play", &vid_idle_toggle);
-            if(vid_idle_toggle == true) {
-                textures.vid_idle.setPaused(false);
-            } else {
-                textures.vid_idle.setPaused(true);
-            }
-            ofxImGui::EndTree(mainSettings);
-        }
-        
         if (ofxImGui::BeginTree("DOF", mainSettings)){
             ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
             ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,20.0,200.0);
             ImGui::SliderFloat("Focal Range",&post.dof_focal_range,0.0,200.0);
-            
             ofxImGui::EndTree(mainSettings);
         }
         if (ofxImGui::BeginTree("PIXELATE", mainSettings)){
