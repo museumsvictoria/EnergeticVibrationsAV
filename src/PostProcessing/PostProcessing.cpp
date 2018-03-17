@@ -32,40 +32,31 @@ void PostProcessing::setup(){
     reaction_diffusion.setup();
     alpha_trails.setup();
     feedback.setup();
-    surface_mask.setup();
     
-    /// Final Render FBO
-    ///-------------------------
+    
     ofFbo::Settings renderFboSettings;
     renderFboSettings.width = ofGetWidth();
     renderFboSettings.height = ofGetHeight();
-    renderFboSettings.internalformat = GL_RGBA;
-    renderFboSettings.numSamples = 1;
-    renderFboSettings.useDepth = false;
-    renderFboSettings.useStencil = false;
-    renderFboSettings.textureTarget = GL_TEXTURE_2D;
-    renderFboSettings.minFilter = GL_LINEAR;
-    renderFboSettings.maxFilter = GL_LINEAR;
-    renderFboSettings.wrapModeHorizontal = GL_CLAMP_TO_EDGE;
-    renderFboSettings.wrapModeVertical = GL_CLAMP_TO_EDGE;
+    renderFboSettings.internalformat = GL_RGB;
+    renderFboSettings.numSamples = 0;
+    renderFboSettings.useDepth = true;
+    renderFboSettings.useStencil = true;
+    renderFboSettings.depthStencilAsTexture = true;
+    renderFboSettings.textureTarget = ofGetUsingArbTex() ? GL_TEXTURE_RECTANGLE_ARB : GL_TEXTURE_2D;
     
-    ofFbo::Settings dofBuffersSettings;
-    dofBuffersSettings.width = ofGetWidth();
-    dofBuffersSettings.height = ofGetHeight();
-    dofBuffersSettings.internalformat = GL_RGB;
-    dofBuffersSettings.numSamples = 0;
-    dofBuffersSettings.useDepth = true;
-    dofBuffersSettings.useStencil = true;
-    dofBuffersSettings.depthStencilAsTexture = true;
-    dofBuffersSettings.textureTarget = ofGetUsingArbTex() ? GL_TEXTURE_RECTANGLE_ARB : GL_TEXTURE_2D;
+    m_activeFbo.allocate( renderFboSettings );
+    m_idleFbo.allocate( renderFboSettings );
     
-    m_renderFbo.allocate( dofBuffersSettings );
     // Because we are viewing this fbo through an ofCamera's viewport
     // We need to manually flip the texture.... ?!?!? dumb
-    m_renderFbo.getTextureReference().getTextureData().bFlipTexture = true;
-    m_renderFbo.begin();
+    m_activeFbo.getTextureReference().getTextureData().bFlipTexture = true;
+    m_activeFbo.begin();
     ofClear(0,0,0,0);
-    m_renderFbo.end();
+    m_activeFbo.end();
+    
+    m_idleFbo.begin();
+    ofClear(0,0,0,0);
+    m_idleFbo.end();
 }
 
 //--------------------------------------------------------------
@@ -133,7 +124,7 @@ void PostProcessing::update(){
 //    
     /// PASS IN TEXTURE TO PIXELATOR
     ////////////////////
-    downsample.set_source_texture(m_renderFbo);
+    downsample.set_source_texture(m_activeFbo);
     downsample.update();
 
     /// PASS IN TEXTURE TO ALPHA TRAILS
@@ -150,35 +141,33 @@ void PostProcessing::update(){
     ////////////////////
     reaction_diffusion.set_source_texture(feedback.getFbo());
     reaction_diffusion.update();
-
-    /// PASS IN TEXTURE TO SURFACE MASK
-    ////////////////////
-    surface_mask.set_source_texture(reaction_diffusion.getFbo());
-    surface_mask.update();
 }
 
 //--------------------------------------------------------------
-void PostProcessing::begin(){
-    m_renderFbo.begin();
+void PostProcessing::begin_active(){
+    m_activeFbo.begin();
     ofClear(0,0,0,0);
+}
+void PostProcessing::end_active(){
+    m_activeFbo.end();
+}
+ofFbo& PostProcessing::get_active_fbo(){
+    return reaction_diffusion.getFbo();
+}
+//--------------------------------------------------------------
+void PostProcessing::begin_idle(){
+    m_idleFbo.begin();
+    ofClear(0,0,0,0);
+}
+void PostProcessing::end_idle(){
+    m_idleFbo.end();
+}
+ofFbo& PostProcessing::get_idle_fbo(){
+    return m_idleFbo;
+}
 
-}
-void PostProcessing::end(){
-    m_renderFbo.end();
-    
-}
 //--------------------------------------------------------------
 void PostProcessing::draw(){
-    
-//    if(toggle_reaction_diffusion){
-//        reaction_diffusion.draw();
-//    } else {
-//        feedback.draw();
-//    }
-//    
-    surface_mask.draw();
-
-//    reaction_diffusion.draw();
-
-//    m_renderFbo.draw(0,0);
+    // Only need to call this funciton if you dont want to send it through the shape mask
+    reaction_diffusion.draw();
 }

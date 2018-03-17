@@ -29,13 +29,19 @@ void SurfaceMask::init_fbos(){
     
     // create our FBOs
     m_fbos[ 0 ].allocate( fboSettings );
+    m_fbos[ 1 ].allocate( fboSettings );
     
     // setup FBOs
     m_fbos[ 0 ].begin();
     ofClear( 0, 0, 0, 255 );
     m_fbos[ 0 ].end();
     
+    m_fbos[ 1 ].begin();
+    ofClear( 0, 0, 0, 255 );
+    m_fbos[ 1 ].end();
+    
     m_fbos[ 0 ].getTexture().bind( 10 );
+    m_fbos[ 1 ].getTexture().bind( 11 );
     
     //------------------------------
     
@@ -89,11 +95,16 @@ void SurfaceMask::setup(){
 }
 
 //--------------------------------------------------------------
-void SurfaceMask::set_source_texture(ofFbo& tex){
-    
-    m_src_fbo.begin();
+void SurfaceMask::set_active_source_texture(ofFbo& tex){
+    m_fbos[ 0 ].begin();
     tex.draw(0,0,ofGetWidth(),ofGetHeight());
-    m_src_fbo.end();
+    m_fbos[ 0 ].end();
+}
+//--------------------------------------------------------------
+void SurfaceMask::set_idle_source_texture(ofFbo& tex){
+    m_fbos[ 1 ].begin();
+    tex.draw(0,0,ofGetWidth(),ofGetHeight());
+    m_fbos[ 1 ].end();
 }
 
 //--------------------------------------------------------------
@@ -105,13 +116,13 @@ void SurfaceMask::update(){
     cam.setDistance(2710); // set default camera distance to 1000
     cam.disableMouseInput();
 
-    m_fbos[ 0 ].begin();
+    m_src_fbo.begin();
     ofClear(0,0,0,0);
     cam.begin();
     ofSetColor(255,255);
     masking_model.getMesh(0).draw();
     cam.end();
-    m_fbos[ 0 ].end();
+    m_src_fbo.end();
 
     
     /// Final Render
@@ -122,12 +133,12 @@ void SurfaceMask::update(){
         shader_image.begin();
         shader_image.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
         shader_image.setUniform1f("iTime", ofGetElapsedTimef());
-        shader_image.setUniformTexture( "iChannel1", m_src_fbo.getTexture(), 1 );
-        shader_image.setUniformTexture( "iChannel0", m_fbos[ 0 ].getTexture(), 2 );
+        shader_image.setUniformTexture( "iChannel0", m_src_fbo.getTexture(), 1);
+        shader_image.setUniformTexture( "iChannel1",  m_fbos[ 0 ].getTexture(), 2 );
+        shader_image.setUniformTexture( "iChannel2",  m_fbos[ 1 ].getTexture(), 3 );
 
         m_fsQuadVbo.draw();
         shader_image.end();
-        
     }
     m_renderFbo.end();
     

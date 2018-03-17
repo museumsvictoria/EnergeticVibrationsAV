@@ -1183,6 +1183,8 @@
 		B9E050B977F19B9DE79165A7 /* PostProcessing */ = {
 			isa = PBXGroup;
 			children = (
+				D2B2489680BEA0B0A94A59A6 /* PostProcessing.cpp */,
+				70FBA4A9C2EDF9236E5B0062 /* PostProcessing.h */,
 				D4A1F5CD5412FC9323F572C7 /* AlphaTrails.cpp */,
 				5FDCB89F637A81030D7FB8A1 /* AlphaTrails.h */,
 				13DCEFEE20510A8500AFD531 /* SurfaceMask.cpp */,
@@ -1195,8 +1197,6 @@
 				17C728DC953EE48E32706F19 /* PingPong.h */,
 				131545712054F68F000357C5 /* Generative.cpp */,
 				131545722054F68F000357C5 /* Generative.h */,
-				D2B2489680BEA0B0A94A59A6 /* PostProcessing.cpp */,
-				70FBA4A9C2EDF9236E5B0062 /* PostProcessing.h */,
 				7426D77CC8AB642CE58BF08D /* ReactionDiffusion.cpp */,
 				5EF0C6B7E752CF74D1343F63 /* ReactionDiffusion.h */,
 			);

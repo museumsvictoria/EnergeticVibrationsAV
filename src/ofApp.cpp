@@ -56,7 +56,8 @@ void ofApp::setup(){
     post.setup();
     textures.setup();
     primitives.setup();
-    
+    surface_mask.setup();
+
     toggle_camera_automation = false;
     cam_near_clip = 1.0;
     cam_far_clip = 1000.0;
@@ -182,10 +183,17 @@ void ofApp::update(){
     mCam1.setNearClip(cam_near_clip);
     mCam1.setFarClip(cam_far_clip);
     
+
     //Post Processing
     if(toggle_post_processing){
         post.update();
     }
+    
+    /// PASS IN TEXTURE TO SURFACE MASK
+    ////////////////////
+    surface_mask.set_active_source_texture(post.get_active_fbo());
+    surface_mask.set_idle_source_texture(post.get_idle_fbo());
+    surface_mask.update();
     
     paths.update();
     paths.set_model_path(params.instance_model_grid);
@@ -301,7 +309,7 @@ void ofApp::draw(){
     
     // begin scene to post process
     if(toggle_post_processing){
-        post.begin();
+        post.begin_active();
     }
     
     mCam1.begin();
@@ -374,12 +382,13 @@ void ofApp::draw(){
     //----------------------------------------------------------------
     //-----------------  DRAW POST PROCESSING
     if(toggle_post_processing){
-        post.end();
-        post.draw();
+        post.end_active();
     }
 
     //----------------------------------------------------------------
     //----------------- IDLE MESH MODE DRAWING
+    post.begin_idle();
+
     mCam1.begin();
     
     // also, let's get rid of the back faces.
@@ -439,7 +448,11 @@ void ofApp::draw(){
         glDisable(GL_CULL_FACE);
     }
     mCam1.end();
+    post.end_idle();
+
     
+    ///------ FINALLY DRAW OUR ACTIVE AND IDLE PASSES THROUGH A 3D SHAPE MASK
+    surface_mask.draw();
 }
 
 //--------------------------------------------------------------

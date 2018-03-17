@@ -6,6 +6,7 @@
 #include "ofxImGui.h"
 #include "GuiTheme.h"
 #include "PostProcessing.h"
+#include "SurfaceMask.h"
 #include "Primitives.h"
 #include "MaterialTextures.h"
 #include "Easings.h"
@@ -82,6 +83,7 @@ public:
     ReceiverOSC osc;
     MaterialTextures textures;
     Primitives primitives;
+    SurfaceMask surface_mask;
 
     ofxCameraMove moveCam;
     ofEasyCam mCam1;

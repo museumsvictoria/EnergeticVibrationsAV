@@ -16,7 +16,8 @@ class SurfaceMask : public PingPong{
 public:
     void setup();
     void init_fbos();
-    void set_source_texture(ofFbo& tex);
+    void set_active_source_texture(ofFbo& tex);
+    void set_idle_source_texture(ofFbo& tex);
     void update();
     void draw();
     
