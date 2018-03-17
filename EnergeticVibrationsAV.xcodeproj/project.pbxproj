@@ -1185,10 +1185,10 @@
 			children = (
 				D2B2489680BEA0B0A94A59A6 /* PostProcessing.cpp */,
 				70FBA4A9C2EDF9236E5B0062 /* PostProcessing.h */,
-				D4A1F5CD5412FC9323F572C7 /* AlphaTrails.cpp */,
-				5FDCB89F637A81030D7FB8A1 /* AlphaTrails.h */,
 				13DCEFEE20510A8500AFD531 /* SurfaceMask.cpp */,
 				13DCEFEF20510A8500AFD531 /* SurfaceMask.h */,
+				D4A1F5CD5412FC9323F572C7 /* AlphaTrails.cpp */,
+				5FDCB89F637A81030D7FB8A1 /* AlphaTrails.h */,
 				44CB1EEF602978559B628CEB /* Downsample.cpp */,
 				3E5213261392B3B2C7B71518 /* Downsample.h */,
 				E4FF696E00510D6FADC39286 /* Feedback.cpp */,

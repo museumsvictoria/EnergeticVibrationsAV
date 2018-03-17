@@ -17,8 +17,8 @@ void SurfaceMask::init_fbos(){
     ofFbo::Settings fboSettings;
     fboSettings.width = ofGetWidth();
     fboSettings.height = ofGetHeight();
-    fboSettings.internalformat = GL_RGBA32F;
-    fboSettings.numSamples = 2;//1
+    fboSettings.internalformat = GL_RGBA;
+    fboSettings.numSamples = 8;//1
     fboSettings.useDepth = false;
     fboSettings.useStencil = false;
     fboSettings.textureTarget = GL_TEXTURE_2D;
@@ -51,7 +51,7 @@ void SurfaceMask::init_fbos(){
     renderFboSettings.width = ofGetWidth();
     renderFboSettings.height = ofGetHeight();
     renderFboSettings.internalformat = GL_RGBA;
-    renderFboSettings.numSamples = 1;
+    renderFboSettings.numSamples = 4;
     renderFboSettings.useDepth = false;
     renderFboSettings.useStencil = false;
     renderFboSettings.textureTarget = GL_TEXTURE_2D;

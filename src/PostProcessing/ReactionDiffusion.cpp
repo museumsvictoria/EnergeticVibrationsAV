@@ -16,7 +16,7 @@ void ReactionDiffusion::init_fbos(){
     ofFbo::Settings fboSettings;
     fboSettings.width = ofGetWidth();
     fboSettings.height = ofGetHeight();
-    fboSettings.internalformat = GL_RGBA32F;
+    fboSettings.internalformat = GL_RGBA;
     fboSettings.numSamples = 2;
     fboSettings.useDepth = false;
     fboSettings.useStencil = false;

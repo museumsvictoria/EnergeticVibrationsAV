@@ -39,9 +39,9 @@ void PostProcessing::setup(){
     renderFboSettings.height = ofGetHeight();
     renderFboSettings.internalformat = GL_RGB;
     renderFboSettings.numSamples = 8;
-    renderFboSettings.useDepth = true;
-    renderFboSettings.useStencil = true;
-    renderFboSettings.depthStencilAsTexture = true;
+    renderFboSettings.useDepth = false;
+    renderFboSettings.useStencil = false;
+    renderFboSettings.depthStencilAsTexture = false;
     renderFboSettings.textureTarget = ofGetUsingArbTex() ? GL_TEXTURE_RECTANGLE_ARB : GL_TEXTURE_2D;
     
     m_activeFbo.allocate( renderFboSettings );
