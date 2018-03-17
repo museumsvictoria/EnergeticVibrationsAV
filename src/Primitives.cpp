@@ -14,8 +14,8 @@ void Primitives::setup(){
     
     icoSphere.set(0.85,1.0);
     sphere.set(0.85, 4);
-    cone.set(0.85, 1.3, 4, 4);
-    cylinder.set(0.85,1.3,4,4);
+    cone.set(0.65, 1.3, 4, 4);
+    cylinder.set(0.5,1.3,4,4);
     box.set(1.0,1.0,1.0);
     
     shape_idx = 1;

@@ -22,7 +22,7 @@ void MaterialTextures::setup(){
     
     
     ofDisableArbTex(); 	///< we need normalised image coordinates
-    
+ 
     tex_idle.allocate(500, 500, GL_RGBA);
     tex_active.allocate(500, 500, GL_RGBA);
 
@@ -82,6 +82,7 @@ string MaterialTextures::get_random_active_path(){
 //-------------------------------------
 ofTexture& MaterialTextures::getActiveTexture(){
     ofDisableArbTex();
+    
     vid_active.update();
     
     fbo_active.begin();
@@ -97,7 +98,7 @@ ofTexture& MaterialTextures::getActiveTexture(){
     fbo_active.end();
     
     tex_active = fbo_active.getTexture();
-
+    
     return tex_active;
 }
 ofTexture& MaterialTextures::getIdleTexture(){

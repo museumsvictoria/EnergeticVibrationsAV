@@ -44,4 +44,7 @@ public:
     ofShader shader;
 
     vector<glm::vec4> colours;
+    
+    vector<ofTexture> active_textures;;
+
 };
