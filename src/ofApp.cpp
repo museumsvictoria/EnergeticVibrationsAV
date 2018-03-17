@@ -1,14 +1,17 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::init(){
-    //params.scale_speed = 1.0;
-    //params.rot_speed = 0.3;
-    
+void ofApp::init(){    
     isShaderDirty = true; // initialise dirty shader
     toggle_post_processing = true;
     toggle_blending = true;
     toggle_backface_cull = true;
+    
+    seat_triggered = false;
+    combo_triggered = false;
+    
+    init_last_gen_time = (int)ofGetElapsedTimef();
+    seconds_since_last_generative_trigger = 0;
     
     //Geometry shader
     active_geom_max_height = idle_geom_max_height = 4.0;
@@ -36,16 +39,18 @@ void ofApp::init(){
     for(int i = 0; i < NUM_INSTANCES; i++){
         params.instance_model_grid[i] = glm::vec3(0.0,0.0,0.0);
         
-        if(i % 7 == 0) params.object_size[i] = 50.0; // large seat
-        else if((i % 7) < 4) params.object_size[i] = 25.0; // middle size seats
-        else params.object_size[i] = 12.5; // small seats
+        if(i % 7 == 0) params.object_size[i] = 40.0; // large seat
+        else if((i % 7) < 4) params.object_size[i] = 20.0; // middle size seats
+        else params.object_size[i] = 10.0; // small seats
         
         params.vibration_hz[i] = 0.0;
+        params.seat_kickers[i] = 0.0;
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofBackground(0);
     
     //Post Processing
     post.setup();
@@ -60,16 +65,27 @@ void ofApp::setup(){
     mCam1.setupPerspective(false, 50, 0.001, 0);
     mCam1.setDistance(330); // set default camera distance to 1000
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
-    
+    moveCam.setup(&mCam1, "cam_presets/");
+
     init();
     
-    for(int i = 0; i < 11; i++){
-        seeds.push_back(ofRandom(100000));
-        speeds.push_back(ofRandom(0.5));
-        
-        dev_seeds.push_back(ofRandom(200000));
-        dev_speeds.push_back(ofRandom(0.15));
-    }
+    // Load number of total idle presets
+    ofxJSONElement json;
+    json.open("presets/idle/num_presets.json");
+    num_idle_presets = json["num_idle_presets"].asInt();
+    cout << "num_idle_presets = " << num_idle_presets << endl;
+    
+    // Load number of total active presets
+    ofxJSONElement json2;
+    json2.open("presets/active/num_presets.json");
+    num_active_presets = json2["num_active_presets"].asInt();
+    cout << "num_active_presets = " << num_active_presets << endl;
+
+    load_idle_preset(1);
+
+    ofAddListener(osc.combo_triggered, this, &ofApp::on_combo_triggered);
+    ofAddListener(osc.seat_triggered, this, &ofApp::on_seat_triggered);
+
 }
 
 //--------------------------------------------------------------
@@ -90,44 +106,6 @@ void ofApp::setupGui(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
-    osc.update();
-    for(int i = 0; i < osc.get_chair_states().size(); i++){
-        params.active_chair[i] = osc.get_chair_states()[i];
-        params.vibration_hz[i] = osc.get_vibration_speeds()[i];
-    }
-    
-    if(toggle_camera_automation){
-        if(ofGetFrameNum() % 200 == 0){
-            cam_tweens.randomise_distance();
-            cam_tweens.trigger();
-            vector<float> speeds;
-            for(int i = 0; i < cam_tweens.size(); i++){
-                speeds.push_back(ofRandom(1,3));
-            }
-            cam_tweens.set_duration(speeds);
-            for(int i = 0; i < cam_tween_types.size(); i++){
-                cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
-            }
-        }
-        
-        float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
-        float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
-        float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,450,150);
-        mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
-    }
-
-    mCam1.setNearClip(cam_near_clip);
-    mCam1.setFarClip(cam_far_clip);
-    
-    //Post Processing
-    if(toggle_post_processing){
-        post.update();
-    }
-    
-    paths.update();
-    paths.set_model_path(params.instance_model_grid);
-
-    
     if (isShaderDirty){
         // dirty shader pattern:
         shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
@@ -156,54 +134,166 @@ void ofApp::update(){
         isShaderDirty = false;
     }
     
- /*
-    if(ofGetFrameNum() % 100 == 0){
-        geom.lfo_type1 = (int)ofRandom(34);
-        geom_effect.lfo_type1 = (int)ofRandom(34);
-        xray.lfo_type1 = (int)ofRandom(34);
-        xray.lfo_type2 = (int)ofRandom(34);
+    osc.update();
+    
+    update_generative_modes();
 
-        geom.lfo_offset = ofRandomuf();
-        geom.lfo_speed = ofRandomuf();
-        geom.lfo_amp = ofRandomuf();
-        geom_effect.mix = ofRandomuf();
-        geom_effect.lfo_offset = ofRandomuf();
-        geom_effect.lfo_speed = ofRandomuf();
-        geom_effect.lfo_amp = ofRandomuf();
-        
-        //Fragment Shader
-        xray.mix = ofRandomuf();
-        xray.lfo_offset = ofRandomuf();
-        xray.lfo_speed = ofRandomuf();
-        xray.lfo_amp = ofRandomuf();
-        
-        primitives.randomise_mesh_resolution();
+    for(int i = 0; i < osc.get_chair_states().size(); i++){
+        params.active_chair[i] = osc.get_chair_states()[i];
+        params.vibration_hz[i] = osc.get_vibration_speeds()[i];
+        params.seat_kickers[i] = osc.get_seat_kickers()[i];
     }
-       */
     
+    // Update Camera
+    moveCam.update();
+    
+    int max_num_cam_tweens = 4;
+    static int num_cam_tweens = 0;
+    
+    if(toggle_camera_automation){
+
+        if(num_cam_tweens < max_num_cam_tweens - 1){
+            if(cam_tweens.isFinished() == true){
+                num_cam_tweens++;
+                cam_tweens.randomise_distance();
+                cam_tweens.trigger();
+                vector<float> speeds;
+                for(int i = 0; i < cam_tweens.size(); i++){
+                    speeds.push_back(ofRandom(1,3));
+                }
+                cam_tweens.set_duration(speeds);
+                for(int i = 0; i < cam_tween_types.size(); i++){
+                    cam_tween_types[i] = (int)ofRandom(cam_tweens.size());
+                }
+            }
+            
+            float orbit_x = ofMap(cam_tweens.get_value()[cam_tween_types[0]],0.0,1.0,-90,90);
+            float orbit_y = ofMap(cam_tweens.get_value()[cam_tween_types[1]],0.0,1.0,-90,90);
+            float orbit_z = ofMap(cam_tweens.get_value()[cam_tween_types[2]],0.0,1.0,450,150);
+            mCam1.orbitDeg(orbit_x, orbit_y, orbit_z);
+        } else {
+            num_cam_tweens = 0;
+            toggle_camera_automation = false;
+            combo_triggered = false;
+            moveCam.tweenNow(0, 2);
+        }
+    }
+
+    mCam1.setNearClip(cam_near_clip);
+    mCam1.setFarClip(cam_far_clip);
+    
+    //Post Processing
+    if(toggle_post_processing){
+        post.update();
+    }
+    
+    paths.update();
+    paths.set_model_path(params.instance_model_grid);
 
     
-    float t = ofGetElapsedTimef();
-    /*
-    active_geom.lfo_offset = (ofSignedNoise((t * dev_speeds[0]) + dev_seeds[0])*0.5) + ofNoise((t * speeds[0]) + seeds[0]);
-    active_geom.lfo_speed = (ofSignedNoise((t * dev_speeds[1]) + dev_seeds[1])*0.5) + ofNoise((t * speeds[1]) + seeds[1]);
-    //active_geom.lfo_amp = (ofSignedNoise((t * dev_speeds[2]) + dev_seeds[2])*0.5) + ofNoise((t * speeds[2]) + seeds[2]);
-    active_geom_effect.mix = (ofSignedNoise((t * dev_speeds[3]) + dev_seeds[3])*0.5) + ofNoise((t * speeds[3]) + seeds[3]);
-    active_geom_effect.lfo_offset = (ofSignedNoise((t * dev_speeds[4]) + dev_seeds[4])*0.5) + ofNoise((t * speeds[4]) + seeds[4]);
-    active_geom_effect.lfo_speed = (ofSignedNoise((t * dev_speeds[5]) + dev_seeds[5])*0.5) + ofNoise((t * speeds[5]) + seeds[5]);
-    //active_geom_effect.lfo_amp = (ofSignedNoise((t * dev_speeds[6]) + dev_seeds[6])*0.5) + ofNoise((t * speeds[6]) + seeds[6]);
+}
+
+//--------------------------------------------------------------
+void ofApp::on_combo_triggered(bool & e){
+    cout << "TRIGGERED COMBO = " << endl;
     
-    //Fragment Shader
-    active_xray.mix = (ofSignedNoise((t * dev_speeds[7]) + dev_seeds[7])*0.5) + ofNoise((t * speeds[7]) + seeds[7]);
-    active_xray.lfo_offset = (ofSignedNoise((t * dev_speeds[8]) + dev_seeds[8])*0.5) + ofNoise((t * speeds[8]) + seeds[8]);
-    active_xray.lfo_speed = (ofSignedNoise((t * dev_speeds[9]) + dev_seeds[9])*0.5) + ofNoise((t * speeds[9]) + seeds[9]);
-    //active_xray.lfo_amp = (ofSignedNoise((t * dev_speeds[10]) + dev_seeds[10])*0.5) + ofNoise((t * speeds[10]) + seeds[10]);
-     */
+    post.trigger_random_combo_mode();
+    toggle_camera_automation = true;
+    combo_triggered = true;
+}
+//--------------------------------------------------------------
+void ofApp::on_seat_triggered(bool & e){
+    cout << "TRIGGERED NEW SEAT COMBO = " << endl;
+    seat_triggered = true;
+}
+
+//--------------------------------------------------------------
+void ofApp::update_generative_modes(){
+    
+    seconds_since_last_generative_trigger = (int)ofGetElapsedTimef() - init_last_gen_time;
+    
+    static bool perlin_mode = false;
+    
+    // Make sure that our combo isnt already running
+    if(combo_triggered == false){
+        //if(seconds_since_last_generative_trigger > 30 || seat_triggered == true){
+            if((int)ofGetFrameNum() % 30 == 0){
+            init_last_gen_time = (int)ofGetElapsedTimef();
+
+            // Reset the seat triggered bool
+            seat_triggered = false;
+            
+            int effect_mode = (int)ofRandom(7);
+            /*
+            perlin_mode = false;
+            switch (effect_mode) {
+                case Bypass:
+                    post.trigger_bypass_mode();
+                    break;
+                case Atari:
+                    post.trigger_atari_mode();
+                    break;
+                case Trails:
+                    post.trigger_trails_mode();
+                    break;
+                case Feedback:
+                    post.trigger_feedback_mode();
+                    break;
+                case Reaction_Diffusion:
+                    post.trigger_reaction_diffusion_mode();
+                    break;
+                case Perlin_Combo:
+                    perlin_mode = true;
+                    break;
+                case Random_Combo:
+                    //post.trigger_random_combo_mode();
+                    break;
+                    
+                default:
+                    break;
+            }
+
+            
+            float idle_preset = ofRandomuf();
+            if(idle_preset > 0.3) load_idle_preset((int)ofRandom(num_idle_presets));
+            
+            float primitive_type = ofRandomuf();
+            if(primitive_type > 0.5) primitives.randomise_objects();
+            
+            float mesh_resolution = ofRandomuf();
+            if(mesh_resolution > 0.5) primitives.randomise_mesh_resolution();
+            
+            float active_lfos = ofRandomuf();
+            if(active_lfos > 0.4) randomise_lfos_active();
+        
+            float active_texture = ofRandomuf();
+            if(active_texture > 0.4) textures.load_random_active_texture();
+
+            float geometry_copies = ofRandomuf();
+            if(geometry_copies < 0.5) {
+                active_geom_num_copies = 1;
+                active_geom_max_height = 2.0;
+                active_geom_effect.lfo_amp = 0.0;
+                active_geom_effect.speed = 0.1;
+            }else {
+                active_geom_num_copies = ofRandom(2,15);
+                active_geom_max_height = ofRandom(2.0, 6.0);
+                active_geom_effect.lfo_amp = ofRandomuf();
+                active_geom_effect.speed = ofRandom(0.01,0.3);
+            }
+                         */
+           // float random_cam = ofRandomuf();
+           // if(random_cam > 0.95 && toggle_camera_automation == false) toggle_camera_automation = true;
+        }
+    }
+    
+    if(perlin_mode){
+        post.run_combo_perlin_mode();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0.65); // pro app gray =)
     ofSetColor(ofColor::white);
 
     //----------------------------------------------------------------
@@ -211,16 +301,11 @@ void ofApp::draw(){
     
     // begin scene to post process
     if(toggle_post_processing){
-        post.dof_begin();
+        post.begin();
     }
     
     mCam1.begin();
     
-    // we need to flip the view port if we are doing postprocessing
-    if(toggle_post_processing){
-        ofScale (1,-1,1);
-    }
-
     // alpha blending is enabled by default,
     // let's see if disabling it will help us a little.
     //ofDisableBlendMode();
@@ -289,7 +374,7 @@ void ofApp::draw(){
     //----------------------------------------------------------------
     //-----------------  DRAW POST PROCESSING
     if(toggle_post_processing){
-        post.dof_end();
+        post.end();
         post.draw();
     }
 
@@ -354,6 +439,7 @@ void ofApp::draw(){
         glDisable(GL_CULL_FACE);
     }
     mCam1.end();
+    
 }
 
 //--------------------------------------------------------------
@@ -399,6 +485,23 @@ void ofApp::randomise_lfos_active(){
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 
+    static int vidNum = 0;
+    if(key == 'n'){
+        textures.load_active_texture(textures.active_dir.getPath(vidNum));
+        vidNum++;
+    }
+    
+    static int camNum = 0;
+    if(key == 's'){
+        //moveCam.saveCameraPosition(camNum);
+        camNum++;
+        //save_active_preset();
+    }
+    
+    if(key == 'r'){
+        moveCam.tweenNow((int)ofRandom(moveCam.getNumCameras()), ofRandom(1,8));
+    }
+    
     switch (key) {
         case ' ':
             isShaderDirty = true;
@@ -457,11 +560,12 @@ void ofApp::drawGui(ofEventArgs & args){
 #define IM_ARRAYSIZE(_ARR)  ((int)(sizeof(_ARR)/sizeof(*_ARR)))
     const char* items[] = { "Sine", "Triangle", "Saw", "Pulse", "Noise", "Exponential In", "Exponential Out", "Exponential In Out", "Sine In", "Sine Out", "Sine In Out", "Qintic In", "Qintic Out", "Qintic In Out", "Quartic In", "Quartic Out", "Quartic In Out", "Quadratic In", "Quadratic Out", "Quadratic In Out", "Cubic In", "Cubic Out", "Cubic In Out", "Elastic In", "Elastic Out", "Elastic In Out", "Circular In", "Circular Out", "Circular In Out", "Bounce In", "Bounce Out", "Bounce In Out", "Back In", "Back Out", "Back In Out" };
     
+
     if (ofxImGui::BeginWindow("Layer Assignments", mainSettings, false))
     {
         if (ofxImGui::BeginTree("Active Shader", mainSettings)){
             ImGui::SliderInt("Num Copies",&active_geom_num_copies,1,15);
-            ImGui::SliderFloat("Max Height",&active_geom_max_height,0.0,10.0);
+            ImGui::SliderFloat("Max Height",&active_geom_max_height,0.0,7.0);
             //ImGui::SliderFloat("Speed",&params.scale_speed,0.0,1.0);
             //ImGui::SliderFloat("Rotation Speed",&params.rot_speed,0.0,1.0);
             
@@ -534,7 +638,7 @@ void ofApp::drawGui(ofEventArgs & args){
             ImGui::SameLine();
             ImGui::Checkbox("Toggle Idle Play", &vid_idle_toggle);
             if(vid_idle_toggle == true) {
-                textures.vid_idle.setPaused(false);
+                textures.vid_idle.setPaused(true);
             } else {
                 textures.vid_idle.setPaused(true);
             }
@@ -567,9 +671,9 @@ void ofApp::drawGui(ofEventArgs & args){
         }
         if (ofxImGui::BeginTree("FEEDBACK", mainSettings)){
             ImGui::SliderFloat("strength",&post.feedback.strength,0.0,1.0);
-            ImGui::SliderFloat("zoom",&post.feedback.zoom,-1.0,1.0);
-            ImGui::SliderFloat("x_mult",&post.feedback.x_mult,1.0,32.0);
-            ImGui::SliderFloat("y_mult",&post.feedback.y_mult,1.0,32.0);
+            ImGui::SliderFloat("zoom",&post.feedback.zoom,0.0,1.0);
+            ImGui::SliderFloat("x_mult",&post.feedback.x_mult,0.0,1.0);
+            ImGui::SliderFloat("y_mult",&post.feedback.y_mult,0.0,1.0);
             ImGui::SliderFloat("x_amp",&post.feedback.x_amp,0.0,1.0);
             ImGui::SliderFloat("y_amp",&post.feedback.y_amp,0.0,1.0);
             ImGui::SliderFloat("x_speed",&post.feedback.x_speed,0.0,1.0);
@@ -595,3 +699,118 @@ void ofApp::drawGui(ofEventArgs & args){
     this->gui.end();
 }
 
+
+//--------------------------------------------------------------
+void ofApp::save_idle_preset(){
+    num_idle_presets++;
+    
+    //------------ Save Idle Geom & Tex Data
+    ofxJSONElement json;
+    json["idle_texture"]["path"] = textures.idle_path;
+    json["idle_geom"]["lfo_offset"] = idle_geom.lfo_offset;
+    json["idle_geom"]["lfo_speed"] = idle_geom.lfo_speed;
+    json["idle_geom"]["lfo_amp"] = idle_geom.lfo_amp;
+    json["idle_geom_effect"]["mix"] = idle_geom_effect.mix;
+    json["idle_geom_effect"]["lfo_offset"] = idle_geom_effect.lfo_offset;
+    json["idle_geom_effect"]["lfo_offset"] = idle_geom_effect.lfo_speed;
+    json["idle_geom_effect"]["lfo_offset"] = idle_geom_effect.lfo_amp;
+    json["idle_xray"]["mix"] = idle_xray.mix;
+    json["idle_xray"]["lfo_offset"] = idle_xray.lfo_offset;
+    json["idle_xray"]["lfo_speed"] = idle_xray.lfo_speed;
+    json["idle_xray"]["lfo_amp"] = idle_xray.lfo_amp;
+    json["idle_geom"]["lfo_type1"] = idle_geom.lfo_type1;
+    json["idle_geom_effect"]["lfo_type1"] = idle_geom_effect.lfo_type1;
+    json["idle_xray"]["lfo_type1"] = idle_xray.lfo_type1;
+    json["idle_xray"]["lfo_type2"] = idle_xray.lfo_type2;
+
+    // Save to file.
+    json.save("presets/idle/IdlePreset" + ofToString(num_idle_presets) + ".json");
+
+    // Update number of total idle presets
+    ofxJSONElement json2;
+    json2["num_idle_presets"] = num_idle_presets;
+    json2.save("presets/idle/num_presets.json");
+
+}
+//--------------------------------------------------------------
+void ofApp::save_active_preset(){
+    num_active_presets++;
+    
+    //------------ Save Idle Geom & Tex Data
+    ofxJSONElement json;
+    json["active_texture"]["path"] = textures.active_path;
+    json["active_geom"]["lfo_offset"] = active_geom.lfo_offset;
+    json["active_geom"]["lfo_speed"] = active_geom.lfo_speed;
+    json["active_geom"]["lfo_amp"] = active_geom.lfo_amp;
+    json["active_geom_effect"]["mix"] = active_geom_effect.mix;
+    json["active_geom_effect"]["lfo_offset"] = active_geom_effect.lfo_offset;
+    json["active_geom_effect"]["lfo_offset"] = active_geom_effect.lfo_speed;
+    json["active_geom_effect"]["lfo_offset"] = active_geom_effect.lfo_amp;
+    json["active_xray"]["mix"] = active_xray.mix;
+    json["active_xray"]["lfo_offset"] = active_xray.lfo_offset;
+    json["active_xray"]["lfo_speed"] = active_xray.lfo_speed;
+    json["active_xray"]["lfo_amp"] = active_xray.lfo_amp;
+    json["active_geom"]["lfo_type1"] = active_geom.lfo_type1;
+    json["active_geom_effect"]["lfo_type1"] = active_geom_effect.lfo_type1;
+    json["active_xray"]["lfo_type1"] = active_xray.lfo_type1;
+    json["active_xray"]["lfo_type2"] = active_xray.lfo_type2;
+    
+    // Save to file.
+    json.save("presets/active/ActivePreset" + ofToString(num_active_presets) + ".json");
+    
+    // Update number of total active presets
+    ofxJSONElement json2;
+    json2["num_active_presets"] = num_active_presets;
+    json2.save("presets/active/num_presets.json");
+}
+
+//--------------------------------------------------------------
+void ofApp::load_idle_preset(int num){
+
+    // Load Laser Colour Data
+    ofxJSONElement json;
+    json.open("presets/idle/IdlePreset" + ofToString(num) + ".json");
+    
+    textures.load_idle_texture(json["idle_texture"]["path"].asString());
+    
+    idle_geom.lfo_offset = json["idle_geom"]["lfo_offset"].asFloat();
+    idle_geom.lfo_speed = json["idle_geom"]["lfo_speed"].asFloat();
+    idle_geom.lfo_amp = json["idle_geom"]["lfo_amp"].asFloat();
+    idle_geom_effect.mix = json["idle_geom_effect"]["mix"].asFloat();
+    idle_geom_effect.lfo_offset = json["idle_geom_effect"]["lfo_offset"].asFloat();
+    idle_geom_effect.lfo_speed = json["idle_geom_effect"]["lfo_offset"].asFloat();
+    idle_geom_effect.lfo_amp = json["idle_geom_effect"]["lfo_offset"].asFloat();
+    idle_xray.mix = json["idle_xray"]["mix"].asFloat();
+    idle_xray.lfo_offset = json["idle_xray"]["lfo_offset"].asFloat();
+    idle_xray.lfo_speed = json["idle_xray"]["lfo_speed"].asFloat();
+    idle_xray.lfo_amp = json["idle_xray"]["lfo_amp"].asFloat();
+    idle_geom.lfo_type1 = json["idle_geom"]["lfo_type1"].asInt();
+    idle_geom_effect.lfo_type1 = json["idle_geom_effect"]["lfo_type1"].asInt();
+    idle_xray.lfo_type1 = json["idle_xray"]["lfo_type1"].asInt();
+    idle_xray.lfo_type2 = json["idle_xray"]["lfo_type2"].asInt();
+}
+//--------------------------------------------------------------
+void ofApp::load_active_preset(int num){
+    
+    // Load Laser Colour Data
+    ofxJSONElement json;
+    json.open("presets/active/ActivePreset" + ofToString(num) + ".json");
+    
+    textures.load_active_texture(json["active_texture"]["path"].asString());
+    
+    active_geom.lfo_offset = json["active_geom"]["lfo_offset"].asFloat();
+    active_geom.lfo_speed = json["active_geom"]["lfo_speed"].asFloat();
+    active_geom.lfo_amp = json["active_geom"]["lfo_amp"].asFloat();
+    active_geom_effect.mix = json["active_geom_effect"]["mix"].asFloat();
+    active_geom_effect.lfo_offset = json["active_geom_effect"]["lfo_offset"].asFloat();
+    active_geom_effect.lfo_speed = json["active_geom_effect"]["lfo_offset"].asFloat();
+    active_geom_effect.lfo_amp = json["active_geom_effect"]["lfo_offset"].asFloat();
+    active_xray.mix = json["active_xray"]["mix"].asFloat();
+    active_xray.lfo_offset = json["active_xray"]["lfo_offset"].asFloat();
+    active_xray.lfo_speed = json["active_xray"]["lfo_speed"].asFloat();
+    active_xray.lfo_amp = json["active_xray"]["lfo_amp"].asFloat();
+    active_geom.lfo_type1 = json["active_geom"]["lfo_type1"].asInt();
+    active_geom_effect.lfo_type1 = json["active_geom_effect"]["lfo_type1"].asInt();
+    active_xray.lfo_type1 = json["active_xray"]["lfo_type1"].asInt();
+    active_xray.lfo_type2 = json["active_xray"]["lfo_type2"].asInt();
+}

@@ -79,7 +79,10 @@ void AlphaTrails::setup(){
     init_fbos();
     
     delay = 0.0;
+    set_generative_param(&delay,0.0,1.0);
+    init_generative();
 }
+
 //--------------------------------------------------------------
 void AlphaTrails::set_source_texture(ofFbo& tex){
     
@@ -128,6 +131,7 @@ void AlphaTrails::set_delay_amount(float _delay){
 
 //--------------------------------------------------------------
 void AlphaTrails::update(){
+    
     // clear to green as grayScott runs in red and green channels
     ofClear( 0, 255, 0, 255 );
     ofDisableDepthTest();

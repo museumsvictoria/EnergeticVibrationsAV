@@ -19,11 +19,11 @@
 
 class PostProcessing : public PingPong{
 public:
-    void init();
+    void init_params();
     void setup();
     void update();
-    void dof_begin();
-    void dof_end();
+    void begin();
+    void end();
     void draw();
     
     ofxDOF depthOfField;
@@ -42,4 +42,14 @@ public:
     bool toggle_reaction_diffusion;
     bool toggle_feedback;
     bool toggle_down_sampling;
+    
+    //----- GENERATIVE MODES
+    void trigger_bypass_mode();
+    void trigger_atari_mode();
+    void trigger_trails_mode();
+    void trigger_feedback_mode();
+    void trigger_reaction_diffusion_mode();
+    void trigger_random_combo_mode();
+    void run_combo_perlin_mode();
+    
 };

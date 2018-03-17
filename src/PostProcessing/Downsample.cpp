@@ -46,12 +46,14 @@ void Downsample::setup(){
     init_fbos();
     
     dry_wet = 0.0;
-    
+    set_generative_param(&dry_wet,0.0,1.0);
+    init_generative();
 }
 //--------------------------------------------------------------
 void Downsample::set_source_texture(ofFbo& tex){
     
     m_src_fbo.begin();
+    ofClear(0,0,0,0);
     tex.draw(0,0,ofGetWidth(),ofGetHeight());
     m_src_fbo.end();
 }
@@ -59,19 +61,18 @@ void Downsample::set_source_texture(ofFbo& tex){
 
 //--------------------------------------------------------------
 void Downsample::update(){
-    shader.load("shaders/passthrough.vert","shaders/Downsample.frag");
+   // shader.load("shaders/passthrough.vert","shaders/Downsample.frag");
 
-    // clear to green as grayScott runs in red and green channels
-    ofClear( 0, 255, 0, 255 );
-    ofDisableDepthTest();
+//    ofDisableDepthTest();
     
     /// Final Render
     ////////////////
     m_renderFbo.begin();
     {
-        ofClear(255,0,0,255);
+//        ofClear(255,0,0,255);
+        ofClear(0,0,0,0);
         shader.begin();
-        shader.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
+        shader.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),0);
         shader.setUniform1f("iTime", ofGetElapsedTimef());
         shader.setUniform1f("dry_wet", dry_wet);
         shader.setUniformTexture( "iChannel0", m_src_fbo.getTexture(), 1 );
@@ -81,7 +82,7 @@ void Downsample::update(){
     }
     m_renderFbo.end();
     
-    glDisable( GL_CULL_FACE );
+//    glDisable( GL_CULL_FACE );
 }
 
 //--------------------------------------------------------------

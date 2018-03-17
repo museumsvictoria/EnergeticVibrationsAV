@@ -14,6 +14,9 @@
 class MaterialTextures : public PingPong{
 public:
     void setup();
+   
+    void load_idle_texture(string path);
+    void load_active_texture(string path);
     
     void load_random_idle_texture();
     void load_random_active_texture();
@@ -27,7 +30,9 @@ public:
     ofVideoPlayer vid_active;
     ofVideoPlayer vid_idle;
 
-private:
+    string idle_path;
+    string active_path;
+//private:
     ofTexture tex_idle;
     ofTexture tex_active;
     

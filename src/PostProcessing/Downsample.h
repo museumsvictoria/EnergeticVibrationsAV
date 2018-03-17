@@ -9,8 +9,9 @@
 #pragma once
 #include "ofMain.h"
 #include "PingPong.h"
+#include "Generative.h"
 
-class Downsample : public PingPong{
+class Downsample : public PingPong, public Generative{
     
 public:
     void setup();

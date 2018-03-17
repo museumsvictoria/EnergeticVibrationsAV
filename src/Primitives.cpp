@@ -12,10 +12,10 @@
 //--------------------------------------------------------------
 void Primitives::setup(){
     
-    icoSphere.set(1.0,1.0);
-    sphere.set(1.0, 4);
-    cone.set(0.5, 1.0, 4, 4);
-    cylinder.set(0.5,1.0,4,4);
+    icoSphere.set(0.85,1.0);
+    sphere.set(0.85, 4);
+    cone.set(0.85, 1.3, 4, 4);
+    cylinder.set(0.85,1.3,4,4);
     box.set(1.0,1.0,1.0);
     
     shape_idx = 1;
@@ -78,9 +78,9 @@ void Primitives::draw_idle_wireframe_box(){
 
 //--------------------------------------------------------------
 void Primitives::randomise_mesh_resolution(){
-    sphere.setResolution((int)ofRandom(4,48));
+    sphere.setResolution((int)ofRandom(4,12));
     icoSphere.setResolution((int)ofRandom(0,5));
-    cone.setResolution((int)ofRandom(4,20), (int)ofRandom(1,9), (int)ofRandom(0,3));
+    cone.setResolution((int)ofRandom(4,15), (int)ofRandom(1,9), (int)ofRandom(0,3));
     cylinder.setResolution((int)ofRandom(4,20), (int)ofRandom(1,9), (int)ofRandom(0,4));
     box.setResolution((int)ofRandom(1,10));
     

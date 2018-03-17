@@ -33,6 +33,11 @@ out vec4 outputColor;
 // Ported from https://www.shadertoy.com/view/ltVSWW
 // by  Jespertheend
 
+float remap( float value, float inMin, float inMax, float outMin, float outMax )
+{
+    return ( (value - inMin) / ( inMax - inMin ) * ( outMax - outMin ) ) + outMin;
+}
+
 mat2 rotate(float angle) {
     return mat2(cos(angle), -sin(angle),
                 sin(angle), cos(angle));
@@ -58,12 +63,12 @@ void main( void )
     //float
     vec2 uv2 = uv - 0.5;
     uv2 *= rotate((sin(iTime*rotate_speed)*(rotate_amp*0.0314)));
-    uv2 *= (1.0 + (zoom*0.05));
+    uv2 *= (1.0 + (remap(zoom,0.0,1.0,-1.0,1.0)*0.05));
     uv2 = uv2 + 0.5;
     
 
-    uv2.x+=sin(xy.x*x_mult+iTime*(x_speed*4.0))*(x_amp*0.01);
-    uv2.y+=sin(xy.y*y_mult+iTime*(y_speed*4.0))*(y_amp*0.01);
+    uv2.x+=sin(xy.x*remap(x_mult,0.0,1.0,1.0,32.0)+iTime*(x_speed*4.0))*(x_amp*0.01);
+    uv2.y+=sin(xy.y*remap(y_mult,0.0,1.0,1.0,32.0)+iTime*(y_speed*4.0))*(y_amp*0.01);
 
 
     // Preserver the position for the top buffer when zooming

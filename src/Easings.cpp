@@ -34,13 +34,18 @@ vector<float> Easings::get_value(){
         positions[i] = ofxeasing::map_clamp(now, initTime, endTime, startPositions[i], endPositions[i], easings[i]);
     }
     
-    for(size_t i=0;i<easings.size();i++){
-        if(now >= endTime){
+    return positions;
+}
+
+bool Easings::isFinished(){
+    if(ofGetElapsedTimef() >= (initTime + durations[0])){
+        for(size_t i=0;i<easings.size();i++){
             startPositions[i] = endPositions[i];
         }
+        return true;
+    } else {
+        return false;
     }
-    
-    return positions;
 }
 
 //--------------------------------------------------------------

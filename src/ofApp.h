@@ -11,13 +11,15 @@
 #include "Easings.h"
 #include "TranslationPaths.h"
 #include "ReceiverOSC.h"
-
+#include "ofxCameraMove.h"
+#include "ofxJson.h"
 
 struct ShaderParams {
     glm::vec3 instance_model_grid[NUM_INSTANCES];
     int active_chair[NUM_INSTANCES];
     float object_size[NUM_INSTANCES];
     float vibration_hz[NUM_INSTANCES];
+    float seat_kickers[NUM_INSTANCES];
 };
 
 
@@ -30,6 +32,19 @@ struct LfoControl {
     float mix;
 };
 
+
+enum EffectModes{
+    Bypass,
+    Atari,
+    Trails,
+    Feedback,
+    Reaction_Diffusion,
+    Perlin_Combo,
+    Random_Combo
+};
+
+
+
 class ofApp : public ofBaseApp{
 public:
     void init();
@@ -37,20 +52,24 @@ public:
     void update();
     void draw();
     void keyReleased(int key);
-    
+
+    void on_combo_triggered(bool & e);
+    void on_seat_triggered(bool & e);
+
     void randomise_params_active();
     void randomise_params_idle();
     
     void randomise_lfos_active();
     void randomise_lfos_idle();
-
-    // param
-    vector<float> seeds;
-    vector<float> speeds;
     
-    // deviation
-    vector<float> dev_seeds;
-    vector<float> dev_speeds;
+    //Preset Saving and Loading
+    void save_idle_preset();
+    void save_active_preset();
+    void load_idle_preset(int num);
+    void load_active_preset(int num);
+    
+    int num_active_presets;
+    int num_idle_presets;
     
     ///------------- GUI
     ofxImGui::Gui gui;
@@ -64,6 +83,7 @@ public:
     MaterialTextures textures;
     Primitives primitives;
 
+    ofxCameraMove moveCam;
     ofEasyCam mCam1;
     Easings cam_tweens;
     vector<int> cam_tween_types = {0,0,0};
@@ -103,5 +123,11 @@ public:
     // FRAGMENT SHADER
     LfoControl idle_xray;
 
+    ///------------------GENERATIVE MODES
+    void update_generative_modes();
+    bool seat_triggered;
+    bool combo_triggered;
+    int seconds_since_last_generative_trigger;
+    int init_last_gen_time;
 
 };

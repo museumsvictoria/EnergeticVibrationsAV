@@ -29,7 +29,7 @@ void MaterialTextures::setup(){
     fbo_active.allocate(500, 500, GL_RGBA);
 
     ofLoadImage(tex_active, "images/Gilmore1.jpg");
-    ofLoadImage(tex_idle, "images/Gilmore1.jpg");
+    ofLoadImage(tex_idle, "images/test.jpg");
 
     load_random_idle_texture();
     load_random_active_texture();
@@ -47,6 +47,16 @@ void MaterialTextures::setup(){
 }
 
 //-------------------------------------
+void MaterialTextures::load_idle_texture(string path){
+    vid_idle.load(path);
+    vid_idle.play();
+}
+void MaterialTextures::load_active_texture(string path){
+    vid_active.load(path);
+    vid_active.play();
+    cout << " << active_path = " << path << endl;
+
+}
 void MaterialTextures::load_random_idle_texture(){
     vid_idle.load(get_random_idle_path());
     vid_idle.play();
@@ -58,13 +68,15 @@ void MaterialTextures::load_random_active_texture(){
 
 //-------------------------------------
 string MaterialTextures::get_random_idle_path(){
-    cout << "random idle path = " << idle_dir.getPath((int)ofRandom(idle_dir.size())) << endl;
-    return idle_dir.getPath((int)ofRandom(idle_dir.size()));
+    idle_path = idle_dir.getPath((int)ofRandom(idle_dir.size()));
+    cout << "random idle path = " << idle_path << endl;
+    return idle_path;
 }
 //-------------------------------------
 string MaterialTextures::get_random_active_path(){
-    cout << "random active path = " << active_dir.getPath((int)ofRandom(active_dir.size())) << endl;
-    return active_dir.getPath((int)ofRandom(active_dir.size()));
+    active_path = active_dir.getPath((int)ofRandom(active_dir.size()));
+    cout << "random active path = " << active_path << endl;
+    return active_path;
 }
 
 //-------------------------------------
@@ -85,6 +97,7 @@ ofTexture& MaterialTextures::getActiveTexture(){
     fbo_active.end();
     
     tex_active = fbo_active.getTexture();
+
     return tex_active;
 }
 ofTexture& MaterialTextures::getIdleTexture(){
