@@ -1,2 +1,2 @@
-{"idle_geom":{"lfo_amp":1,"lfo_offset":0.6800000071525574,"lfo_speed":0.0430000014603138,"lfo_type1":15},"idle_geom_effect":{"lfo_offset":1,"lfo_type1":10,"mix":1},"idle_texture":{"path":"movies/idle/tripped133.mov"},"idle_xray":{"lfo_amp":1,"lfo_offset":0.8400000333786011,"lfo_speed":0.06700000166893005,"lfo_type1":31,"lfo_type2":10,"mix":1}}
+{"idle_geom":{"lfo_amp":1,"lfo_offset":0.3811793625354767,"lfo_speed":0.0300000011920929,"lfo_type1":15},"idle_geom_effect":{"lfo_offset":0,"lfo_type1":10,"mix":1},"idle_texture":{"path":"movies/idle/tripped112.mov"},"idle_xray":{"lfo_amp":0,"lfo_offset":0.2899250984191895,"lfo_speed":0.0430000014603138,"lfo_type1":11,"lfo_type2":0,"mix":1}}
 

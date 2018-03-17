@@ -38,7 +38,7 @@ void PostProcessing::setup(){
     renderFboSettings.width = ofGetWidth();
     renderFboSettings.height = ofGetHeight();
     renderFboSettings.internalformat = GL_RGB;
-    renderFboSettings.numSamples = 0;
+    renderFboSettings.numSamples = 8;
     renderFboSettings.useDepth = true;
     renderFboSettings.useStencil = true;
     renderFboSettings.depthStencilAsTexture = true;

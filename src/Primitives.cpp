@@ -79,7 +79,7 @@ void Primitives::draw_idle_wireframe_box(){
 //--------------------------------------------------------------
 void Primitives::randomise_mesh_resolution(){
     sphere.setResolution((int)ofRandom(4,12));
-    icoSphere.setResolution((int)ofRandom(0,5));
+    icoSphere.setResolution((int)ofRandom(0,3));
     cone.setResolution((int)ofRandom(4,15), (int)ofRandom(1,9), (int)ofRandom(0,3));
     cylinder.setResolution((int)ofRandom(4,20), (int)ofRandom(1,9), (int)ofRandom(0,4));
     box.setResolution((int)ofRandom(1,10));

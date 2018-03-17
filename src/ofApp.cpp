@@ -187,18 +187,15 @@ void ofApp::update(){
     //Post Processing
     if(toggle_post_processing){
         post.update();
+        /// PASS IN TEXTURE TO SURFACE MASK
+        ////////////////////
+        surface_mask.set_active_source_texture(post.get_active_fbo());
+        surface_mask.set_idle_source_texture(post.get_idle_fbo());
+        surface_mask.update();
     }
-    
-    /// PASS IN TEXTURE TO SURFACE MASK
-    ////////////////////
-    surface_mask.set_active_source_texture(post.get_active_fbo());
-    surface_mask.set_idle_source_texture(post.get_idle_fbo());
-    surface_mask.update();
     
     paths.update();
     paths.set_model_path(params.instance_model_grid);
-
-    
 }
 
 //--------------------------------------------------------------
@@ -224,15 +221,15 @@ void ofApp::update_generative_modes(){
     
     // Make sure that our combo isnt already running
     if(combo_triggered == false){
-        //if(seconds_since_last_generative_trigger > 30 || seat_triggered == true){
-            if((int)ofGetFrameNum() % 30 == 0){
+        if(seconds_since_last_generative_trigger > 30 || seat_triggered == true){
+        //    if((int)ofGetFrameNum() % 30 == 0){
             init_last_gen_time = (int)ofGetElapsedTimef();
 
             // Reset the seat triggered bool
             seat_triggered = false;
             
             int effect_mode = (int)ofRandom(7);
-            /*
+            
             perlin_mode = false;
             switch (effect_mode) {
                 case Bypass:
@@ -282,14 +279,14 @@ void ofApp::update_generative_modes(){
                 active_geom_num_copies = 1;
                 active_geom_max_height = 2.0;
                 active_geom_effect.lfo_amp = 0.0;
-                active_geom_effect.speed = 0.1;
+                active_geom_effect.lfo_speed = 0.1;
             }else {
                 active_geom_num_copies = ofRandom(2,15);
                 active_geom_max_height = ofRandom(2.0, 6.0);
                 active_geom_effect.lfo_amp = ofRandomuf();
-                active_geom_effect.speed = ofRandom(0.01,0.3);
+                active_geom_effect.lfo_speed = ofRandom(0.01,0.3);
             }
-                         */
+             
            // float random_cam = ofRandomuf();
            // if(random_cam > 0.95 && toggle_camera_automation == false) toggle_camera_automation = true;
         }
@@ -387,8 +384,10 @@ void ofApp::draw(){
 
     //----------------------------------------------------------------
     //----------------- IDLE MESH MODE DRAWING
-    post.begin_idle();
-
+    if(toggle_post_processing){
+        post.begin_idle();
+    }
+    
     mCam1.begin();
     
     // also, let's get rid of the back faces.
@@ -448,11 +447,12 @@ void ofApp::draw(){
         glDisable(GL_CULL_FACE);
     }
     mCam1.end();
-    post.end_idle();
-
     
-    ///------ FINALLY DRAW OUR ACTIVE AND IDLE PASSES THROUGH A 3D SHAPE MASK
-    surface_mask.draw();
+    if(toggle_post_processing){
+        post.end_idle();
+        ///------ FINALLY DRAW OUR ACTIVE AND IDLE PASSES THROUGH A 3D SHAPE MASK
+        surface_mask.draw();
+    }
 }
 
 //--------------------------------------------------------------
@@ -508,6 +508,9 @@ void ofApp::keyReleased(int key){
     if(key == 's'){
         //moveCam.saveCameraPosition(camNum);
         camNum++;
+        //load_idle_preset(camNum);
+        //cout << "idle preset num = " << camNum << endl;
+        
         //save_active_preset();
     }
     
