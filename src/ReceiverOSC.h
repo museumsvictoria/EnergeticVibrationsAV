@@ -10,6 +10,7 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "Constants.h"
 
 #define NUM_CHAIRS 21
 #define OSC_PORT 9001

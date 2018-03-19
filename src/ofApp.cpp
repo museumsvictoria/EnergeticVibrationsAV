@@ -221,7 +221,7 @@ void ofApp::update_generative_modes(){
     
     // Make sure that our combo isnt already running
     if(combo_triggered == false){
-        if(seconds_since_last_generative_trigger > 30 || seat_triggered == true){
+        if(seconds_since_last_generative_trigger > GENERATIVE_TRIGGER_TIME_IN_SECONDS || seat_triggered == true){
         //    if((int)ofGetFrameNum() % 30 == 0){
             init_last_gen_time = (int)ofGetElapsedTimef();
 

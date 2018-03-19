@@ -74,7 +74,7 @@ void ReceiverOSC::update(){
             current_chair_sum += chair;
         }
         
-        if(seconds_since_last_seat > 3){
+        if(seconds_since_last_seat > TIME_SINCE_LAST_CHAIR_IN_SECONDS){
             // Check to see if new chairs have been sat on since the last loop
             if(current_chair_sum > prev_chair_sum){
                 // initialise the count timer
