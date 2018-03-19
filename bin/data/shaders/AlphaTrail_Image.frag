@@ -29,7 +29,8 @@ void main( void )
     uv.y *= -1.;
     uv.y += 1.0;
     
-    float intensity = 1.5 + (delay*2.5);
+//    float intensity = 1.5 + (delay*2.5);
+    float intensity = 1.0 + (delay*0.5);
     // Done.
     outputColor = texture(iChannel0, uv) * intensity;
 }

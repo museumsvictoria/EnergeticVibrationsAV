@@ -9,81 +9,134 @@
 #include "PostProcessing.h"
 
 //--------------------------------------------------------------
-void PostProcessing::init(){
-    ofEnableArbTex();
-    depthOfField.setup(ofGetWidth(), ofGetHeight());
+void PostProcessing::init_params(){
+    dof_blur_amount = 0.05;
+    dof_focal_range = 200.0;
+    dof_focal_distance = 200.0;
 }
 
 
 //--------------------------------------------------------------
 void PostProcessing::setup(){
-    init();
+    init_params();
+    
+    ofEnableArbTex();
+    depthOfField.setup(ofGetWidth(), ofGetHeight());
     
     toggle_dof = false;
     toggle_reaction_diffusion = true;
     toggle_feedback = false;
     toggle_down_sampling = false;
     
-    dof_blur_amount = 0.4;
-    dof_focal_range = 200.0;
-    dof_focal_distance = 200.0;
-    
-    
     downsample.setup();
     reaction_diffusion.setup();
     alpha_trails.setup();
     feedback.setup();
     
-    createFullScreenQuad();
-    blend_shader.load("shaders/passthrough.vert","shaders/blend_mask.frag");
     
-    masking_model.loadModel("models/WallShape.obj");
-    //you can create as many rotations as you want
-    //choose which axis you want it to effect
-    //you can update these rotations later on
-    // these rotation set the model so it is oriented correctly
-    masking_model.setRotation(0, 90, 1, 0, 0);
-    masking_model.setRotation(0, 90, 0, 1, 0);
-    masking_model.setScale(0.9, 0.9, 0.9);
-    masking_model.setPosition(ofGetWidth()/2, ofGetHeight()/2, 0);
+    ofFbo::Settings renderFboSettings;
+    renderFboSettings.width = ofGetWidth();
+    renderFboSettings.height = ofGetHeight();
+    renderFboSettings.internalformat = GL_RGB;
+    renderFboSettings.numSamples = 8;
+    renderFboSettings.useDepth = false;
+    renderFboSettings.useStencil = false;
+    renderFboSettings.depthStencilAsTexture = false;
+    renderFboSettings.textureTarget = ofGetUsingArbTex() ? GL_TEXTURE_RECTANGLE_ARB : GL_TEXTURE_2D;
     
-    cam.setupPerspective(false, 50, 0.001, 0);
-    cam.setDistance(3200); // set default camera distance to 1000
-    //mCam1.boom(5); // move camera up a little
-    cam.lookAt(ofVec3f(0)); // look at centre of the world
+    m_activeFbo.allocate( renderFboSettings );
+    m_idleFbo.allocate( renderFboSettings );
+    
+    // Because we are viewing this fbo through an ofCamera's viewport
+    // We need to manually flip the texture.... ?!?!? dumb
+    m_activeFbo.getTextureReference().getTextureData().bFlipTexture = true;
+    m_activeFbo.begin();
+    ofClear(0,0,0,0);
+    m_activeFbo.end();
+    
+    m_idleFbo.begin();
+    ofClear(0,0,0,0);
+    m_idleFbo.end();
+}
+
+//--------------------------------------------------------------
+void PostProcessing::trigger_bypass_mode(){
+    downsample.bypass();
+    alpha_trails.bypass();
+    feedback.bypass();
+    reaction_diffusion.bypass();
+}
+void PostProcessing::trigger_atari_mode(){
+    downsample.random_dry_wet();
+    alpha_trails.init_params();
+    feedback.init_params();
+    reaction_diffusion.init_params();
+}
+void PostProcessing::trigger_trails_mode(){
+    downsample.init_params();
+    alpha_trails.random_dry_wet();
+    feedback.init_params();
+    reaction_diffusion.init_params();
+}
+void PostProcessing::trigger_feedback_mode(){
+    downsample.init_params();
+    alpha_trails.init_params();
+    feedback.randomise_all_params();
+    feedback.random_dry_wet();
+    reaction_diffusion.init_params();
+}
+void PostProcessing::trigger_reaction_diffusion_mode(){
+    downsample.init_params();
+    alpha_trails.init_params();
+    feedback.init_params();
+    reaction_diffusion.randomise_all_params();
+    reaction_diffusion.random_dry_wet();
+}
+void PostProcessing::trigger_random_combo_mode(){
+    downsample.randomise_all_params();
+    alpha_trails.randomise_all_params();
+    feedback.randomise_all_params();
+    reaction_diffusion.randomise_all_params();
+}
+void PostProcessing::run_combo_perlin_mode(){
+    downsample.update_noise_walks();
+    alpha_trails.update_noise_walks();
+    feedback.update_noise_walks();
+    reaction_diffusion.update_noise_walks();
 }
 
 //--------------------------------------------------------------
 void PostProcessing::update(){
     
+
     /// SET DOF PARAMS
     ////////////////////
     
     // where is the focal plane from the camera
-    depthOfField.setFocalDistance(dof_focal_distance);
-    //	depthOfField.setFocalDistance(ofMap(sin(ofGetElapsedTimef()/2),-1,1, 20, 150));
-    
-    //usually between 0 and 2 or 3
-    depthOfField.setBlurAmount(dof_blur_amount);
-    
-    // how much of the scene is in focus, smaller number is a narrower focal distance
-    depthOfField.setFocalRange(dof_focal_range);
-    
+//    depthOfField.setFocalDistance(dof_focal_distance);
+//    //	depthOfField.setFocalDistance(ofMap(sin(ofGetElapsedTimef()/2),-1,1, 20, 150));
+//    
+//    //usually between 0 and 2 or 3
+//    depthOfField.setBlurAmount(dof_blur_amount);
+//    
+//    // how much of the scene is in focus, smaller number is a narrower focal distance
+//    depthOfField.setFocalRange(dof_focal_range);
+//    
     /// PASS IN TEXTURE TO PIXELATOR
     ////////////////////
-    downsample.set_source_texture(depthOfField.getFbo());
+    downsample.set_source_texture(m_activeFbo);
     downsample.update();
-    
+
     /// PASS IN TEXTURE TO ALPHA TRAILS
     ////////////////////
     alpha_trails.set_source_texture(downsample.getFbo());
     alpha_trails.update();
-    
+
     /// PASS IN TEXTURE TO FEEDBACK
     ////////////////////
     feedback.set_source_texture(alpha_trails.getFbo());
     feedback.update();
-    
+
     /// PASS IN TEXTURE TO REACTION DUFFUSION
     ////////////////////
     reaction_diffusion.set_source_texture(feedback.getFbo());
@@ -91,70 +144,30 @@ void PostProcessing::update(){
 }
 
 //--------------------------------------------------------------
-void PostProcessing::dof_begin(){
-    depthOfField.begin();
-
+void PostProcessing::begin_active(){
+    m_activeFbo.begin();
+    ofClear(0,0,0,0);
 }
-void PostProcessing::dof_end(){
-    depthOfField.end();
-    
+void PostProcessing::end_active(){
+    m_activeFbo.end();
+}
+ofFbo& PostProcessing::get_active_fbo(){
+    return reaction_diffusion.getFbo();
 }
 //--------------------------------------------------------------
-void PostProcessing::draw(){
-    cam.setDistance(3200); // set default camera distance to 1000
-    
-//    ofFbo fbo;
-//    fbo.allocate(ofGetWidth(), ofGetHeight());
-//    
-//    fbo.begin();
-//    ofClear(0,0,0,0);
-//    cam.begin();
-//    ofPushStyle();
-//    ofScale (1,-1,1);
-//    ofSetColor(255,255);
-//    masking_model.getMesh(0).draw();
-//    ofPopStyle();
-//    cam.end();
-//    fbo.end();
-//    
-//    ofEnableBlendMode(OF_BLENDMODE_ADD);
-//    
-//    ofSetColor(255,255);
-////    fbo.draw(0,0);
-//
-//    
-//    if(ofGetKeyPressed('f')){
-//      //  depthOfField.drawFocusAssist(0, 0);
-//    }
-//    else{
-//      //  depthOfField.getFbo().draw(0, 0);
-//    }
-//    
-//    blend_shader.load("shaders/passthrough.vert","shaders/blend_mask.frag");
-//
-//    
-//    depthOfField.getFbo().getTexture().bind();
-//    blend_shader.begin();
-//    
-//    blend_shader.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(), 0);
-//    blend_shader.setUniformTexture("iChannel0", fbo.getTexture(), 0);
-//    blend_shader.setUniformTexture("iChannel1", depthOfField.getFbo().getTexture(), 1);
-//    m_fsQuadVbo.draw();
-//
-//    blend_shader.end();
-//    depthOfField.getFbo().getTexture().unbind();
-//
-////    reaction_diffusion.draw();
-////    alpha_trails.draw();
-//    
-//   // ofDisableBlendMode();
-    
-    //depthOfField.getFbo().draw(0, 0);
-    
-    if(toggle_reaction_diffusion){
-        reaction_diffusion.draw();
-    } else {
-        feedback.draw();
-    }
+void PostProcessing::begin_idle(){
+    m_idleFbo.begin();
+    ofClear(0,0,0,0);
+}
+void PostProcessing::end_idle(){
+    m_idleFbo.end();
+}
+ofFbo& PostProcessing::get_idle_fbo(){
+    return m_idleFbo;
+}
 
+//--------------------------------------------------------------
+void PostProcessing::draw(){
+    // Only need to call this funciton if you dont want to send it through the shape mask
+    reaction_diffusion.draw();
 }

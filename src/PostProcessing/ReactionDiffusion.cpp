@@ -16,7 +16,7 @@ void ReactionDiffusion::init_fbos(){
     ofFbo::Settings fboSettings;
     fboSettings.width = ofGetWidth();
     fboSettings.height = ofGetHeight();
-    fboSettings.internalformat = GL_RGBA32F;
+    fboSettings.internalformat = GL_RGBA;
     fboSettings.numSamples = 2;
     fboSettings.useDepth = false;
     fboSettings.useStencil = false;
@@ -66,9 +66,7 @@ void ReactionDiffusion::init_fbos(){
 void ReactionDiffusion::setup(){
     // Use GL_TEXTURE_2D Textures (normalized texture coordinates 0..1)
     //ofDisableArbTex();
-    intensity = 1.0;
-    bleed_amount = 0.0;
-    dry_wet = 0.0;
+    init_params();
     
     reaction_shader_bufA.load("shaders/passthrough.vert","shaders/ReactionDiffusion_BufA.frag");
     reaction_shader_image.load("shaders/passthrough.vert","shaders/ReactionDiffusion_Image.frag");
@@ -79,6 +77,15 @@ void ReactionDiffusion::setup(){
     
     createFullScreenQuad();
     init_fbos();
+    
+    intensity = 1.0;
+    bleed_amount = 0.0;
+    dry_wet = 0.0;
+    
+    set_generative_param(&intensity,0.0,1.0);
+    set_generative_param(&bleed_amount,0.0,1.0);
+    set_generative_param(&dry_wet,0.0,1.0);
+    init_generative();
 }
 //--------------------------------------------------------------
 void ReactionDiffusion::set_source_texture(ofFbo& tex){

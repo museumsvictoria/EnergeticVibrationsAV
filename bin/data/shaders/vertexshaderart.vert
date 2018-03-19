@@ -61,6 +61,7 @@ uniform ShaderParams {
     int active_chair[NUM_INSTANCES];
     float object_size[NUM_INSTANCES];
     float vibration_hz[NUM_INSTANCES];
+    float seat_kickers[NUM_INSTANCES];
 }params;
 
 //uniform ShaderParams {
@@ -137,9 +138,19 @@ void main()
     perInstanceModelMatrix[2] = vec4(0,0,1,0);
     perInstanceModelMatrix[3] = translation;
     
-    float vib_hz = sin(2.*PI*time*params.vibration_hz[gl_InstanceID])*3.;
-    float max_size = params.object_size[gl_InstanceID];
-    float scale = remap(abs(sin(gl_InstanceID+time*0.2)),0.0,1.0,max_size*0.3,max_size) + vib_hz;
+//    float vib_hz = sin(2.*PI*time*params.vibration_hz[gl_InstanceID])*3.;
+//    float max_size = params.object_size[gl_InstanceID] * 0.7;
+//    float scale = remap(abs(sin(gl_InstanceID+time*0.2)),0.0,1.0,max_size*0.3,max_size) + vib_hz;
+    
+    float vib_hz = params.seat_kickers[gl_InstanceID]*12.;
+    float max_size = params.object_size[gl_InstanceID] * 0.7;
+    float scale = remap(abs(sin(gl_InstanceID+time*0.2)),0.0,1.0,max_size*0.3,max_size);
+    
+    // Only Apply reactivity if we aren't on the 3 small seats
+    if((gl_InstanceID % 7) < 4){
+        scale += vib_hz;
+    }
+    
     vertex.scale = scale;
     mat4 scaleMatrix;
     scaleMatrix[0] = vec4(scale,0,0,0);

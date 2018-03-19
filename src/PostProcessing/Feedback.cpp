@@ -17,7 +17,7 @@ void Feedback::init_fbos(){
     ofFbo::Settings fboSettings;
     fboSettings.width = ofGetWidth();
     fboSettings.height = ofGetHeight();
-    fboSettings.internalformat = GL_RGBA32F;
+    fboSettings.internalformat = GL_RGBA;
     fboSettings.numSamples = 2;
     fboSettings.useDepth = false;
     fboSettings.useStencil = false;
@@ -78,20 +78,30 @@ void Feedback::setup(){
     createFullScreenQuad();
     init_fbos();
     
-    strength = 0.8;
-    zoom = -0.3;
-    x_mult = 11.50;
-    y_mult = 10.0;
-    
+    strength = 0.05;
+    zoom = 0.4;
+    x_mult = 0.30;
+    y_mult = 0.25;
     x_amp = 1.0;
     y_amp = 1.0;
-    
     x_speed = 0.25;
     y_speed = 0.4;
-    
     rotate_speed = 0.2;
     rotate_amp = 0.92;
+
+    set_generative_param(&strength,0.25,1.0);
+    set_generative_param(&zoom,0.0,1.0);
+    set_generative_param(&x_mult,0.0,1.0);
+    set_generative_param(&y_mult,0.0,1.0);
+    set_generative_param(&x_amp,0.0,1.0);
+    set_generative_param(&y_amp,0.0,1.0);
+    set_generative_param(&x_speed,0.0,0.3);
+    set_generative_param(&y_speed,0.0,0.3);
+    set_generative_param(&rotate_speed,0.0,0.3);
+    set_generative_param(&rotate_amp,0.0,1.0);
+    init_generative();
 }
+
 //--------------------------------------------------------------
 void Feedback::set_source_texture(ofFbo& tex){
     
@@ -108,8 +118,8 @@ void Feedback::runSimulation()
     glEnable( GL_CULL_FACE );
     glCullFace( GL_BACK );
     
-    ofDisableDepthTest();
-    ofEnableAlphaBlending();
+    //ofDisableDepthTest();
+    //ofEnableAlphaBlending();
     
     shader_bufA.begin();
     shader_bufA.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);

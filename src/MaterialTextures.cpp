@@ -11,7 +11,7 @@
 //-------------------------------------
 void MaterialTextures::setup(){
     
-    idle_dir.listDir("movies/active/");
+    idle_dir.listDir("movies/idle/");
     idle_dir.sort();
     
     active_dir.listDir("movies/active/");
@@ -20,25 +20,19 @@ void MaterialTextures::setup(){
     createFullScreenQuad();
     shader.load("shaders/colour_palette");
     
-    // step 1: load our height map image
     
     ofDisableArbTex(); 	///< we need normalised image coordinates
-    
+ 
     tex_idle.allocate(500, 500, GL_RGBA);
     tex_active.allocate(500, 500, GL_RGBA);
 
-    fbo_idle.allocate(500, 500, GL_RGBA);
     fbo_active.allocate(500, 500, GL_RGBA);
 
-    //ofLoadImage(mTex1, "elevation2.png");
     ofLoadImage(tex_active, "images/Gilmore1.jpg");
-    ofLoadImage(tex_idle, "images/Gilmore1.jpg");
+    ofLoadImage(tex_idle, "images/test.jpg");
 
-    //ofLoadImage(tex, "/Users/joshuabatty/Pictures/gifs/automatagraphics/tripped3.gif");
     load_random_idle_texture();
     load_random_active_texture();
-
-//    ofEnableArbTex();
     
     colours.push_back(glm::vec4(0.255,0.745,0.670,1.0)); // aqua
     colours.push_back(glm::vec4(0.235,0.596,0.807,1.0)); // blue
@@ -53,6 +47,16 @@ void MaterialTextures::setup(){
 }
 
 //-------------------------------------
+void MaterialTextures::load_idle_texture(string path){
+    vid_idle.load(path);
+    vid_idle.play();
+}
+void MaterialTextures::load_active_texture(string path){
+    vid_active.load(path);
+    vid_active.play();
+    cout << " << active_path = " << path << endl;
+
+}
 void MaterialTextures::load_random_idle_texture(){
     vid_idle.load(get_random_idle_path());
     vid_idle.play();
@@ -64,18 +68,21 @@ void MaterialTextures::load_random_active_texture(){
 
 //-------------------------------------
 string MaterialTextures::get_random_idle_path(){
-    cout << "random idle path = " << idle_dir.getPath((int)ofRandom(idle_dir.size())) << endl;
-    return idle_dir.getPath((int)ofRandom(idle_dir.size()));
+    idle_path = idle_dir.getPath((int)ofRandom(idle_dir.size()));
+    cout << "random idle path = " << idle_path << endl;
+    return idle_path;
 }
 //-------------------------------------
 string MaterialTextures::get_random_active_path(){
-    cout << "random active path = " << active_dir.getPath((int)ofRandom(active_dir.size())) << endl;
-    return active_dir.getPath((int)ofRandom(active_dir.size()));
+    active_path = active_dir.getPath((int)ofRandom(active_dir.size()));
+    cout << "random active path = " << active_path << endl;
+    return active_path;
 }
 
 //-------------------------------------
 ofTexture& MaterialTextures::getActiveTexture(){
     ofDisableArbTex();
+    
     vid_active.update();
     
     fbo_active.begin();
@@ -91,24 +98,13 @@ ofTexture& MaterialTextures::getActiveTexture(){
     fbo_active.end();
     
     tex_active = fbo_active.getTexture();
+    
     return tex_active;
 }
 ofTexture& MaterialTextures::getIdleTexture(){
     ofDisableArbTex();
     vid_idle.update();
-
-    fbo_idle.begin();
-    ofClear(0,0,0,0);
-    shader.begin();
-    shader.setUniform3f("iResolution", fbo_idle.getWidth(), fbo_idle.getHeight(), 0);
-    shader.setUniformTexture("iChannel0", vid_idle.getTexture(), 0);
-    for(int i = 0; i < colours.size(); i++){
-        shader.setUniform4f("color_" + ofToString(1+i), colours[i].r, colours[i].g, colours[i].b, colours[i].a);
-    }
-    m_fsQuadVbo.draw();
-    shader.end();
-    fbo_idle.end();
     
-    tex_idle = fbo_idle.getTexture();
+    tex_idle = vid_idle.getTexture();
     return tex_idle;
 }

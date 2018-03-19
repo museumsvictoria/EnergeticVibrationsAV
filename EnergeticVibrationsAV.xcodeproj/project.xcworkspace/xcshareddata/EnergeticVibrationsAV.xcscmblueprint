@@ -8,33 +8,30 @@
     "20767BA6A2739E5EA231BFEB5CA0D281358398D2" : 9223372036854775807,
     "926E79937B1D74080D6099615F18FF8D46E99FB5" : 9223372036854775807,
     "BFC135EF24D9019A18FD967A9BEDA0439C246ADD" : 9223372036854775807,
-    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : 9223372036854775807,
+    "B84130D9396ED9A5FB5812E1F59F0C57C1A4FE45" : 9223372036854775807,
     "3F04C9D1D793210C4DA26F0054C08BBE2F768B3C" : 9223372036854775807,
     "86145F1292B789AB93966AE12565F1D778504ABC" : 9223372036854775807,
     "BCA0DC16491F98A3055F675274FD6DB3C9D136E3" : 9223372036854775807,
-    "10B5C19A69CA77EFAF308C38B58AB32D29789387" : 9223372036854775807
+    "F69848794C3B8E65777F64980F34D78754B55DEA" : 9223372036854775807,
+    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C8D13B20-E1E1-4D73-864B-55EB87A8B969",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "EE9B60D0-4829-45FD-9069-0A779DAEF226",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "55505DE6675E1AEB4CF72AD63A972936EC984D97" : "..\/..\/addons\/ofxImGui",
     "20767BA6A2739E5EA231BFEB5CA0D281358398D2" : "EnergeticVibrationsAV\/",
     "926E79937B1D74080D6099615F18FF8D46E99FB5" : "..\/..\/addons\/ofxUbo",
     "BFC135EF24D9019A18FD967A9BEDA0439C246ADD" : "..\/..\/addons\/ofxDOF",
-    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : "..\/..",
+    "B84130D9396ED9A5FB5812E1F59F0C57C1A4FE45" : "..\/..\/addons\/ofxCameraMove",
     "3F04C9D1D793210C4DA26F0054C08BBE2F768B3C" : "EnergeticVibrationsAV\/ofxAlgebraic\/",
     "86145F1292B789AB93966AE12565F1D778504ABC" : "EnergeticVibrationsAV\/ofxEasing\/",
     "BCA0DC16491F98A3055F675274FD6DB3C9D136E3" : "..\/..\/addons\/ofxPlaymodes",
-    "10B5C19A69CA77EFAF308C38B58AB32D29789387" : "..\/..\/addons\/ofxNDI"
+    "F69848794C3B8E65777F64980F34D78754B55DEA" : "EnergeticVibrationsAV\/ofxTweener\/",
+    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : "..\/.."
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "EnergeticVibrationsAV",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "EnergeticVibrationsAV.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ThomasLengeling\/ofxNDI",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "10B5C19A69CA77EFAF308C38B58AB32D29789387"
-    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/JoshuaBatty\/EnergeticVibrationsAV",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
@@ -66,6 +63,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "926E79937B1D74080D6099615F18FF8D46E99FB5"
     },
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/strimbob\/ofxCameraMove",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B84130D9396ED9A5FB5812E1F59F0C57C1A4FE45"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/JoshuaBatty\/ofxPlaymodes",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BCA0DC16491F98A3055F675274FD6DB3C9D136E3"
@@ -74,6 +76,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/obviousjim\/ofxDOF",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BFC135EF24D9019A18FD967A9BEDA0439C246ADD"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/hautetechnique\/ofxTweener",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F69848794C3B8E65777F64980F34D78754B55DEA"
     }
   ]
 }

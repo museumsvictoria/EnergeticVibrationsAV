@@ -14,9 +14,9 @@
 /bin/*
 !/bin/data/
 /bin/data/people/
-/bin/data/movies/
-/bin/data/movies/active/
-/bin/data/movies/idle/
+#/bin/data/movies/
+#/bin/data/movies/active/
+#/bin/data/movies/idle/
 
 
 #########

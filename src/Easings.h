@@ -20,6 +20,7 @@ public:
     void trigger();
     void randomise_distance();
     vector<float> get_value();
+    bool isFinished();
     int size();
     
     std::vector<ofxeasing::function> easings{

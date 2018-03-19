@@ -30,7 +30,6 @@ const float PI = 3.141592653589793;
 
 uniform mat4 modelViewMatrix;
 uniform int is_active;
-uniform float tick_position;
 uniform float time;
 
 #pragma include "Util/easing_lfo.glsl"
@@ -43,7 +42,7 @@ uniform float xray_lfo_amp;
 uniform float xray_mix;
 
 
-uniform sampler2D tex_unit_1; 		// 2d texture
+uniform sampler2D tex_unit_0; 		// 2d texture
 
 //in mat4 perInstanceModelViewMatrix;
 
@@ -54,6 +53,7 @@ in VertexAttrib {
     vec2 texcoord;
     float height;
     float instance_ID;
+    float primitive_ID;
 } vertex;
 
 out vec4 fragColor;
@@ -79,7 +79,7 @@ void addRimLighting(in vec3 N, in vec3 viewVector, inout vec3 rimLight_){
 }
 
 // See if I can bring over tri planar or flat shading algorithm
-// to then create my own textures. 
+// to then create my own textures.
 
 // have a look at this technique http://greggman.github.io/doodles/lightball03.html
 // ----------------------------------------------------------------------
@@ -87,17 +87,10 @@ void addRimLighting(in vec3 N, in vec3 viewVector, inout vec3 rimLight_){
 vec3 get_texture(){
     
     // find out the texture dimensions in pixels, at LOD 0
-    ivec2 texSize = textureSize(tex_unit_1, 0 );
+    ivec2 texSize = textureSize(tex_unit_0, 0 );
     
-//    vec2 sampleCoords = vec2(translation.x,translation.y);
-//    vec2 sampleCoords = vec2(vertex.texcoord.x,vertex.texcoord.y);
-    
-    float s = 8500.0;
-    float x = remap(vertex.position.x,-s,s,-1.0,1.0);
-    float y = remap(vertex.position.y,-s,s,-1.0,1.0);
-    vec2 sampleCoords = vec2(x, y);
-    
-
+    //    vec2 sampleCoords = vec2(translation.x,translation.y);
+    vec2 sampleCoords = vec2(vertex.texcoord.x,vertex.texcoord.y);
     
     // hmmm. that looks squished.
     // it's because the texture coordinates run from -1 to +1, but should go from 0 to 1.
@@ -107,7 +100,7 @@ vec3 get_texture(){
     
     // then add 0.5
     sampleCoords += vec2(0.5);
-
+    
     
     // ok, now sample from the texture.
     
@@ -118,7 +111,7 @@ vec3 get_texture(){
     
     vec2 sampleOffset = vec2(0.5,0.5) * vec2(1.0/texSize.x,1.0/texSize.y);
     
-    return texture(tex_unit_1, sampleCoords + sampleOffset).rgb;
+    return texture(tex_unit_0, sampleCoords + sampleOffset).rgb;
 }
 
 void main(){
@@ -131,56 +124,38 @@ void main(){
     
     vec3 rimLight = vec3(0);
     addRimLighting(N, vec3(0,0,1), rimLight);
-
     
-//    float alpha_fill_lfo = easing_lfo(fill_lfo_type,((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
-//    
-//    float alpha_wireframe_lfo = easing_lfo(wireframe_lfo_type,((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
-
-    /*
+    float instance_offset = (vertex.instance_ID / 18.0) * PI;
     
+    float alpha_fill_lfo = easing_lfo(fill_lfo_type,instance_offset + ((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
+    
+    float alpha_wireframe_lfo = easing_lfo(wireframe_lfo_type,instance_offset + ((vertex.primitive_ID*(xray_lfo_offset*0.1))+time*(xray_lfo_speed*3.0)))*xray_lfo_amp;
+    
+    
+    float tex = (sin((vertex.instance_ID / 21.0) + vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+N.r;
+
     if(is_active == 1){
         fragColor = vec4(0,0,0,mix(xray_mix,alpha_wireframe_lfo,xray_lfo_amp));
-
+        
         fragColor.rgb += boxColor;
         
         fragColor.rgb += rimLight * 0.2;
-
+        
         fragColor.rgb = pow(fragColor.rgb, vec3(-0.5));
         //fragColor.rgb *= vec3(0.3,0.85,1.0);
-
+        
         //fragColor.rgb += clamp(glowAmt*0.4,0.,1.)*vec3(.3,.5,.7);
         //fragColor.rgb *= vec3(0.3,0.5,1.0);
-        fragColor = vec4(pow(get_texture(),vec3(2.0)),mix(xray_mix,alpha_wireframe_lfo,xray_lfo_amp));
+        fragColor = vec4(pow(get_texture() + vec3(tex),vec3(.5)),mix(xray_mix,alpha_wireframe_lfo,xray_lfo_amp));
     } else {
-        vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
         fragColor = vec4((N + vec3(1.0, 1.0, 1.0)) / 2.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
         
-        //fragColor = vec4(0.0,0.0,1.0,1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
-        
-        fragColor = vec4(get_texture(),1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
+        fragColor = vec4(get_texture() + vec3(tex),1.0-mix(xray_mix,alpha_fill_lfo,xray_lfo_amp));
     }
-    */
-    /*
-    if(tick_position == vertex.instance_ID){
-        fragColor = vec4(1.0,0.0,0.0,1.0);
-    }
-*/
-
-    vec4 tex = vec4(sin(vertex.texcoord.x+time)*1.0+vertex.texcoord.y)+vec4(N,1.0);
-    tex.rgb = vec3(vertex.position.x * 0.001, vertex.position.y * 0.001, 0.0);
-//    fragColor = vec4(tex.rgb * get_texture(),1.0);
-    fragColor = vec4(get_texture(),1.0);
     
-    
-    
-    //fragColor = vec4( vec3(1.-vertex.position.z),1.0);
-
-
     //fragColor.rgb += vertex.normal * vertex.height;
     
     // fragColor = vec4(vertex.texcoord.x, vertex.texcoord.y, 0 , 1.0);
     // fragColor = vec4(vertex.normal * 0.5 + vec3(0.5,0.5,0.5),1.0);
     
 }
-

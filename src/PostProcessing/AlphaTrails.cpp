@@ -17,7 +17,7 @@ void AlphaTrails::init_fbos(){
     ofFbo::Settings fboSettings;
     fboSettings.width = ofGetWidth();
     fboSettings.height = ofGetHeight();
-    fboSettings.internalformat = GL_RGBA32F;
+    fboSettings.internalformat = GL_RGBA;
     fboSettings.numSamples = 2;
     fboSettings.useDepth = false;
     fboSettings.useStencil = false;
@@ -78,8 +78,11 @@ void AlphaTrails::setup(){
     createFullScreenQuad();
     init_fbos();
     
-    delay = 0.05;
+    delay = 0.0;
+    set_generative_param(&delay,0.0,1.0);
+    init_generative();
 }
+
 //--------------------------------------------------------------
 void AlphaTrails::set_source_texture(ofFbo& tex){
     
@@ -128,6 +131,7 @@ void AlphaTrails::set_delay_amount(float _delay){
 
 //--------------------------------------------------------------
 void AlphaTrails::update(){
+    
     // clear to green as grayScott runs in red and green channels
     ofClear( 0, 255, 0, 255 );
     ofDisableDepthTest();

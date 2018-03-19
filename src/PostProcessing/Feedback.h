@@ -9,8 +9,9 @@
 #pragma once
 #include "ofMain.h"
 #include "PingPong.h"
+#include "Generative.h"
 
-class Feedback : public PingPong{
+class Feedback : public PingPong, public Generative{
     
 public:
     void setup();
@@ -25,7 +26,6 @@ public:
     ofShader shader_bufA;
     ofShader shader_image;
     
-//private:
     float strength;
     float zoom;
     float x_mult;

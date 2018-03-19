@@ -15,7 +15,6 @@ layout(triangle_strip, max_vertices=3) out;
 //uniform float normal_length;
 //uniform float time;
 uniform float time;
-uniform float explode_amount;
 
 uniform int geom_lfo_type;
 uniform float geom_lfo_offset;
