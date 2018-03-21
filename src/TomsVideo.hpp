@@ -4,7 +4,7 @@
 #include "ofTexture.h"
 
 //Define for windows video
-#define WINVID 1
+#define WINVID 0
 #ifdef WINVID
 #include "ofxWMFVideoPlayer.h"
 #endif

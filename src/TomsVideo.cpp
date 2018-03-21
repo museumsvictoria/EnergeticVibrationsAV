@@ -30,12 +30,8 @@ void TomsVideo::setPaused(bool bPause) {
 
 void TomsVideo::play() {
 	video.play();
-	std::cout << "is playing: " << video.isPlaying() << endl;
 }
 
 void TomsVideo::update() {
 	video.update();
-	auto t = video.getTexture();
-	t.draw(0,0);
-	//std::cout << "is playing: " << video.isPlaying() << endl;
 }
