@@ -11,6 +11,8 @@
 #include "ofMain.h"
 #include "PingPong.h"
 
+#include "TomsVideo.hpp"
+
 class MaterialTextures : public PingPong{
 public:
     void setup();
@@ -23,9 +25,9 @@ public:
     
     ofTexture& getIdleTexture();
     ofTexture& getActiveTexture();
-    
-    ofVideoPlayer vid_active;
-    ofVideoPlayer vid_idle;
+
+    TomsVideo vid_active;
+    TomsVideo vid_idle;
 
     int idle_idx;
     int active_idx;

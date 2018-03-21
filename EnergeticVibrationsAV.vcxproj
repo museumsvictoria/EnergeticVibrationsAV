@@ -1,430 +1,479 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup Label="ProjectConfigurations">
-		<ProjectConfiguration Include="Debug|Win32">
-			<Configuration>Debug</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Debug|x64">
-			<Configuration>Debug</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|Win32">
-			<Configuration>Release</Configuration>
-			<Platform>Win32</Platform>
-		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|x64">
-			<Configuration>Release</Configuration>
-			<Platform>x64</Platform>
-		</ProjectConfiguration>
-	</ItemGroup>
-	<PropertyGroup Label="Globals">
-		<ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
-		<Keyword>Win32Proj</Keyword>
-		<RootNamespace>EnergeticVibrationsAV</RootNamespace>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-		<ConfigurationType>Application</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v140</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-		<ConfigurationType>Application</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<PlatformToolset>v140</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-		<ConfigurationType>Application</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<PlatformToolset>v140</PlatformToolset>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-		<ConfigurationType>Application</ConfigurationType>
-		<CharacterSet>Unicode</CharacterSet>
-		<WholeProgramOptimization>true</WholeProgramOptimization>
-		<PlatformToolset>v140</PlatformToolset>
-	</PropertyGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
-	</ImportGroup>
-	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
-	</ImportGroup>
-	<PropertyGroup Label="UserMacros" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-		<OutDir>bin\</OutDir>
-		<IntDir>obj\$(Configuration)\</IntDir>
-		<TargetName>$(ProjectName)_debug</TargetName>
-		<LinkIncremental>true</LinkIncremental>
-		<GenerateManifest>true</GenerateManifest>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<OutDir>bin\</OutDir>
-		<IntDir>obj\$(Configuration)\</IntDir>
-		<TargetName>$(ProjectName)_debug</TargetName>
-		<LinkIncremental>true</LinkIncremental>
-		<GenerateManifest>true</GenerateManifest>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-		<OutDir>bin\</OutDir>
-		<IntDir>obj\$(Configuration)\</IntDir>
-		<LinkIncremental>false</LinkIncremental>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<OutDir>bin\</OutDir>
-		<IntDir>obj\$(Configuration)\</IntDir>
-		<LinkIncremental>false</LinkIncremental>
-	</PropertyGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<WarningLevel>Level3</WarningLevel>
-			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src</AdditionalIncludeDirectories>
-			<CompileAs>CompileAsCpp</CompileAs>
-			<ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
-			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
-		</ClCompile>
-		<Link>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<SubSystem>Console</SubSystem>
-			<RandomizedBaseAddress>false</RandomizedBaseAddress>
-			<AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoMongoDBmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib</AdditionalDependencies>
-			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxPoco\libs\poco\lib\vs\Win32\Debug</AdditionalLibraryDirectories>
-		</Link>
-		<PostBuildEvent />
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<ClCompile>
-			<Optimization>Disabled</Optimization>
-			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-			<WarningLevel>Level3</WarningLevel>
-			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src</AdditionalIncludeDirectories>
-			<CompileAs>CompileAsCpp</CompileAs>
-			<ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
-			<MultiProcessorCompilation>true</MultiProcessorCompilation>
-			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
-		</ClCompile>
-		<Link>
-			<GenerateDebugInformation>true</GenerateDebugInformation>
-			<SubSystem>Console</SubSystem>
-			<RandomizedBaseAddress>false</RandomizedBaseAddress>
-			<AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoMongoDBmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib</AdditionalDependencies>
-			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxPoco\libs\poco\lib\vs\x64\Debug</AdditionalLibraryDirectories>
-		</Link>
-		<PostBuildEvent />
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-		<ClCompile>
-			<WholeProgramOptimization>false</WholeProgramOptimization>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<WarningLevel>Level3</WarningLevel>
-			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src</AdditionalIncludeDirectories>
-			<CompileAs>CompileAsCpp</CompileAs>
-			<ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
-			<MultiProcessorCompilation>true</MultiProcessorCompilation>
-			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
-		</ClCompile>
-		<Link>
-			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<SubSystem>Console</SubSystem>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<RandomizedBaseAddress>false</RandomizedBaseAddress>
-			<AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoMongoDBmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib</AdditionalDependencies>
-			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxPoco\libs\poco\lib\vs\Win32\Release</AdditionalLibraryDirectories>
-		</Link>
-		<PostBuildEvent />
-	</ItemDefinitionGroup>
-	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<ClCompile>
-			<WholeProgramOptimization>false</WholeProgramOptimization>
-			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-			<WarningLevel>Level3</WarningLevel>
-			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src</AdditionalIncludeDirectories>
-			<CompileAs>CompileAsCpp</CompileAs>
-			<ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
-			<AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
-		</ClCompile>
-		<Link>
-			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-			<GenerateDebugInformation>false</GenerateDebugInformation>
-			<SubSystem>Console</SubSystem>
-			<OptimizeReferences>true</OptimizeReferences>
-			<EnableCOMDATFolding>true</EnableCOMDATFolding>
-			<RandomizedBaseAddress>false</RandomizedBaseAddress>
-			<AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoMongoDBmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib</AdditionalDependencies>
-			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxPoco\libs\poco\lib\vs\x64\Release</AdditionalLibraryDirectories>
-		</Link>
-		<PostBuildEvent />
-	</ItemDefinitionGroup>
-	<ItemGroup>
-		<ClCompile Include="src\main.cpp" />
-		<ClCompile Include="src\ofApp.cpp" />
-		<ClCompile Include="src\Easings.cpp" />
-		<ClCompile Include="src\HarmonicMotion\HarmonicMotion.cpp" />
-		<ClCompile Include="src\IdleMesh.cpp" />
-		<ClCompile Include="src\Lights.cpp" />
-		<ClCompile Include="src\MaterialTextures.cpp" />
-		<ClCompile Include="src\PostProcessing\AlphaTrails.cpp" />
-		<ClCompile Include="src\PostProcessing\Downsample.cpp" />
-		<ClCompile Include="src\PostProcessing\Feedback.cpp" />
-		<ClCompile Include="src\PostProcessing\PingPong.cpp" />
-		<ClCompile Include="src\PostProcessing\PostProcessing.cpp" />
-		<ClCompile Include="src\PostProcessing\ReactionDiffusion.cpp" />
-		<ClCompile Include="src\Primitives.cpp" />
-		<ClCompile Include="src\ReceiverOSC.cpp" />
-		<ClCompile Include="src\ShaderParams.cpp" />
-		<ClCompile Include="src\ShapePaths\AssimpModelVertices.cpp" />
-		<ClCompile Include="src\ShapePaths\BaseShape.cpp" />
-		<ClCompile Include="src\ShapePaths\Grid.cpp" />
-		<ClCompile Include="src\ShapePaths\Ngon.cpp" />
-		<ClCompile Include="src\ShapePaths\TranslationPaths.cpp" />
-		<ClCompile Include="src\ShapePaths\Wave.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxAlgebraic\src\Algebraic.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxAlgebraic\src\JenGaussian.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxAlgebraic\src\ofxAlgebraic.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpTexture.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxDOF\src\ofxDOF.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\BaseEngine.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\BaseTheme.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\EngineGLFW.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\EngineVk.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\Gui.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\Helpers.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_demo.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\AudioHeaderSample.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\VideoHeader.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBuffer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamples.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamplesMarker.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\Buffer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\VideoBuffer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoFilter.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoMixerGPU.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoRate.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\frames\AudioFrame.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\frames\Frame.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\frames\VideoFrame.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\grabbers\AudioGrabber.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\grabbers\FileGrabber.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\grabbers\VideoGrabber.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\ofxOscEvents\ofxOscEventsReceiver.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\oscControl\OscInterface.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSink.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSource.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSink.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSource.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\AudioRenderer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\avLooperRenderer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\BasicVideoRenderer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\HeaderLooperRenderer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\VideoRenderer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPlaymodes\src\utils\ofxObjCPointer.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxPoco\src\ofxXmlPoco.cpp" />
-		<ClCompile Include="..\..\..\addons\ofxUbo\src\ofxUbo.cpp" />
-	</ItemGroup>
-	<ItemGroup>
-		<ClInclude Include="src\ofApp.h" />
-		<ClInclude Include="src\Constants.h" />
-		<ClInclude Include="src\Easings.h" />
-		<ClInclude Include="src\GuiTheme.h" />
-		<ClInclude Include="src\HarmonicMotion\HarmonicMotion.h" />
-		<ClInclude Include="src\IdleMesh.h" />
-		<ClInclude Include="src\Lights.h" />
-		<ClInclude Include="src\MaterialTextures.h" />
-		<ClInclude Include="src\OptimisedBox.h" />
-		<ClInclude Include="src\PostProcessing\AlphaTrails.h" />
-		<ClInclude Include="src\PostProcessing\Downsample.h" />
-		<ClInclude Include="src\PostProcessing\Feedback.h" />
-		<ClInclude Include="src\PostProcessing\PingPong.h" />
-		<ClInclude Include="src\PostProcessing\PostProcessing.h" />
-		<ClInclude Include="src\PostProcessing\ReactionDiffusion.h" />
-		<ClInclude Include="src\Primitives.h" />
-		<ClInclude Include="src\ReceiverOSC.h" />
-		<ClInclude Include="src\ShaderParams.h" />
-		<ClInclude Include="src\ShapePaths\AssimpModelVertices.h" />
-		<ClInclude Include="src\ShapePaths\BaseShape.h" />
-		<ClInclude Include="src\ShapePaths\Grid.h" />
-		<ClInclude Include="src\ShapePaths\Ngon.h" />
-		<ClInclude Include="src\ShapePaths\TranslationPaths.h" />
-		<ClInclude Include="src\ShapePaths\Wave.h" />
-		<ClInclude Include="..\..\..\addons\ofxAlgebraic\src\Algebraic.h" />
-		<ClInclude Include="..\..\..\addons\ofxAlgebraic\src\JenGaussian.h" />
-		<ClInclude Include="..\..\..\addons\ofxAlgebraic\src\ofxAlgebraic.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpTexture.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpUtils.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\ai_assert.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\anim.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\camera.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cexport.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cfileio.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cimport.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\color4.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\poppack1.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\pstdint.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\pushpack1.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\config.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\DefaultLogger.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\defs.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Exporter.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Importer.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\importerdesc.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\IOStream.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\IOSystem.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\light.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Logger.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\LogStream.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\material.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\matrix3x3.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\matrix4x4.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\mesh.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\metadata.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\NullLogger.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\postprocess.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\ProgressHandler.hpp" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\quaternion.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\scene.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\texture.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\types.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\vector2.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\vector3.h" />
-		<ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\version.h" />
-		<ClInclude Include="..\..\..\addons\ofxDOF\src\ofxDOF.h" />
-		<ClInclude Include="..\..\..\addons\ofxEasing\src\easing_terms_of_use.html" />
-		<ClInclude Include="..\..\..\addons\ofxEasing\src\ofxEasing.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\BaseEngine.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\BaseTheme.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\EngineGLFW.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\EngineVk.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\Gui.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\Helpers.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\imconfig.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\ofxImGui.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\src\ThemeTest.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_internal.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\stb_rect_pack.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\stb_textedit.h" />
-		<ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\stb_truetype.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
-		<ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\AudioHeaderSample.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\VideoHeader.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBuffer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamples.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamplesMarker.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\Buffer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\VideoBuffer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoFilter.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoMixerGPU.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoRate.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\AudioFrame.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\AudioSample.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\envelopes\BaseEnvelope.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\envelopes\RaisedCosineBellEnvelope.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\Frame.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\VideoFrame.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\grabbers\AudioGrabber.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\grabbers\FileGrabber.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\grabbers\VideoGrabber.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\ofxOscEvents\ofxOscEventsReceiver.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\ofxPlaymodes.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\oscControl\OscInterface.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSink.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSource.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSink.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSource.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\AudioRenderer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\avLooperRenderer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\BasicVideoRenderer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\HeaderLooperRenderer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\VideoRenderer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\AudioFormat.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\ofxObjCPointer.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\pmUtils.h" />
-		<ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\VideoFormat.h" />
-		<ClInclude Include="..\..\..\addons\ofxPoco\src\ofxXmlPoco.h" />
-		<ClInclude Include="..\..\..\addons\ofxUbo\src\ofxUbo.h" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
-			<Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
-		</ProjectReference>
-	</ItemGroup>
-	<ItemGroup>
-		<ResourceCompile Include="icon.rc">
-			<AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
-			<AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
-			<AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
-		</ResourceCompile>
-	</ItemGroup>
-	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties RESOURCE_FILE="icon.rc" />
-		</VisualStudio>
-	</ProjectExtensions>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>EnergeticVibrationsAV</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src;ofxcameramove\src;..\..\..\addons\ofxJSON\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxTweener\src;..\..\..\addons\ofxJSON\libs\jsoncpp\include;..\..\..\addons\ofxWMFVideoPlayer\src;..\..\..\addons\ofxWMFVideoPlayer\src\presenter;..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoMongoDBmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxPoco\libs\poco\lib\vs\Win32\Debug</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src;;..\..\..\addons\ofxWMFVideoPlayer\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomdd.lib;PocoDatamdd.lib;PocoDataSQLitemdd.lib;PocoFoundationmdd.lib;PocoJSONmdd.lib;PocoMongoDBmdd.lib;PocoNetmdd.lib;PocoNetSSLmdd.lib;PocoPDFmdd.lib;PocoUtilmdd.lib;PocoXMLmdd.lib;PocoZipmdd.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxPoco\libs\poco\lib\vs\x64\Debug</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src;ofxcameramove\src;..\..\..\addons\ofxJSON\src;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxTweener\src;..\..\..\addons\ofxJSON\libs\jsoncpp\include</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoMongoDBmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxPoco\libs\poco\lib\vs\Win32\Release</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\HarmonicMotion;src\PostProcessing;src\ShapePaths;..\..\..\addons\ofxAlgebraic\src;..\..\..\addons\ofxAssimpModelLoader\libs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxDOF\src;..\..\..\addons\ofxEasing\src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxPlaymodes\src;..\..\..\addons\ofxPlaymodes\src\AVHeaders;..\..\..\addons\ofxPlaymodes\src\buffers;..\..\..\addons\ofxPlaymodes\src\filters;..\..\..\addons\ofxPlaymodes\src\frames;..\..\..\addons\ofxPlaymodes\src\frames\envelopes;..\..\..\addons\ofxPlaymodes\src\grabbers;..\..\..\addons\ofxPlaymodes\src\ofxOscEvents;..\..\..\addons\ofxPlaymodes\src\oscControl;..\..\..\addons\ofxPlaymodes\src\pipeline;..\..\..\addons\ofxPlaymodes\src\pipeline\audio;..\..\..\addons\ofxPlaymodes\src\pipeline\video;..\..\..\addons\ofxPlaymodes\src\renderers;..\..\..\addons\ofxPlaymodes\src\utils;..\..\..\addons\ofxPoco\libs\poco\include;..\..\..\addons\ofxPoco\src;..\..\..\addons\ofxUbo\src</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies);assimp.lib;PocoCryptomd.lib;PocoDatamd.lib;PocoDataSQLitemd.lib;PocoFoundationmd.lib;PocoJSONmd.lib;PocoMongoDBmd.lib;PocoNetmd.lib;PocoNetSSLmd.lib;PocoPDFmd.lib;PocoUtilmd.lib;PocoXMLmd.lib;PocoZipmd.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\..\addons\ofxPoco\libs\poco\lib\vs\x64\Release</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\addons\ofxJSON\libs\jsoncpp\src\jsoncpp.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxJSON\src\ofxJSONElement.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxTweener\src\ofxTransitions.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxTweener\src\ofxTweener.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxWMFVideoPlayer\src\ofxWMFVideoPlayer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxWMFVideoPlayer\src\ofxWMFVideoPlayerUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\Helpers.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\PresentEngine.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\Presenter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\scheduler.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="ofxcameramove\src\ofxCameraMove.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\Easings.cpp" />
+    <ClCompile Include="src\HarmonicMotion\HarmonicMotion.cpp" />
+    <ClCompile Include="src\Lights.cpp" />
+    <ClCompile Include="src\MaterialTextures.cpp" />
+    <ClCompile Include="src\PostProcessing\AlphaTrails.cpp" />
+    <ClCompile Include="src\PostProcessing\Downsample.cpp" />
+    <ClCompile Include="src\PostProcessing\Feedback.cpp" />
+    <ClCompile Include="src\PostProcessing\Generative.cpp" />
+    <ClCompile Include="src\PostProcessing\PingPong.cpp" />
+    <ClCompile Include="src\PostProcessing\PostProcessing.cpp" />
+    <ClCompile Include="src\PostProcessing\ReactionDiffusion.cpp" />
+    <ClCompile Include="src\PostProcessing\SurfaceMask.cpp" />
+    <ClCompile Include="src\Primitives.cpp" />
+    <ClCompile Include="src\ReceiverOSC.cpp" />
+    <ClCompile Include="src\ShaderParams.cpp" />
+    <ClCompile Include="src\ShapePaths\AssimpModelVertices.cpp" />
+    <ClCompile Include="src\ShapePaths\BaseShape.cpp" />
+    <ClCompile Include="src\ShapePaths\Grid.cpp" />
+    <ClCompile Include="src\ShapePaths\Ngon.cpp" />
+    <ClCompile Include="src\ShapePaths\TranslationPaths.cpp" />
+    <ClCompile Include="src\ShapePaths\Wave.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxAlgebraic\src\Algebraic.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxAlgebraic\src\JenGaussian.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxAlgebraic\src\ofxAlgebraic.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpTexture.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxDOF\src\ofxDOF.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\BaseEngine.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\BaseTheme.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineGLFW.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineVk.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\Gui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\Helpers.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\AudioHeaderSample.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\VideoHeader.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBuffer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamples.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamplesMarker.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\Buffer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\buffers\VideoBuffer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoFilter.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoMixerGPU.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoRate.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\frames\AudioFrame.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\frames\Frame.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\frames\VideoFrame.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\grabbers\AudioGrabber.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\grabbers\FileGrabber.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\grabbers\VideoGrabber.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\ofxOscEvents\ofxOscEventsReceiver.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\oscControl\OscInterface.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSink.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSource.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSink.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSource.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\AudioRenderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\avLooperRenderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\BasicVideoRenderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\HeaderLooperRenderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\renderers\VideoRenderer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPlaymodes\src\utils\ofxObjCPointer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxPoco\src\ofxXmlPoco.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUbo\src\ofxUbo.cpp" />
+    <ClCompile Include="src\TomsVideo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\addons\ofxJSON\src\ofxJSON.h" />
+    <ClInclude Include="..\..\..\addons\ofxJSON\src\ofxJSONElement.h" />
+    <ClInclude Include="..\..\..\addons\ofxTweener\src\ofxTransitions.h" />
+    <ClInclude Include="..\..\..\addons\ofxTweener\src\ofxTweener.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\ofxWMFVideoPlayer.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\ofxWMFVideoPlayerUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\AsyncCB.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\BufferLock.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\ClassFactory.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\common.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\critsec.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\GrowArray.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\linklist.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\logging.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\logmediatype.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\mediatype.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\mfutils.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\PropVar.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\registry.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\TinyMap.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\common\trace.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\EVRPresenter.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\EVRPresenterUuid.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\Helpers.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\PresentEngine.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\Presenter.h" />
+    <ClInclude Include="..\..\..\addons\ofxWMFVideoPlayer\src\presenter\scheduler.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="ofxcameramove\src\ofxCameraMove.h" />
+    <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\Constants.h" />
+    <ClInclude Include="src\Easings.h" />
+    <ClInclude Include="src\GuiTheme.h" />
+    <ClInclude Include="src\HarmonicMotion\HarmonicMotion.h" />
+    <ClInclude Include="src\Lights.h" />
+    <ClInclude Include="src\MaterialTextures.h" />
+    <ClInclude Include="src\OptimisedBox.h" />
+    <ClInclude Include="src\PostProcessing\AlphaTrails.h" />
+    <ClInclude Include="src\PostProcessing\Downsample.h" />
+    <ClInclude Include="src\PostProcessing\Feedback.h" />
+    <ClInclude Include="src\PostProcessing\Generative.h" />
+    <ClInclude Include="src\PostProcessing\PingPong.h" />
+    <ClInclude Include="src\PostProcessing\PostProcessing.h" />
+    <ClInclude Include="src\PostProcessing\ReactionDiffusion.h" />
+    <ClInclude Include="src\PostProcessing\SurfaceMask.h" />
+    <ClInclude Include="src\Primitives.h" />
+    <ClInclude Include="src\ReceiverOSC.h" />
+    <ClInclude Include="src\ShaderParams.h" />
+    <ClInclude Include="src\ShapePaths\AssimpModelVertices.h" />
+    <ClInclude Include="src\ShapePaths\BaseShape.h" />
+    <ClInclude Include="src\ShapePaths\Grid.h" />
+    <ClInclude Include="src\ShapePaths\Ngon.h" />
+    <ClInclude Include="src\ShapePaths\TranslationPaths.h" />
+    <ClInclude Include="src\ShapePaths\Wave.h" />
+    <ClInclude Include="..\..\..\addons\ofxAlgebraic\src\Algebraic.h" />
+    <ClInclude Include="..\..\..\addons\ofxAlgebraic\src\JenGaussian.h" />
+    <ClInclude Include="..\..\..\addons\ofxAlgebraic\src\ofxAlgebraic.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpTexture.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\ai_assert.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\anim.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\camera.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cexport.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cfileio.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\cimport.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\color4.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\poppack1.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\pstdint.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\config.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\DefaultLogger.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\defs.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Exporter.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Importer.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\importerdesc.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\IOStream.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\IOSystem.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\light.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Logger.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\LogStream.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\material.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\matrix3x3.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\matrix4x4.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\mesh.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\metadata.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\NullLogger.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\postprocess.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\ProgressHandler.hpp" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\quaternion.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\scene.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\texture.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\types.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\vector2.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\vector3.h" />
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\version.h" />
+    <ClInclude Include="..\..\..\addons\ofxDOF\src\ofxDOF.h" />
+    <ClInclude Include="..\..\..\addons\ofxEasing\src\easing_terms_of_use.html" />
+    <ClInclude Include="..\..\..\addons\ofxEasing\src\ofxEasing.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseEngine.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseTheme.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineGLFW.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineVk.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\Gui.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\Helpers.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\imconfig.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\ofxImGui.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\ThemeTest.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_internal.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\stb_rect_pack.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\stb_textedit.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\stb_truetype.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\AudioHeaderSample.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\AVHeaders\VideoHeader.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBuffer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamples.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\AudioBufferSamplesMarker.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\Buffer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\buffers\VideoBuffer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoFilter.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoMixerGPU.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\filters\VideoRate.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\AudioFrame.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\AudioSample.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\envelopes\BaseEnvelope.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\envelopes\RaisedCosineBellEnvelope.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\Frame.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\frames\VideoFrame.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\grabbers\AudioGrabber.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\grabbers\FileGrabber.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\grabbers\VideoGrabber.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\ofxOscEvents\ofxOscEventsReceiver.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\ofxPlaymodes.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\oscControl\OscInterface.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSink.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\audio\AudioSource.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSink.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\pipeline\video\VideoSource.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\AudioRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\avLooperRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\BasicVideoRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\HeaderLooperRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\renderers\VideoRenderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\AudioFormat.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\ofxObjCPointer.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\pmUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxPlaymodes\src\utils\VideoFormat.h" />
+    <ClInclude Include="..\..\..\addons\ofxPoco\src\ofxXmlPoco.h" />
+    <ClInclude Include="..\..\..\addons\ofxUbo\src\ofxUbo.h" />
+    <ClInclude Include="src\TomsVideo.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+      <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="icon.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
