@@ -23,21 +23,19 @@ public:
     void load_random_idle_texture();
     void load_random_active_texture();
     
-    string get_random_idle_path();
-    string get_random_active_path();
-    
     ofTexture& getIdleTexture();
     ofTexture& getActiveTexture();
 
     TomsVideo vid_active;
     TomsVideo vid_idle;
 
+    int idle_idx;
+    int active_idx;
+    
     string idle_path;
     string active_path;
-//private:
-    ofTexture tex_idle;
-    ofTexture tex_active;
     
+private:
     ofFbo fbo_active;
     
     ofDirectory active_dir;
@@ -47,6 +45,7 @@ public:
 
     vector<glm::vec4> colours;
     
-    vector<ofTexture> active_textures;;
+    vector<ofTexture> idle_textures;
+    vector<ofTexture> active_textures;
 
 };

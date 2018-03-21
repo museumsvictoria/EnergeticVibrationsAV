@@ -453,6 +453,8 @@ void ofApp::draw(){
         ///------ FINALLY DRAW OUR ACTIVE AND IDLE PASSES THROUGH A 3D SHAPE MASK
         surface_mask.draw();
     }
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -500,7 +502,7 @@ void ofApp::keyReleased(int key){
 
     static int vidNum = 0;
     if(key == 'n'){
-        textures.load_active_texture(textures.active_dir.getPath(vidNum));
+        //textures.load_active_texture(textures.active_dir.getPath(vidNum));
         vidNum++;
     }
     
@@ -640,24 +642,6 @@ void ofApp::drawGui(ofEventArgs & args){
         if (ofxImGui::BeginTree("GL STATE", mainSettings)){
             ImGui::Checkbox("Post Processing", &toggle_post_processing);
             
-            static bool vid_actvie_toggle = false;
-            ImGui::SameLine();
-            ImGui::Checkbox("Toggle Active Play", &vid_actvie_toggle);
-            if(vid_actvie_toggle == true) {
-                textures.vid_active.setPaused(false);
-            } else {
-                textures.vid_active.setPaused(true);
-            }
-            ImGui::Checkbox("GL Blending Add", &toggle_blending);
-            
-            static bool vid_idle_toggle = true;
-            ImGui::SameLine();
-            ImGui::Checkbox("Toggle Idle Play", &vid_idle_toggle);
-            if(vid_idle_toggle == true) {
-                textures.vid_idle.setPaused(true);
-            } else {
-                textures.vid_idle.setPaused(true);
-            }
             ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
             ImGui::SameLine();
             ImGui::Checkbox("Automate Cam", &toggle_camera_automation);
@@ -671,12 +655,12 @@ void ofApp::drawGui(ofEventArgs & args){
             }
             ofxImGui::EndTree(mainSettings);
         }
-        if (ofxImGui::BeginTree("DOF", mainSettings)){
-            ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
-            ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,20.0,200.0);
-            ImGui::SliderFloat("Focal Range",&post.dof_focal_range,0.0,200.0);
-            ofxImGui::EndTree(mainSettings);
-        }
+//        if (ofxImGui::BeginTree("DOF", mainSettings)){
+//            ImGui::SliderFloat("Blur Amount",&post.dof_blur_amount,0.0,3.0);
+//            ImGui::SliderFloat("Focal Distance",&post.dof_focal_distance,20.0,200.0);
+//            ImGui::SliderFloat("Focal Range",&post.dof_focal_range,0.0,200.0);
+//            ofxImGui::EndTree(mainSettings);
+//        }
         if (ofxImGui::BeginTree("PIXELATE", mainSettings)){
             ImGui::SliderFloat("dry_wet",&post.downsample.dry_wet,0.0,1.0);
             ofxImGui::EndTree(mainSettings);
