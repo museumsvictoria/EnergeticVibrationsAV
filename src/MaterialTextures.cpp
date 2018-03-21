@@ -11,25 +11,28 @@
 //-------------------------------------
 void MaterialTextures::setup(){
     
-    idle_dir.listDir("movies/idle/");
+    idle_dir.listDir("images/idle/");
     idle_dir.sort();
     
-    active_dir.listDir("movies/active/");
+    active_dir.listDir("images/active/");
     active_dir.sort();
     
     createFullScreenQuad();
     shader.load("shaders/colour_palette");
     
-    
     ofDisableArbTex(); 	///< we need normalised image coordinates
- 
-    tex_idle.allocate(500, 500, GL_RGBA);
-    tex_active.allocate(500, 500, GL_RGBA);
 
+    ///---------------------
+    for(int i = 0; i < active_dir.size(); i++){
+        active_textures.push_back(ofTexture());
+        ofLoadImage(active_textures[i], active_dir.getPath(i));
+    }
+    for(int i = 0; i < idle_dir.size(); i++){
+        idle_textures.push_back(ofTexture());
+        ofLoadImage(idle_textures[i], idle_dir.getPath(i));
+    }
+    ///---------------------
     fbo_active.allocate(500, 500, GL_RGBA);
-
-    ofLoadImage(tex_active, "images/Gilmore1.jpg");
-    ofLoadImage(tex_idle, "images/test.jpg");
 
     load_random_idle_texture();
     load_random_active_texture();
@@ -48,48 +51,37 @@ void MaterialTextures::setup(){
 
 //-------------------------------------
 void MaterialTextures::load_idle_texture(string path){
-    vid_idle.load(path);
-    vid_idle.play();
+    for(int i = 0; i < idle_dir.size(); i++){
+        if(path == idle_dir.getPath(i)){
+            idle_idx = i;
+        }
+    }
 }
 void MaterialTextures::load_active_texture(string path){
-    vid_active.load(path);
-    vid_active.play();
-    cout << " << active_path = " << path << endl;
-
+    for(int i = 0; i < active_dir.size(); i++){
+        if(path == active_dir.getPath(i)){
+            active_idx = i;
+        }
+    }
 }
 void MaterialTextures::load_random_idle_texture(){
-    vid_idle.load(get_random_idle_path());
-    vid_idle.play();
+    idle_idx = (int)ofRandom(idle_dir.size());
 }
 void MaterialTextures::load_random_active_texture(){
-    vid_active.load(get_random_active_path());
-    vid_active.play();
-}
-
-//-------------------------------------
-string MaterialTextures::get_random_idle_path(){
-    idle_path = idle_dir.getPath((int)ofRandom(idle_dir.size()));
-    cout << "random idle path = " << idle_path << endl;
-    return idle_path;
-}
-//-------------------------------------
-string MaterialTextures::get_random_active_path(){
-    active_path = active_dir.getPath((int)ofRandom(active_dir.size()));
-    cout << "random active path = " << active_path << endl;
-    return active_path;
+    active_idx = (int)ofRandom(active_dir.size());
 }
 
 //-------------------------------------
 ofTexture& MaterialTextures::getActiveTexture(){
     ofDisableArbTex();
     
-    vid_active.update();
+    active_path = active_dir.getPath(active_idx);
     
     fbo_active.begin();
     ofClear(0,0,0,0);
     shader.begin();
     shader.setUniform3f("iResolution", fbo_active.getWidth(), fbo_active.getHeight(), 0);
-    shader.setUniformTexture("iChannel0", vid_active.getTexture(), 0);
+    shader.setUniformTexture("iChannel0", active_textures[active_idx], 0);
     for(int i = 0; i < colours.size(); i++){
         shader.setUniform4f("color_" + ofToString(1+i), colours[i].r, colours[i].g, colours[i].b, colours[i].a);
     }
@@ -97,14 +89,11 @@ ofTexture& MaterialTextures::getActiveTexture(){
     shader.end();
     fbo_active.end();
     
-    tex_active = fbo_active.getTexture();
-    
-    return tex_active;
+    return fbo_active.getTexture();
 }
 ofTexture& MaterialTextures::getIdleTexture(){
     ofDisableArbTex();
-    vid_idle.update();
-    
-    tex_idle = vid_idle.getTexture();
-    return tex_idle;
+    idle_path = idle_dir.getPath(idle_idx);
+
+    return idle_textures[idle_idx];
 }
