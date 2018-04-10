@@ -11,7 +11,7 @@
 #include "ofMain.h"
 #include "PingPong.h"
 
-#include "TomsVideo.hpp"
+//#include "TomsVideo.hpp"
 
 class MaterialTextures : public PingPong{
 public:
@@ -26,8 +26,8 @@ public:
     ofTexture& getIdleTexture();
     ofTexture& getActiveTexture();
 
-    TomsVideo vid_active;
-    TomsVideo vid_idle;
+    //TomsVideo vid_active;
+    //TomsVideo vid_idle;
 
     int idle_idx;
     int active_idx;

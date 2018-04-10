@@ -34,7 +34,8 @@ void main( void )
     vec4 tex2 = texture(iChannel2,uv);
     
     if(shape_tex.rgb == vec3(0.0)){
-        discard;
+        //discard;
+        outputColor = vec4(1.0,0.0,0.0,1.0);
     } else {
         outputColor = tex1 + tex2;
     }
