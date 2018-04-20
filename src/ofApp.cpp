@@ -64,7 +64,7 @@ void ofApp::setup(){
     
     // we will also need a camera, so we can move around in the scene
     mCam1.setupPerspective(false, 50, 0.001, 0);
-    mCam1.setDistance(330); // set default camera distance to 1000
+    mCam1.setDistance(365); // set default camera distance to 1000
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
     moveCam.setup(&mCam1, "cam_presets/");
 
@@ -641,7 +641,14 @@ void ofApp::drawGui(ofEventArgs & args){
     if (ofxImGui::BeginWindow("Post Processing", mainSettings, false)) {
         if (ofxImGui::BeginTree("GL STATE", mainSettings)){
             ImGui::Checkbox("Post Processing", &toggle_post_processing);
-            
+            ImGui::SameLine();
+            static bool mapping_debug_mode = false;
+            ImGui::Checkbox("Debug", &mapping_debug_mode);
+            if(mapping_debug_mode == true){
+                surface_mask.debug_mode = 1;
+            } else {
+                surface_mask.debug_mode = 0;
+            }
             ImGui::Checkbox("Cull Backface", &toggle_backface_cull);
             ImGui::SameLine();
             ImGui::Checkbox("Automate Cam", &toggle_camera_automation);

@@ -78,6 +78,8 @@ void SurfaceMask::setup(){
     createFullScreenQuad();
     init_fbos();
     
+    debug_mode = 0;
+    
     masking_model.loadModel("models/ProjectionSurface.obj");
     //you can create as many rotations as you want
     //choose which axis you want it to effect
@@ -113,7 +115,8 @@ void SurfaceMask::update(){
     ofClear( 0, 255, 0, 255 );
     ofDisableDepthTest();
     
-    cam.setDistance(2710); // set default camera distance to 1000
+    float cam_dist = 3015;
+    cam.setDistance(cam_dist); // set default camera distance to 1000
     cam.disableMouseInput();
 
     m_src_fbo.begin();
@@ -133,6 +136,7 @@ void SurfaceMask::update(){
         shader_image.begin();
         shader_image.setUniform3f("iResolution", ofGetWidth(), ofGetHeight(),1);
         shader_image.setUniform1f("iTime", ofGetElapsedTimef());
+        shader_image.setUniform1i("debug_mode", debug_mode);
         shader_image.setUniformTexture( "iChannel0", m_src_fbo.getTexture(), 1);
         shader_image.setUniformTexture( "iChannel1",  m_fbos[ 0 ].getTexture(), 2 );
         shader_image.setUniformTexture( "iChannel2",  m_fbos[ 1 ].getTexture(), 3 );

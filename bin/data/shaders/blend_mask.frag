@@ -19,6 +19,7 @@ in vec2 vTexCoord;
 // outputs
 out vec4 outputColor;
 
+uniform int debug_mode;
 
 void main( void )
 {
@@ -34,8 +35,11 @@ void main( void )
     vec4 tex2 = texture(iChannel2,uv);
     
     if(shape_tex.rgb == vec3(0.0)){
-        //discard;
-        outputColor = vec4(1.0,0.0,0.0,1.0);
+        if(debug_mode == 1){
+            outputColor = vec4(1.0,0.0,0.0,1.0);
+        } else {
+            discard;
+        }
     } else {
         outputColor = tex1 + tex2;
     }

@@ -25,6 +25,8 @@ public:
 
     ofShader shader_image;
     ofxAssimpModelLoader masking_model;
-    ofEasyCam cam;    
+    ofEasyCam cam;
+    
+    int debug_mode;
 
 };
