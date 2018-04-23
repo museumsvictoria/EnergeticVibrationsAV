@@ -23,7 +23,7 @@ ReceiverOSC::ReceiverOSC(){
     original_combos.push_back({1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0});
     original_combos.push_back({0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0});
     original_combos.push_back({0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0});
-    original_combos.push_back({1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0,1,0});
+    original_combos.push_back({1,0,1,0,1,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1});
     original_combos.push_back({1,1,0,1,0,0,0,1,1,0,1,0,0,0,1,1,0,1,0,0,0});
     
     seat_combos = original_combos;
