@@ -8,17 +8,21 @@ int main( ){
     
     ofGLFWWindowSettings settings;
     settings.setGLVersion(4, 1);
-	//settings.setSize(1920, 1080);
+	settings.setSize(1920, 1200);
+	/* these are private in OF master
     settings.width = 1920;
     settings.height = 1200;
+	*/
     settings.setPosition(ofVec2f(1920,0));
     settings.resizable = true;
     settings.windowMode = ofWindowMode::OF_FULLSCREEN;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-	//settings.setSize(850, 1000);
+	settings.setSize(850, 1000);
+	/* these are private in OF master
     settings.width = 850;
     settings.height = 1000;
+	*/
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = false;
     // uncomment next line to share main's OpenGL resources with gui
