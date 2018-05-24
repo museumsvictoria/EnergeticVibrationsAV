@@ -14,6 +14,9 @@ void ofxCameraMove::setup(ofEasyCam *_cam,string folder) {
     destFolder = folder;
     current_camera = 0;
     getNumberOfCamFormXML(folder);
+    start = 0;
+    end = 1;
+    pre = 0;
 }
 
 int ofxCameraMove::getNumCameras(){
@@ -114,6 +117,7 @@ void ofxCameraMove::tweenNow(int cameraNumber,float time) {
     targetQuat.makeRotate(angleEnd, x,y,z);
     start = 0;
     end = 1;
+    pre = 0;
     if(tweenType == 0){
         Tweener.addTween(start, end, time,&ofxTransitions::easeOutExpo);
     }
