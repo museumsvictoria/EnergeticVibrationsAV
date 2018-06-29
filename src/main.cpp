@@ -18,7 +18,7 @@ int main( ){
     settings.windowMode = ofWindowMode::OF_FULLSCREEN;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-	settings.setSize(850, 1000);
+	settings.setSize(850, 1200);
 	/* these are private in OF master
     settings.width = 850;
     settings.height = 1000;

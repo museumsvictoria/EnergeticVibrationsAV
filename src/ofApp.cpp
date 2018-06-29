@@ -66,6 +66,7 @@ void ofApp::setup(){
     mCam1.setupPerspective(false, 50, 0.001, 0);
     mCam1.setDistance(365); // set default camera distance to 1000
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
+	mCam1.setPosition(0, -19, 365);
     moveCam.setup(&mCam1, "cam_presets/");
 
     init();
@@ -107,6 +108,7 @@ void ofApp::setupGui(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
+	mCam1.setPosition(0, -19, 365);
     if (isShaderDirty){
         // dirty shader pattern:
         shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
@@ -228,7 +230,7 @@ void ofApp::update_generative_modes(){
             // Reset the seat triggered bool
             seat_triggered = false;
             
-            int effect_mode = (int)ofRandom(7);
+            int effect_mode = (int)ofRandom(6);
             
             perlin_mode = false;
             switch (effect_mode) {
@@ -251,7 +253,7 @@ void ofApp::update_generative_modes(){
                     perlin_mode = true;
                     break;
                 case Random_Combo:
-                    //post.trigger_random_combo_mode();
+                    post.trigger_random_combo_mode();
                     break;
                     
                 default:
@@ -563,6 +565,18 @@ void ofApp::keyReleased(int key){
             }
             break;
         }
+		case 'i': {
+			auto pos = mCam1.getPosition();
+			//mCam1.setPosition(pos.x, pos.y + 1, pos.z);
+			cout << mCam1.getPosition() << endl;
+		}
+			break;
+		case 'I': {
+			auto pos = mCam1.getPosition();
+			//mCam1.setPosition(pos.x, pos.y - 1, pos.z);
+			cout << mCam1.getPosition() << endl;
+		}
+			break;
         default:
             break;
     }
