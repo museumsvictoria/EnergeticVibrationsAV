@@ -262,7 +262,7 @@ void ofApp::update_generative_modes(){
 
             
             float idle_preset = ofRandomuf();
-            if(idle_preset > 0.3) load_idle_preset((int)ofRandom(num_idle_presets));
+            if(idle_preset > 0.3) load_idle_preset(1 + (int)ofRandom(num_idle_presets));
             
             float primitive_type = ofRandomuf();
             if(primitive_type > 0.5) primitives.randomise_objects();
