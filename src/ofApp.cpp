@@ -198,6 +198,7 @@ void ofApp::update(){
     
     paths.update();
     paths.set_model_path(params.instance_model_grid);
+    
 }
 
 //--------------------------------------------------------------
@@ -751,8 +752,8 @@ void ofApp::save_idle_preset(){
     ofxJSONElement json2;
     json2["num_idle_presets"] = num_idle_presets;
     json2.save("presets/idle/num_presets.json");
-
 }
+
 //--------------------------------------------------------------
 void ofApp::save_active_preset(){
     num_active_presets++;
