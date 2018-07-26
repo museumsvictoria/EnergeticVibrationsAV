@@ -66,6 +66,7 @@ void ofApp::setup(){
     mCam1.setupPerspective(false, 50, 0.001, 0);
     mCam1.setDistance(365); // set default camera distance to 1000
     mCam1.lookAt(ofVec3f(0)); // look at centre of the world
+	mCam1.setPosition(0, -19, 365);
     moveCam.setup(&mCam1, "cam_presets/");
 
     init();
@@ -107,6 +108,7 @@ void ofApp::setupGui(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
+	mCam1.setPosition(0, -19, 365);
     if (isShaderDirty){
         // dirty shader pattern:
         shared_ptr<ofxUboShader> tmpShader = shared_ptr<ofxUboShader>(new ofxUboShader);
@@ -261,7 +263,7 @@ void ofApp::update_generative_modes(){
 
             
             float idle_preset = ofRandomuf();
-            if(idle_preset > 0.3) load_idle_preset((int)ofRandom(num_idle_presets));
+            if(idle_preset > 0.3) load_idle_preset(1 + (int)ofRandom(num_idle_presets));
             
             float primitive_type = ofRandomuf();
             if(primitive_type > 0.5) primitives.randomise_objects();
@@ -564,6 +566,18 @@ void ofApp::keyReleased(int key){
             }
             break;
         }
+		case 'i': {
+			auto pos = mCam1.getPosition();
+			//mCam1.setPosition(pos.x, pos.y + 1, pos.z);
+			cout << mCam1.getPosition() << endl;
+		}
+			break;
+		case 'I': {
+			auto pos = mCam1.getPosition();
+			//mCam1.setPosition(pos.x, pos.y - 1, pos.z);
+			cout << mCam1.getPosition() << endl;
+		}
+			break;
         default:
             break;
     }
